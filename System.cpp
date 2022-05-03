@@ -15,8 +15,8 @@ public:
     System(){};
 
     // Get all the houses on the system
-    vector<House> getAllHouses(){
-        vector<House> records;
+    vector<House*> getAllHouses(){
+        vector<House*> records;
         for(Member member: users){
             records.push_back(member.getHouseForOwn());
         }
@@ -25,11 +25,11 @@ public:
 
     // Show list of houses to be used in a the period
 	vector<House> availableHouses(string start, string end){
-        vector<House> allHouses = this->getAllHouses();
+        vector<House*> allHouses = this->getAllHouses();
 		vector<House> availableRecords;
-		for(House house: allHouses)
-			if(house.isFree(start,end)) {
-				availableRecords.push_back(house);
+		for(House *house: allHouses)
+			if(house->isFree(start,end)) {
+				availableRecords.push_back(*house);
 			}
         return availableRecords;
 	}
