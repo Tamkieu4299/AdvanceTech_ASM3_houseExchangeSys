@@ -40,7 +40,7 @@ int main(){
 
     // Non-member do registration
     cout << "-----Register account--------\n";
-    
+
     cout << "Register as 1->Admin  2->Member: ";
     int AdminOrUser;
     cin >> AdminOrUser;
@@ -81,7 +81,7 @@ int main(){
         string description;
         cin >> description;
 
-        newMember.setHouseForOwn(House(location, description));
+        newMember.setHouseForOwn(&House(location, description));
     }
 
     //Store account into the system (if the registration is successful)

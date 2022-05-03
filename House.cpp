@@ -13,6 +13,8 @@ private:
 	double houseRatingScrore;
 	string startDate;
 	string endDate;
+	string availablePeridStart;
+	string availablePeridEnd;
 	double consumingPoints;
 	double requiredMinOccupierRating;
 	long usedTimes;
@@ -68,6 +70,22 @@ public:
 		this->endDate=endDate;
 	}
 
+	void setAvailablePeriodStart(string availablePeriodStart){
+		this->availablePeridStart=availablePeridStart;
+	}
+
+	string getAvailablePeriodEnd(){
+		return this->availablePeridEnd;
+	}
+
+	void setAvailablePeriodEnd(string availablePeriodEnd){
+		this->availablePeridEnd=availablePeridEnd;
+	}
+
+	string getAvailablePeriodStart(){
+		return this->availablePeridStart;
+	}
+
 	double getConsumingPoints(){
 		return this->consumingPoints;
 	}
@@ -119,6 +137,14 @@ public:
 
 	// Check if the house is free in the period
 	bool isFree(string start, string end){
+
+		const char *availbleStart = this->getAvailablePeriodStart().c_str();
+		const char *availbleEnd = this->getAvailablePeriodEnd().c_str();
+		tm tmAvailableStart;
+		tm tmAvailableEnd;
+		sscanf(availbleStart,"%4d/%2d/%2d",&tmAvailableStart.tm_year,&tmAvailableStart.tm_mon,&tmAvailableStart.tm_mday);
+		sscanf(availbleEnd,"%4d/%2d/%2d",&tmAvailableEnd.tm_year,&tmAvailableEnd.tm_mon,&tmAvailableEnd.tm_mday);
+
 		const char *startDate = start.c_str();
 		const char *endDate = end.c_str();
 		tm tmStart;
@@ -134,9 +160,11 @@ public:
 		sscanf(houseEnd,"%4d/%2d/%2d",&tmHouseEnd.tm_year,&tmHouseEnd.tm_mon,&tmHouseEnd.tm_mday);
 
 		//End to HouseStart
-		if(tmEnd.tm_year<=tmHouseStart.tm_year && tmEnd.tm_mon<=tmHouseStart.tm_mon && tmEnd.tm_mday<=tmHouseStart.tm_mday 
-			|| tmHouseEnd.tm_year<=tmStart.tm_year && tmHouseEnd.tm_mon<=tmStart.tm_mon && tmHouseEnd.tm_mday<=tmStart.tm_mday)
-				return true;	
+		if(tmEnd.tm_year<=tmAvailableStart.tm_year && tmEnd.tm_mon<=tmAvailableStart.tm_mon && tmEnd.tm_mday<=tmAvailableStart.tm_mday 
+			|| tmAvailableEnd.tm_year<=tmStart.tm_year && tmAvailableEnd.tm_mon<=tmStart.tm_mon && tmAvailableEnd.tm_mday<=tmStart.tm_mday)
+				if(tmEnd.tm_year<=tmHouseStart.tm_year && tmEnd.tm_mon<=tmHouseStart.tm_mon && tmEnd.tm_mday<=tmHouseStart.tm_mday 
+					|| tmHouseEnd.tm_year<=tmStart.tm_year && tmHouseEnd.tm_mon<=tmStart.tm_mon && tmHouseEnd.tm_mday<=tmStart.tm_mday)
+						return true;	
 		return false;
 	}
 

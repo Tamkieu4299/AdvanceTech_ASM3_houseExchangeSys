@@ -14,8 +14,8 @@ private:
 	string password;
 	long creditPoints = 500;
 	double occupierRatingScore;
-	House houseForLive;
-	House houseForOwn;
+	House *houseForLive;
+	House *houseForOwn;
 	long occupyTimes;
 	bool isAdmin;
 
@@ -74,19 +74,19 @@ public:
 		this->occupierRatingScore=occupierRatingScore;
 	}
 
-	House getHouseForLive(){
+	House* getHouseForLive(){
 		return this->houseForLive;
 	}	
 
-	void setHouseForLive(House houseForLive){
+	void setHouseForLive(House* houseForLive){
 		this->houseForLive=houseForLive;
 	}
 
-	House getHouseForOwn(){
+	House* getHouseForOwn(){
 		return this->houseForOwn;
 	}	
 
-	void setHouseForOwn(House houseForOwn){
+	void setHouseForOwn(House *houseForOwn){
 		this->houseForOwn=houseForOwn;
 	}
 
@@ -119,7 +119,8 @@ public:
 	}
 
 	void setAvailablePeriod(string start, string end){
-		
+		this->getHouseForOwn()->setAvailablePeriodStart(start);
+		this->getHouseForOwn()->setAvailablePeriodEnd(end);
 	}
 };
 
