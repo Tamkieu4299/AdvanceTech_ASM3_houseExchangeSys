@@ -1,34 +1,23 @@
 #include <iostream>
 #include <stdio.h>
-#include "House.cpp"
-#include "Member.cpp"
 
 using namespace std;
 
 class Request{
 private:
-    House *house;
     string start;
     string end;
-    Member *requestMember;
+    string requestUsername;
 
 public:
     Request(){}
 
-    House* getHouse(){
-        return this->house;
+    string getRequestUsername(){
+        return this->requestUsername;
     }
 
-    void setHouse(House *house){
-        this->house=house;
-    }
-
-    Member* getRequestMember(){
-        return this->requestMember;
-    }
-
-    void setRequestMember(Member *requestMember){
-        this->requestMember=requestMember;
+    void setRequestUsername(string requestUsername){
+        this->requestUsername=requestUsername;
     }
 
     string getStart(){

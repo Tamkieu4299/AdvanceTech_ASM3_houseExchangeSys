@@ -3,6 +3,7 @@
 #include <vector>
 #include <sstream>
 #include <time.h>
+#include "Request.cpp"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ private:
 	long usedTimes;
 	long usedDays;
 	vector<string> comments;
+	vector<Request*> requests; 
 
 public:
 	House(){};
@@ -133,6 +135,14 @@ public:
 
 	vector<string> getComments(){
 		return this->comments;
+	}
+
+	void setRequests(vector<Request*> requests){
+		this->requests=requests;
+	}
+
+	vector<Request*> getRequests(){
+		return this->requests;
 	}
 
 	// Check if the house is free in the period

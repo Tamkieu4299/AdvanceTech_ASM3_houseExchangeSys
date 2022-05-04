@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stdio.h>
 #include <cstring>
-
 #include "House.cpp"
 
 using namespace std;
@@ -12,19 +11,28 @@ private:
 	string fullname;
 	string phone;
 	string password;
-	long creditPoints = 500;
+	long creditPoints;
 	double occupierRatingScore;
 	House *houseForLive;
 	House *houseForOwn;
 	long occupyTimes;
 	bool isAdmin;
-	vector<Request*> requests; 
 
 public:
 	// Constructor
 	Member(){
 		this->occupyTimes=0;
+		this->creditPoints=500;
 	};
+
+	Member(string username, string password, string fullname, string phone){
+		this->username=username;
+		this->password=password;
+		this->fullname=fullname;
+		this->phone=phone;
+		this->occupyTimes=0;
+		this->creditPoints=500;
+	}
 
 	// Getter - Setter
 	string getUsername(){
@@ -87,8 +95,8 @@ public:
 		return this->houseForOwn;
 	}	
 
-	void setHouseForOwn(House *houseForOwn){
-		this->houseForOwn=houseForOwn;
+	void setHouseForOwn(House houseForOwn){
+		this->houseForOwn=&houseForOwn;
 	}
 
 	long getOccupyTimes(){
@@ -107,14 +115,6 @@ public:
 		this->isAdmin=isAdmin;
 	}
 
-	void setRequests(vector<Request*> requests){
-		this->requests=requests;
-	}
-
-	vector<Request*> getRequests(){
-		return this->requests;
-	}
-
 	// Rate the House while living
 	void ratingHouse(double rating, House house){
 		double newRating = (house.getHouseRatingScrore()+rating)/house.getUsedTimes();
@@ -131,42 +131,6 @@ public:
 	void setAvailablePeriod(string start, string end){
 		this->getHouseForOwn()->setAvailablePeriodStart(start);
 		this->getHouseForOwn()->setAvailablePeriodEnd(end);
-	}
-
-	// Show all requests for the owner of his house
-	void showRequests(){
-		vector<Request*> requests = this->getRequests();
-		if(requests.size()==0) {
-			cout<<"You don't have any request !"<<endl;
-			return;
-		}
-		cout<<"All requests for you: "<<endl;
-		int index=0;
-		for(Request *request: this->getRequests()){
-			cout<<"Id: "<<index<<" | User: "<<request->getRequestMember()->getUsername()<<" | From: "<<request->getStart()<<" | To: "<<request->getEnd()<<endl;
-		}
-	}
-
-	// Owner check the requests for accept
-	void acceptRequest(int index){
-		vector<Request*> allRequests = this->getRequests();
-
-		if(index>=allRequests.size()){
-			cout<<"Invalid choice !"<<endl;
-			return;
-		}
-
-		Request *request = allRequests[index];
-		if(this->getHouseForOwn()->isFree(request->getStart(), request->getEnd())){
-			cout<<"Successfully accept request from user: "<<request->getRequestMember()->getUsername()<<" | From: "<<request->getStart()<<" | To: "<<request->getEnd()<<endl;
-			allRequests.erase(allRequests.begin()+index);
-
-			this->getHouseForOwn()->setStartDate(request->getStart());
-			this->getHouseForOwn()->setEndDate(request->getEnd());
-
-			this->showRequests();
-		}
-		else cout<<"Your house will not be free on this period ! Please check again"<<endl;
 	}
 };
 
