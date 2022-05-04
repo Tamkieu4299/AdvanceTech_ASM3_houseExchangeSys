@@ -4,6 +4,7 @@
 
 #include "House.cpp"
 #include "Member.cpp"
+#include "Request.cpp"
 
 using namespace std;
 
@@ -33,62 +34,82 @@ public:
 			}
         return availableRecords;
 	}
+
+    // Show list of houses for member
+    vector<House> availableHousesForMember(Member member, string start, string end, string city){
+        vector<House*> allHouses = this->getAllHouses();
+        vector<House> availableRecords;
+        for(House *house: allHouses)
+            if(house->isFree(start,end) && house->getLocation()==city && house->getRequiredMinOccupierRating()<=member.getOccupierRatingScore()){
+                long totalCost = house->countDays(start, end)*house->getConsumingPoints();
+                if(member.getCreditPoints()>=totalCost) availableRecords.push_back(*house); 
+            }
+        return availableRecords;
+    }
+
+    // Member choose house from available list
+    int rentHouse(Member occupier, House house){
+       return 1; 
+    }
+
+    // Registration for non-member
+    void registerAccount(){
+        cout << "-----Register account--------\n";
+        cout << "Register as 1->Admin  2->Member: ";
+        int AdminOrUser;
+        cin >> AdminOrUser;
+        Member newMember = Member();
+
+        if(AdminOrUser==1) newMember.setIsAdmin(true);
+        else newMember.setIsAdmin(false);
+
+        cout << "Enter username: ";
+        string username;
+        cin >> username;
+        newMember.setUsername(username);
+        
+        cout << "Enter password: ";
+        string password;
+        cin >> password;
+        newMember.setPassword(password);
+
+        cout << "Enter fullname: ";
+        string fullname;
+        cin >>  fullname;
+        newMember.setFullname(fullname);
+
+        cout << "Enter Phone: ";
+        string phone;
+        cin >> phone;
+        newMember.setPhone(phone);
+
+        cout << "Enter house ? Press 1->Yes  2->No : ";
+        int enterHouse;
+        cin >> enterHouse;
+        if(enterHouse==1){
+            cout << "Enter Location: ";
+            string location;
+            cin >> location;
+
+            cout << "Enter Description: ";
+            string description;
+            cin >> description;
+
+            newMember.setHouseForOwn(&House(location, description));
+        }
+
+        // Store account into the system (if the registration is successful)
+        this->users.push_back(newMember);
+        cout << "All accounts in the system: \n";
+        // for (Member eachUser: appSys.users)
+        //     cout << "Name = " << eachUser.getUsername() << ", pwd = " << eachUser.getPassword();
+    }
 };
 
 int main(){
     System appSys;
 
-    // Non-member do registration
-    cout << "-----Register account--------\n";
-
-    cout << "Register as 1->Admin  2->Member: ";
-    int AdminOrUser;
-    cin >> AdminOrUser;
-    Member newMember = Member();
-
-    if(AdminOrUser==1) newMember.setIsAdmin(true);
-    else newMember.setIsAdmin(false);
-
-    cout << "Enter username: ";
-    string username;
-    cin >> username;
-    newMember.setUsername(username);
-    
-    cout << "Enter password: ";
-    string password;
-    cin >> password;
-    newMember.setPassword(password);
-
-    cout << "Enter fullname: ";
-    string fullname;
-    cin >>  fullname;
-    newMember.setFullname(fullname);
-
-    cout << "Enter Phone: ";
-    string phone;
-    cin >> phone;
-    newMember.setPhone(phone);
-
-    cout << "Enter house ? Press 1->Yes  2->No : ";
-    int enterHouse;
-    cin >> enterHouse;
-    if(enterHouse==1){
-        cout << "Enter Location: ";
-        string location;
-        cin >> location;
-
-        cout << "Enter Description: ";
-        string description;
-        cin >> description;
-
-        newMember.setHouseForOwn(&House(location, description));
-    }
-
-    //Store account into the system (if the registration is successful)
-    appSys.users.push_back(newMember);
-    cout << "All accounts in the system: \n";
-    // for (Member eachUser: appSys.users)
-    //     cout << "Name = " << eachUser.getUsername() << ", pwd = " << eachUser.getPassword();
+    appSys.registerAccount();
     
     return 0;
 }

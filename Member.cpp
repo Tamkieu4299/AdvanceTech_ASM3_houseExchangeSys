@@ -18,6 +18,7 @@ private:
 	House *houseForOwn;
 	long occupyTimes;
 	bool isAdmin;
+	vector<Request*> requests; 
 
 public:
 	// Constructor
@@ -106,6 +107,14 @@ public:
 		this->isAdmin=isAdmin;
 	}
 
+	void setRequests(vector<Request*> requests){
+		this->requests=requests;
+	}
+
+	vector<Request*> getRequests(){
+		return this->requests;
+	}
+
 	// Rate the House while living
 	void ratingHouse(double rating, House house){
 		double newRating = (house.getHouseRatingScrore()+rating)/house.getUsedTimes();
@@ -118,9 +127,46 @@ public:
 		member.setOccupierRatingScore(newRating);
 	}
 
+	// Set the period which the owner wants to rent his house
 	void setAvailablePeriod(string start, string end){
 		this->getHouseForOwn()->setAvailablePeriodStart(start);
 		this->getHouseForOwn()->setAvailablePeriodEnd(end);
+	}
+
+	// Show all requests for the owner of his house
+	void showRequests(){
+		vector<Request*> requests = this->getRequests();
+		if(requests.size()==0) {
+			cout<<"You don't have any request !"<<endl;
+			return;
+		}
+		cout<<"All requests for you: "<<endl;
+		int index=0;
+		for(Request *request: this->getRequests()){
+			cout<<"Id: "<<index<<" | User: "<<request->getRequestMember()->getUsername()<<" | From: "<<request->getStart()<<" | To: "<<request->getEnd()<<endl;
+		}
+	}
+
+	// Owner check the requests for accept
+	void acceptRequest(int index){
+		vector<Request*> allRequests = this->getRequests();
+
+		if(index>=allRequests.size()){
+			cout<<"Invalid choice !"<<endl;
+			return;
+		}
+
+		Request *request = allRequests[index];
+		if(this->getHouseForOwn()->isFree(request->getStart(), request->getEnd())){
+			cout<<"Successfully accept request from user: "<<request->getRequestMember()->getUsername()<<" | From: "<<request->getStart()<<" | To: "<<request->getEnd()<<endl;
+			allRequests.erase(allRequests.begin()+index);
+
+			this->getHouseForOwn()->setStartDate(request->getStart());
+			this->getHouseForOwn()->setEndDate(request->getEnd());
+
+			this->showRequests();
+		}
+		else cout<<"Your house will not be free on this period ! Please check again"<<endl;
 	}
 };
 

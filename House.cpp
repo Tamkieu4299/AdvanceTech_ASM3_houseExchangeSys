@@ -15,7 +15,7 @@ private:
 	string endDate;
 	string availablePeridStart;
 	string availablePeridEnd;
-	double consumingPoints;
+	double consumingPoints; // per day
 	double requiredMinOccupierRating;
 	long usedTimes;
 	long usedDays;
@@ -90,9 +90,9 @@ public:
 		return this->consumingPoints;
 	}
 
-	void newConsumingPoints(){
-		this->setConsumingPoints(this->getUsedTimes()/this->getUsedDays());
-	}
+	// void newConsumingPoints(){
+	// 	this->setConsumingPoints(this->getUsedTimes()/this->getUsedDays());
+	// }
 
 	void setConsumingPoints(double consumingPoints){
 		this->consumingPoints=consumingPoints;
@@ -122,10 +122,10 @@ public:
 		return this->usedDays;
 	}
 
-	void newUsedDays(string start, string end){
-		long curUsedDays = this->getUsedDays();
-		this->setUsedDays(curUsedDays+countDays(start,end));
-	}
+	// void newUsedDays(string start, string end){
+	// 	long curUsedDays = this->getUsedDays();
+	// 	this->setUsedDays(curUsedDays+countDays(start,end));
+	// }
 
 	void setComments(vector<string> comments){
 		this->comments=comments;
@@ -168,7 +168,7 @@ public:
 		return false;
 	}
 
-	// Count the days between the period for calculating consuming points
+	// Count the days between the period for calculating consuming points in a period
 	long countDays(string start, string end){
 		stringstream ss(start + "-" + end);
 		int year, month, day;
