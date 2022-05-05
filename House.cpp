@@ -14,8 +14,8 @@ private:
 	double houseRatingScrore;
 	string startDate;
 	string endDate;
-	string availablePeridStart;
-	string availablePeridEnd;
+	string availablePeriodStart;
+	string availablePeriodEnd;
 	double consumingPoints; // per day
 	double requiredMinOccupierRating;
 	long usedTimes;
@@ -73,19 +73,19 @@ public:
 	}
 
 	void setAvailablePeriodStart(string availablePeriodStart){
-		this->availablePeridStart=availablePeridStart;
+		this->availablePeriodStart=availablePeriodStart;
 	}
 
 	string getAvailablePeriodEnd(){
-		return this->availablePeridEnd;
+		return this->availablePeriodEnd;
 	}
 
 	void setAvailablePeriodEnd(string availablePeriodEnd){
-		this->availablePeridEnd=availablePeridEnd;
+		this->availablePeriodEnd=availablePeriodEnd;
 	}
 
 	string getAvailablePeriodStart(){
-		return this->availablePeridStart;
+		return this->availablePeriodStart;
 	}
 
 	double getConsumingPoints(){
@@ -147,7 +147,7 @@ public:
 
 	// Check if the house is free in the period
 	bool isFree(string start, string end){
-
+	
 		const char *availbleStart = this->getAvailablePeriodStart().c_str();
 		const char *availbleEnd = this->getAvailablePeriodEnd().c_str();
 		tm tmAvailableStart;
@@ -198,6 +198,14 @@ public:
 		return abs(ttEnd - ttStart) / 86400;
 	}
 };
+
+// int main(int argc, char const *argv[])
+// {
+// 	House house = House();
+// 	house.setAvailablePeriodStart("2022/04/27");
+// 	cout<<house.getAvailablePeriodStart()<<endl;
+// 	return 0;
+// }
 
 
 
