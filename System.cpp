@@ -8,100 +8,102 @@ using namespace std;
 
 class System{
 public:
-    vector<Member> users;
+    vector<Member*> users;
 
     // Constructor
     System(){};
 
-    Member getMemberByUsername(string username){
-        Member res;
-        for(Member member: users){
-            if(member.getUsername()==username) res=member;
+    Member* getMemberByUsername(string username){
+        Member* res;
+        for(Member *member: users){
+            if(member->getUsername()==username) res=member;
         }
         return res;
     }
 
     // Get all the houses on the system
-    vector<House> getAllHouses(){
-        vector<House> records;
-        for(Member member: users){
-            records.push_back(member.getHouseForOwn());
+    vector<House*> getAllHouses(){
+        vector<House*> records;
+        for(Member *member: this->users){
+            records.push_back(member->getHouseForOwn());
         }
         return records;
     };
 
     // Show list of houses to be used in a the period
-	vector<House> availableHouses(string start, string end){
-        vector<House> allHouses = this->getAllHouses();
-		vector<House> availableRecords;
-		for(House house: allHouses)
-			if(house.isFree(start,end)) {
+	vector<House*> availableHouses(string start, string end){
+        vector<House*> allHouses = this->getAllHouses();
+		vector<House*> availableRecords;
+		for(House *house: allHouses)
+			if(house->isFree(start,end)) {
 				availableRecords.push_back(house);
 			}
         return availableRecords;
 	}
 
     // Show list of houses for member
-    vector<House> availableHousesForMember(Member member, string start, string end, string city){
-        vector<House> allHouses = this->getAllHouses();
-        vector<House> availableRecords;
-        for(House house: allHouses)
-            if(house.isFree(start,end) && house.getLocation()==city && house.getRequiredMinOccupierRating()<=member.getOccupierRatingScore()){
-                long totalCost = house.countDays(start, end)*house.getConsumingPoints();
-                if(member.getCreditPoints()>=totalCost) availableRecords.push_back(house); 
+    vector<House*> availableHousesForMember(Member *member, string start, string end, string city){
+        vector<House*> allHouses = this->getAllHouses();
+        vector<House*> availableRecords;
+        for(House *house: allHouses)
+            if(house->isFree(start,end) && house->getLocation()==city && house->getRequiredMinOccupierRating()<=member->getOccupierRatingScore()){
+                long totalCost = house->countDays(start, end)*house->getConsumingPoints();
+                if(member->getCreditPoints()>=totalCost) 
+                    availableRecords.push_back(house); 
             }
         return availableRecords;
     }
-
+    
     // Send request to owner of the house
-	void sendRequest(string username, vector<House> availableHouses, int index, string start, string end){
+	void sendRequest(string username, vector<House*> availableHouses, int index, string start, string end){
 		if(index>=availableHouses.size()){
 			cout<<"Invalid choice !"<<endl;
 			return;
 		}
-		House house = availableHouses[index];
+		House *house = availableHouses[index];
 		
-        Request request = Request();
-        request.setRequestUsername(username);
-        request.setStart(start);
-        request.setEnd(end);
+        Request *request = new Request();
+        request->setRequestUsername(username);
+        request->setStart(start);
+        request->setEnd(end);
 
-        vector<Request*> requests = house.getRequests();
-        requests.push_back(&request);
-        house.setRequests(requests);
+        vector<Request*> requests = house->getRequests();
+        requests.push_back(request);
+        house->setRequests(requests);
 	} 
 
     // Show all requests for the owner of his house
-	void showRequests(Member member){
-		vector<Request*> requests = member.getHouseForOwn().getRequests();
+	void showRequests(Member *member){
+		vector<Request*> requests = member->getHouseForOwn()->getRequests();
 		if(requests.size()==0) {
 			cout<<"You don't have any request !"<<endl;
 			return;
 		}
 		cout<<"All requests for you: "<<endl;
 		int index=0;
-		for(Request *request: member.getHouseForOwn().getRequests()){
-			cout<<"Id: "<<index<<" | User: "<<this->getMemberByUsername(request->getRequestUsername()).getUsername()<<" | From: "<<request->getStart()<<" | To: "<<request->getEnd()<<endl;
+		for(Request *request: member->getHouseForOwn()->getRequests()){
+			cout<<"Id: "<<index<<" | User: "<<this->getMemberByUsername(request->getRequestUsername())->getUsername()<<" | From: "<<request->getStart()<<" | To: "<<request->getEnd()<<endl;
 		}
 	}
 
     // Owner check the requests for accept
-	void acceptRequest(Member member, int index){
-		vector<Request*> allRequests = member.getHouseForOwn().getRequests();
+	void acceptRequest(Member *member, int index){
+		vector<Request*> allRequests = member->getHouseForOwn()->getRequests();
 
 		if(index>=allRequests.size()){
-			cout<<"Invalid choice !"<<endl;
+			cout<<"Invalid choice !"<<endl; 
 			return;
 		}
 
 		Request *request = allRequests[index];
-		if(member.getHouseForOwn().isFree(request->getStart(), request->getEnd())){
-			cout<<"Successfully accept request from user: "<<this->getMemberByUsername(request->getRequestUsername()).getUsername()<<" | From: "<<request->getStart()<<" | To: "<<request->getEnd()<<endl;
+		if(member->getHouseForOwn()->isFree(request->getStart(), request->getEnd())){
+			cout<<"Successfully accept request from user: "<<this->getMemberByUsername(request->getRequestUsername())->getUsername()<<" | From: "<<request->getStart()<<" | To: "<<request->getEnd()<<endl;
 			allRequests.erase(allRequests.begin()+index);
-
-			member.getHouseForOwn().setStartDate(request->getStart());
-			member.getHouseForOwn().setEndDate(request->getEnd());
-			this->getMemberByUsername(request->getRequestUsername()).setCreditPoints(this->getMemberByUsername(request->getRequestUsername()).getCreditPoints() - member.getHouseForOwn().countDays(request->getStart(), request->getEnd())*member.getHouseForOwn().getConsumingPoints());
+            
+			member->getHouseForOwn()->setStartDate(request->getStart());
+			member->getHouseForOwn()->setEndDate(request->getEnd());
+            cout<<member->getHouseForOwn()->countDays(request->getStart(), request->getEnd())<<endl;
+			this->getMemberByUsername(request->getRequestUsername())->setCreditPoints(this->getMemberByUsername(request->getRequestUsername())->getCreditPoints() - member->getHouseForOwn()->countDays(request->getStart(), request->getEnd())*member->getHouseForOwn()->getConsumingPoints());
 
 			this->showRequests(member);
 		}
@@ -109,35 +111,35 @@ public:
 	}
 
     // Registration for non-member
-    void registerAccount(){
+    Member* registerAccount(){
         cout << "-----Register account--------\n";
         cout << "Register as 1->Admin  2->Member: ";
         int AdminOrUser;
         cin >> AdminOrUser;
-        Member newMember = Member();
+        Member *newMember = new Member();
 
-        if(AdminOrUser==1) newMember.setIsAdmin(true);
-        else newMember.setIsAdmin(false);
+        if(AdminOrUser==1) newMember->setIsAdmin(true);
+        else newMember->setIsAdmin(false);
 
         cout << "Enter username: ";
         string username;
         cin >> username;
-        newMember.setUsername(username);
+        newMember->setUsername(username);
         
         cout << "Enter password: ";
         string password;
         cin >> password;
-        newMember.setPassword(password);
+        newMember->setPassword(password);
 
         cout << "Enter fullname: ";
         string fullname;
         cin >>  fullname;
-        newMember.setFullname(fullname);
+        newMember->setFullname(fullname);
 
         cout << "Enter Phone: ";
         string phone;
         cin >> phone;
-        newMember.setPhone(phone);
+        newMember->setPhone(phone);
 
         cout << "Enter house ? Press 1->Yes  2->No : ";
         int enterHouse;
@@ -150,47 +152,57 @@ public:
             cout << "Enter Description: ";
             string description;
             cin >> description;
-
-            newMember.setHouseForOwn(House(location, description));
+            // House house = House(location, description);
+            // House house_copy = house;
+            House *house = new House(location, description);
+            newMember->setHouseForOwn(house);
         }
+        // Member *ptMember = new Member();
+        // ptMember = &newMember;
+    
+        return newMember;
 
-        // Store account into the system (if the registration is successful)
-        this->users.push_back(newMember);
-        cout << "All accounts in the system: \n";
-        cout<<users.size()<<endl;
-        for (Member eachUser: this->users)
-            cout << "Name = " << eachUser.getUsername() << ", pwd = " << eachUser.getPassword()<<endl;
+        // // Store account into the system (if the registration is successful)
+        // this->users.push_back(newMember);
+        // cout << "All accounts in the system: \n";
+        // cout<<users.size()<<endl;
+        // for (Member eachUser: this->users)
+        // cout << "Name = " << eachUser.getUsername() << ", pwd = " << eachUser.getPassword()<<endl;
     }
 };
 
 int main(){
     System appSys;
-
-    appSys.registerAccount();
-    appSys.registerAccount();
     
-    Member mem1 = appSys.users[0];
-    cout<<mem1.getUsername()<<endl;
-    Member mem2 = appSys.users[1];
-    cout<<mem2.getUsername()<<endl;
+    Member *mem1 = appSys.registerAccount();
+    Member *mem2 = appSys.registerAccount();
 
-    mem1.setAvailablePeriod("2022/04/27", "2022/05/27");
+    appSys.users.push_back(mem1);
+    appSys.users.push_back(mem2);
+
+    cout<<mem1->getUsername()<<endl;
+    cout<<mem2->getUsername()<<endl;
+
+    mem1->setAvailablePeriod("2022/04/27", "2022/05/27");
     cout<<"a"<<endl;
-    cout<<mem1.getHouseForOwn().getAvailablePeriodStart()<<endl;
+
+    cout<<mem1->getHouseForOwn()->getAvailablePeriodStart()<<endl;
     cout<<"a"<<endl;
-    mem1.getHouseForOwn().setConsumingPoints(30);
+
+    mem1->getHouseForOwn()->setConsumingPoints(30);
     cout<<"a"<<endl;
-    vector<House> availableHousesForMember = appSys.availableHousesForMember(mem2, "2022/04/27", "2022/04/29", "HCM");
-    for(House house: availableHousesForMember){
-        cout<<"Location: "<<house.getLocation()<< " | Description: "<<house.getDescription()<<endl;
+
+    vector<House*> availableHousesForMember = appSys.availableHousesForMember(mem2, "2022/04/27", "2022/04/29", "HCM");
+    for(House *house: availableHousesForMember){
+        cout<<"Location: "<<house->getLocation()<< " | Description: "<<house->getDescription()<<endl;
     }
     
-    appSys.sendRequest(mem2.getUsername(), availableHousesForMember, 0,"2022/04/27", "2022/04/29");
+    appSys.sendRequest(mem2->getUsername(), availableHousesForMember, 0,"2022/04/27", "2022/04/29");
 
-    appSys.showRequests(mem1);
+    // appSys.showRequests(mem1);
     appSys.acceptRequest(mem1, 0);
 
-    cout<<mem2.getCreditPoints()<<endl;
+    cout<<mem2->getCreditPoints()<<endl;
     
     return 0;
 }

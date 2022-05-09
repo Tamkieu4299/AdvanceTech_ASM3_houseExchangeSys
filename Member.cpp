@@ -14,7 +14,7 @@ private:
 	long creditPoints;
 	double occupierRatingScore;
 	House *houseForLive;
-	House houseForOwn;
+	House *houseForOwn;
 	long occupyTimes;
 	bool isAdmin;
 
@@ -22,6 +22,7 @@ public:
 	// Constructor
 	Member(){
 		this->occupyTimes=0;
+		this->occupierRatingScore=0;
 		this->creditPoints=500;
 	};
 
@@ -87,15 +88,15 @@ public:
 		return this->houseForLive;
 	}	
 
-	void setHouseForLive(House* houseForLive){
-		this->houseForLive=houseForLive;
+	void setHouseForLive(House houseForLive){
+		this->houseForLive=&houseForLive;
 	}
 
-	House getHouseForOwn(){
+	House* getHouseForOwn(){
 		return this->houseForOwn;
 	}	
 
-	void setHouseForOwn(House houseForOwn){
+	void setHouseForOwn(House *houseForOwn){
 		this->houseForOwn=houseForOwn;
 	}
 
@@ -129,16 +130,15 @@ public:
 
 	// Set the period which the owner wants to rent his house
 	void setAvailablePeriod(string start, string end){
-		this->getHouseForOwn().setAvailablePeriodStart(start);
-		this->getHouseForOwn().setAvailablePeriodEnd(end);
+		this->getHouseForOwn()->setAvailablePeriodStart(start);
+		this->getHouseForOwn()->setAvailablePeriodEnd(end);
 	}
 };
 
-// int main(int argc, char const *argv[])
-// {
+// int main(int argc, char const *argv[]){
 // 	Member m1 = Member("kt", "1233", "123", "123");
 // 	House house = House("HCM", "Hcm");
-// 	m1.setHouseForOwn(&house);
+// 	m1.setHouseForOwn(house);
 // 	m1.getHouseForOwn()->setAvailablePeriodStart("2022/04/22");
 // 	cout<<m1.getHouseForOwn()->getAvailablePeriodStart()<<endl;
 

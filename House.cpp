@@ -30,6 +30,7 @@ public:
 		this->location=location;
 		this->descripton=descripton;
 		this->usedTimes=0;
+		this->requiredMinOccupierRating=0;
 	}
 
 	string getLocation(){
@@ -147,7 +148,7 @@ public:
 
 	// Check if the house is free in the period
 	bool isFree(string start, string end){
-	
+		if(this->startDate == "" && this->endDate == "") return true;
 		const char *availbleStart = this->getAvailablePeriodStart().c_str();
 		const char *availbleEnd = this->getAvailablePeriodEnd().c_str();
 		tm tmAvailableStart;
@@ -195,7 +196,7 @@ public:
 		time_t ttEnd = mktime(&endtm);
 		
 		// Find out the difference and divide it by 86400 to get the number of days
-		return abs(ttEnd - ttStart) / 86400;
+		return abs(ttEnd - ttStart) / 86400+1;
 	}
 };
 
@@ -203,7 +204,7 @@ public:
 // {
 // 	House house = House();
 // 	house.setAvailablePeriodStart("2022/04/27");
-// 	cout<<house.getAvailablePeriodStart()<<endl;
+// 	cout<<house.countDays("2022/04/25", "2022/04/29")<<endl;
 // 	return 0;
 // }
 
