@@ -198,7 +198,6 @@ int main()
 {
     System appSys;
 
-    // Member *mem1 = appSys.registerAccount();
     // Member *mem2 = appSys.registerAccount();
 
     // appSys.users.push_back(mem1);
@@ -227,6 +226,7 @@ int main()
     // appSys.acceptRequest(mem1, 0);
 
     // cout<<mem2->getCreditPoints()<<endl;
+    int choice;
 
     cout << "EEET2482/COSC2082 ASSIGNMENT" << endl
          << "VACATION HOUSE EXCHANGE APPLICATION" << endl
@@ -240,6 +240,26 @@ int main()
          << "\n"
          << "Use the app as 1. Guest   2. Member   3. Admin" << endl
          << "Enter your choice: " << endl;
+    cin >> choice;
+
+    // if (choice==1){
+    //         Member *mem1 = appSys.registerAccount();
+    // } else if (choice==2)
+
+    while (choice != 0)
+    {
+        cout << "\nThis is your menu:" << endl
+             << "0. Exit" << endl
+             << "1. List/Unlist available occupied houses" << endl
+             << "2. Search for available suitable houses" << endl
+             << "3. Request to occupy" << endl
+             << "4. View requests" << endl
+             << "5. Rate house" << endl
+             << "6. Rate occupier" << endl
+             << "7. View information" << endl
+             << "Enter your choice: " << endl;
+        cin >> choice;
+    }
 
     return 0;
 }
