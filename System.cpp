@@ -282,6 +282,10 @@ int main()
                 break;
             cout << "Invalid Input! Please enter your choice again\n";
         }
+    } else if (choice=="2"){
+
+    } else {
+        
     }
 
     while (choice != "0")
@@ -295,9 +299,13 @@ int main()
              << "5. Rate house" << endl
              << "6. Rate occupier" << endl
              << "7. View information" << endl
+             << "8. View the reviews" << endl
              << "Enter your choice: " << endl;
         cin >> choice;
         checkChoice(choice, "0", "7");
+        if (choice == "1")
+        {
+        }
     }
 
     cout << "\nHave A Nice Day!!!" << endl;
