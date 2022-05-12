@@ -228,19 +228,24 @@ int main()
     // cout<<mem2->getCreditPoints()<<endl;
     int choice;
 
-    cout << "EEET2482/COSC2082 ASSIGNMENT" << endl
-         << "VACATION HOUSE EXCHANGE APPLICATION" << endl
-         << "\n"
-         << "Instructor: Mr. Linh Tran" << endl
-         << "Group: Group 11" << endl
-         << "s3891528, Ma Phu Dien" << endl
-         << "s3922087, Kieu Cong Tam" << endl
-         << "s3915468, Nguyen Xuan Thanh" << endl
-         << "s3754105, Nguyen Dang Lam Phuong" << endl
-         << "\n"
-         << "Use the app as 1. Guest   2. Member   3. Admin" << endl
-         << "Enter your choice: " << endl;
-    cin >> choice;
+    while ((choice < 1) | (choice > 3) | (!isdigit(choice)))
+    {
+        cout << "EEET2482/COSC2082 ASSIGNMENT" << endl
+             << "VACATION HOUSE EXCHANGE APPLICATION" << endl
+             << "\n"
+             << "Instructor: Mr. Linh Tran" << endl
+             << "Group: Group 11" << endl
+             << "s3891528, Ma Phu Dien" << endl
+             << "s3922087, Kieu Cong Tam" << endl
+             << "s3915468, Nguyen Xuan Thanh" << endl
+             << "s3754105, Nguyen Dang Lam Phuong" << endl
+             << "\n"
+             << "Use the app as 1. Guest   2. Member   3. Admin" << endl
+             << "Enter your choice: " << endl;
+        cin >> choice;
+        if ((choice < 1) | (choice > 3) | (!isdigit(choice)))
+            cout << "Invalid Input! Please enter your choice again";
+    }
 
     // if (choice==1){
     //         Member *mem1 = appSys.registerAccount();
@@ -259,6 +264,11 @@ int main()
              << "7. View information" << endl
              << "Enter your choice: " << endl;
         cin >> choice;
+        if ((choice < 0) | (choice > 7) | (!isdigit(choice)))
+        {
+            cout << "Invalid Input! Please enter your choice again";
+            continue;
+        }
     }
 
     return 0;
