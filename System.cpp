@@ -5,6 +5,7 @@
 #include "Member.cpp"
 
 using namespace std;
+using std::string;
 
 class System
 {
@@ -200,10 +201,8 @@ int main()
 
     // Member *mem2 = appSys.registerAccount();
 
-    // appSys.users.push_back(mem1);
     // appSys.users.push_back(mem2);
 
-    // cout<<mem1->getUsername()<<endl;
     // cout<<mem2->getUsername()<<endl;
 
     // mem1->setAvailablePeriod("2022/04/27", "2022/05/27");
@@ -226,9 +225,10 @@ int main()
     // appSys.acceptRequest(mem1, 0);
 
     // cout<<mem2->getCreditPoints()<<endl;
-    int choice;
+    bool check = false;
+    string choice;
 
-    while ((choice < 1) | (choice > 3) | (!isdigit(choice)))
+    while (!check)
     {
         cout << "EEET2482/COSC2082 ASSIGNMENT" << endl
              << "VACATION HOUSE EXCHANGE APPLICATION" << endl
@@ -243,33 +243,60 @@ int main()
              << "Use the app as 1. Guest   2. Member   3. Admin" << endl
              << "Enter your choice: " << endl;
         cin >> choice;
-        if ((choice < 1) | (choice > 3) | (!isdigit(choice)))
-            cout << "Invalid Input! Please enter your choice again";
+        if ((choice.size() > 1) | (choice.size() < 1))
+        {
+            cout << "Invalid Input! Please enter your choice again" << endl;
+            cout << "\n********************************************\n";
+        }
+        else if (("1" > choice | choice > "3") | (!isdigit(choice[0])))
+        {
+            cout << "Invalid Input! Please enter your choice again" << endl;
+            cout << "\n********************************************\n";
+        }
+        else
+            check = true;
     }
 
-    // if (choice==1){
-    //         Member *mem1 = appSys.registerAccount();
-    // } else if (choice==2)
-
-    while (choice != 0)
+    if (choice == "1")
     {
-        cout << "\nThis is your menu:" << endl
-             << "0. Exit" << endl
-             << "1. List/Unlist available occupied houses" << endl
-             << "2. Search for available suitable houses" << endl
-             << "3. Request to occupy" << endl
-             << "4. View requests" << endl
-             << "5. Rate house" << endl
-             << "6. Rate occupier" << endl
-             << "7. View information" << endl
-             << "Enter your choice: " << endl;
-        cin >> choice;
-        if ((choice < 0) | (choice > 7) | (!isdigit(choice)))
+        check = false;
+        while (!check)
         {
-            cout << "Invalid Input! Please enter your choice again";
-            continue;
+            cout << "\nRegist an account? Y/N" << endl;
+            cin >> choice;
+            if (choice == "Y" | choice == "y")
+            {
+                Member *mem1 = appSys.registerAccount();
+                appSys.users.push_back(mem1);
+                check = true;
+            }
+            else if (choice == "N" | choice == "n")
+                check = true;
+            if (!check)
+                cout << "Invalid Input! Please enter your choice again\n";
         }
     }
+
+    // while (choice != 0)
+    // {
+    //     cout << "\nThis is your menu:" << endl
+    //          << "0. Exit" << endl
+    //          << "1. List/Unlist available occupied houses" << endl
+    //          << "2. Search for available suitable houses" << endl
+    //          << "3. Request to occupy" << endl
+    //          << "4. View requests" << endl
+    //          << "5. Rate house" << endl
+    //          << "6. Rate occupier" << endl
+    //          << "7. View information" << endl
+    //          << "Enter your choice: " << endl;
+    //     cin >> choice;
+    //     if ((choice < 0) | (choice > 7) | (!isdigit(choice)))
+    //     {
+    //         cout << "Invalid Input! Please enter your choice again" << endl;
+    //         cout << "\n";
+    //         continue;
+    //     }
+    // }
 
     return 0;
 }
