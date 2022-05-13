@@ -262,10 +262,61 @@ void Login(vector<Member *> users)
         {
 
             if ((users[i]->getUsername() == username) & (users[i]->getPassword() == password))
+            {
                 check = true;
+                cout << endl;
+                break;
+            }
+
             else
+            {
                 cout << "\nWrong username or wrong password. Please enter again!" << endl;
+                cout << endl;
+                break;
+            }
         }
+    }
+}
+
+void checkRole(string role)
+{
+    if (role == "1")
+    {
+        cout << "\nThis is your menu:" << endl
+             << "0. Exit" << endl
+             << "1. View houses" << endl
+             << "Enter your choice: " << endl;
+    }
+    else if (role == "2")
+    {
+        cout << "\nThis is your menu:" << endl
+             << "0. Exit" << endl
+             << "1. List/Unlist available occupied houses" << endl
+             << "2. Search for available suitable houses" << endl
+             << "3. Request to occupy" << endl
+             << "4. Rate house" << endl
+             << "5. Rate occupier" << endl
+             << "6. View requests" << endl
+             << "7. View information" << endl
+             << "8. View the reviews" << endl
+             << "9. View houses" << endl
+             << "Enter your choice: " << endl;
+    }
+    else
+    {
+        cout << "\nThis is your menu:" << endl
+             << "0. Exit" << endl
+             << "1. List/Unlist available occupied houses" << endl
+             << "2. Search for available suitable houses" << endl
+             << "3. Request to occupy" << endl
+             << "4. Rate house" << endl
+             << "5. Rate occupier" << endl
+             << "6. View requests" << endl
+             << "7. View information" << endl
+             << "8. View the reviews" << endl
+             << "9. View houses" << endl
+             << "10. View others information" << endl
+             << "Enter your choice: " << endl;
     }
 }
 
@@ -273,9 +324,16 @@ int main()
 {
     System appSys;
 
-    // Member *mem2 = appSys.registerAccount();
+    Member mem2 = Member("Thanh", "123", "Thanh Nguyen", "0123456");
+    Member mem3 = Member("Tam", "456", "Tam Kieu", "0123456");
 
-    // appSys.users.push_back(mem2);
+    mem2.setIsAdmin(false);
+    mem3.setIsAdmin(true);
+
+    appSys.users.push_back(&mem2);
+    appSys.users.push_back(&mem3);
+
+    // Member *mem2 = appSys.registerAccount();
 
     // cout<<mem2->getUsername()<<endl;
 
@@ -300,7 +358,7 @@ int main()
 
     // cout<<mem2->getCreditPoints()<<endl;
     bool check = false;
-    string choice;
+    string choice, role;
 
     while (true)
     {
@@ -316,12 +374,12 @@ int main()
              << "\n"
              << "Use the app as 1. Guest   2. Member   3. Admin" << endl
              << "Enter your choice: " << endl;
-        cin >> choice;
-        if (!checkChoice(choice, "1", "3"))
+        cin >> role;
+        if (!checkChoice(role, "1", "3"))
             break;
     }
 
-    if (choice == "1")
+    if (role == "1")
     {
         check = false;
         while (true)
@@ -346,17 +404,8 @@ int main()
 
     while (choice != "0")
     {
-        cout << "\nThis is your menu:" << endl
-             << "0. Exit" << endl
-             << "1. List/Unlist available occupied houses" << endl
-             << "2. Search for available suitable houses" << endl
-             << "3. Request to occupy" << endl
-             << "4. View requests" << endl
-             << "5. Rate house" << endl
-             << "6. Rate occupier" << endl
-             << "7. View information" << endl
-             << "8. View the reviews" << endl
-             << "Enter your choice: " << endl;
+        checkRole(role);
+
         cin >> choice;
         checkChoice(choice, "0", "7");
         if (choice == "1")
