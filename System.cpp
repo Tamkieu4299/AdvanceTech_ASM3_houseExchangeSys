@@ -212,38 +212,61 @@ bool checkChoice(string choice, string start, string end)
     return false;
 }
 
-void viewInfo(bool isAdmin, House *house)
+// void viewInfo(bool isAdmin, House *house)
+// {
+//     if (this.getIsAdmin)
+//     {
+//         cout << "Your info: " << endl;
+//         cout << "\n";
+//         cout << "Username:              " << this.username << endl;
+//         cout << "Fullname:              " << this.fullname << endl;
+//         cout << "Credit Points:         " << this.creditPoints << endl;
+//         cout << "Occupier Rating Score: " << this.occupierRatingScore << endl;
+
+//         cout << "Occupy Times:           " << this.occupyTimes;
+//     }
+// }
+
+// void viewHouse(){
+//     cout << "Houses For Live:       " << endl;
+
+//         for (House *house : this.houseForLive)
+//         {
+//             cout << "Location: " << house->getLocation() << " | Description: " << house->getDescription() << endl;
+//             cout << "Rating Score: " << house->getHouseRatingScrore() << " | Consuming Points: " << house->getConsumingPoints() << endl;
+//             cout << endl;
+//         }
+//         cout << "Owned Houses:           " << endl;
+
+//         for (House *house : this.houseForOwn)
+//         {
+//             cout << "Location: " << house->getLocation() << " | Description: " << house->getDescription() << endl;
+//             cout << "Rating Score: " << house->getHouseRatingScrore() << " | Consuming Points: " << house->getConsumingPoints() << endl;
+//             cout << endl;
+//         }
+// }
+
+void Login(vector<Member *> users)
 {
-    if (this.getIsAdmin)
+    bool check = false;
+    while (!check)
     {
-        cout << "Your info: " << endl;
-        cout << "\n";
-        cout << "Username:              " << this.username << endl;
-        cout << "Fullname:              " << this.fullname << endl;
-        cout << "Credit Points:         " << this.creditPoints << endl;
-        cout << "Occupier Rating Score: " << this.occupierRatingScore << endl;
-        
-        cout << "Occupy Times:           " << this.occupyTimes;
+        cout << "\nEnter username: ";
+        string username;
+        cin >> username;
+
+        cout << "\nEnter password: ";
+        string password;
+        cin >> password;
+        for (int i = 0; i < users.size(); i++)
+        {
+
+            if ((users[i]->getUsername() == username) & (users[i]->getPassword() == password))
+                check = true;
+            else
+                cout << "\nWrong username or wrong password. Please enter again!" << endl;
+        }
     }
-}
-
-void viewHouse(){
-    cout << "Houses For Live:       " << endl;
-
-        for (House *house : this.houseForLive)
-        {
-            cout << "Location: " << house->getLocation() << " | Description: " << house->getDescription() << endl;
-            cout << "Rating Score: " << house->getHouseRatingScrore() << " | Consuming Points: " << house->getConsumingPoints() << endl;
-            cout << endl;
-        }
-        cout << "Owned Houses:           " << endl;
-
-        for (House *house : this.houseForOwn)
-        {
-            cout << "Location: " << house->getLocation() << " | Description: " << house->getDescription() << endl;
-            cout << "Rating Score: " << house->getHouseRatingScrore() << " | Consuming Points: " << house->getConsumingPoints() << endl;
-            cout << endl;
-        }
 }
 
 int main()
@@ -309,6 +332,7 @@ int main()
             {
                 Member *mem1 = appSys.registerAccount();
                 appSys.users.push_back(mem1);
+                Login(appSys.users);
                 break;
                 ;
             }
@@ -317,12 +341,8 @@ int main()
             cout << "Invalid Input! Please enter your choice again\n";
         }
     }
-    else if (choice == "2")
-    {
-    }
     else
-    {
-    }
+        Login(appSys.users);
 
     while (choice != "0")
     {
