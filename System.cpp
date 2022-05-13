@@ -277,9 +277,72 @@ bool checkChoice(string choice, string start, string end)
     return false;
 }
 
+<<<<<<< HEAD
 // int main()
 // {
 //     System appSys;
+=======
+// void viewInfo(bool isAdmin, House *house)
+// {
+//     if (this.getIsAdmin)
+//     {
+//         cout << "Your info: " << endl;
+//         cout << "\n";
+//         cout << "Username:              " << this.username << endl;
+//         cout << "Fullname:              " << this.fullname << endl;
+//         cout << "Credit Points:         " << this.creditPoints << endl;
+//         cout << "Occupier Rating Score: " << this.occupierRatingScore << endl;
+
+//         cout << "Occupy Times:           " << this.occupyTimes;
+//     }
+// }
+
+// void viewHouse(){
+//     cout << "Houses For Live:       " << endl;
+
+//         for (House *house : this.houseForLive)
+//         {
+//             cout << "Location: " << house->getLocation() << " | Description: " << house->getDescription() << endl;
+//             cout << "Rating Score: " << house->getHouseRatingScrore() << " | Consuming Points: " << house->getConsumingPoints() << endl;
+//             cout << endl;
+//         }
+//         cout << "Owned Houses:           " << endl;
+
+//         for (House *house : this.houseForOwn)
+//         {
+//             cout << "Location: " << house->getLocation() << " | Description: " << house->getDescription() << endl;
+//             cout << "Rating Score: " << house->getHouseRatingScrore() << " | Consuming Points: " << house->getConsumingPoints() << endl;
+//             cout << endl;
+//         }
+// }
+
+void Login(vector<Member *> users)
+{
+    bool check = false;
+    while (!check)
+    {
+        cout << "\nEnter username: ";
+        string username;
+        cin >> username;
+
+        cout << "\nEnter password: ";
+        string password;
+        cin >> password;
+        for (int i = 0; i < users.size(); i++)
+        {
+
+            if ((users[i]->getUsername() == username) & (users[i]->getPassword() == password))
+                check = true;
+            else
+                cout << "\nWrong username or wrong password. Please enter again!" << endl;
+        }
+    }
+}
+
+int main()
+{
+    System appSys;
+>>>>>>> 6a906815eab39482ee7b0c4567e901f8b39cdbf4
 
 //     // Member *mem2 = appSys.registerAccount();
 
@@ -329,6 +392,7 @@ bool checkChoice(string choice, string start, string end)
 //             break;
 //     }
 
+<<<<<<< HEAD
 //     if (choice == "1")
 //     {
 //         check = false;
@@ -352,6 +416,30 @@ bool checkChoice(string choice, string start, string end)
 //     } else {
         
 //     }
+=======
+    if (choice == "1")
+    {
+        check = false;
+        while (true)
+        {
+            cout << "\nRegist an account? Y/N" << endl;
+            cin >> choice;
+            if (choice == "Y" | choice == "y")
+            {
+                Member *mem1 = appSys.registerAccount();
+                appSys.users.push_back(mem1);
+                Login(appSys.users);
+                break;
+                ;
+            }
+            else if (choice == "N" | choice == "n")
+                break;
+            cout << "Invalid Input! Please enter your choice again\n";
+        }
+    }
+    else
+        Login(appSys.users);
+>>>>>>> 6a906815eab39482ee7b0c4567e901f8b39cdbf4
 
 //     while (choice != "0")
 //     {
@@ -375,6 +463,7 @@ bool checkChoice(string choice, string start, string end)
 
 //     cout << "\nHave A Nice Day!!!" << endl;
 
+<<<<<<< HEAD
 //     return 0;
 // }
 
@@ -399,3 +488,7 @@ bool checkChoice(string choice, string start, string end)
 //     for(Request *r: requests) cout<<r->getStart()<<endl;
 //     return 0;
 // }
+=======
+    return 0;
+}
+>>>>>>> 6a906815eab39482ee7b0c4567e901f8b39cdbf4
