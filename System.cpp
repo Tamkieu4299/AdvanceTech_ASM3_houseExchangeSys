@@ -212,6 +212,40 @@ bool checkChoice(string choice, string start, string end)
     return false;
 }
 
+void viewInfo(bool isAdmin, House *house)
+{
+    if (this.getIsAdmin)
+    {
+        cout << "Your info: " << endl;
+        cout << "\n";
+        cout << "Username:              " << this.username << endl;
+        cout << "Fullname:              " << this.fullname << endl;
+        cout << "Credit Points:         " << this.creditPoints << endl;
+        cout << "Occupier Rating Score: " << this.occupierRatingScore << endl;
+        
+        cout << "Occupy Times:           " << this.occupyTimes;
+    }
+}
+
+void viewHouse(){
+    cout << "Houses For Live:       " << endl;
+
+        for (House *house : this.houseForLive)
+        {
+            cout << "Location: " << house->getLocation() << " | Description: " << house->getDescription() << endl;
+            cout << "Rating Score: " << house->getHouseRatingScrore() << " | Consuming Points: " << house->getConsumingPoints() << endl;
+            cout << endl;
+        }
+        cout << "Owned Houses:           " << endl;
+
+        for (House *house : this.houseForOwn)
+        {
+            cout << "Location: " << house->getLocation() << " | Description: " << house->getDescription() << endl;
+            cout << "Rating Score: " << house->getHouseRatingScrore() << " | Consuming Points: " << house->getConsumingPoints() << endl;
+            cout << endl;
+        }
+}
+
 int main()
 {
     System appSys;
@@ -282,10 +316,12 @@ int main()
                 break;
             cout << "Invalid Input! Please enter your choice again\n";
         }
-    } else if (choice=="2"){
-
-    } else {
-        
+    }
+    else if (choice == "2")
+    {
+    }
+    else
+    {
     }
 
     while (choice != "0")
