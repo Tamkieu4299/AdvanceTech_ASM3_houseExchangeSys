@@ -198,13 +198,43 @@ public:
 		// Find out the difference and divide it by 86400 to get the number of days
 		return abs(ttEnd - ttStart) / 86400+1;
 	}
+	
 };
-
+tm stringToTime(string str){
+    const char *cstr = str.c_str();
+    tm tmStr;
+    sscanf(cstr,"%4d/%2d/%2d",&tmStr.tm_year,&tmStr.tm_mon,&tmStr.tm_mday);
+    return tmStr;
+}
+bool compareSmallerTime(tm t1, tm t2){
+    if(t1.tm_year>t2.tm_year) return false;
+	else if(t1.tm_year=t2.tm_year){
+		if(t1.tm_mon>t2.tm_mon) return false;
+		else if(t1.tm_mon=t2.tm_mon){
+			if(t1.tm_mday>t2.tm_mday) return false;
+		}
+	}
+	return true;
+}
+bool compareBiggerTime(tm t1, tm t2){
+    if(t1.tm_year<t2.tm_year) return false;
+	else if(t1.tm_year=t2.tm_year){
+		if(t1.tm_mon<t2.tm_mon) return false;
+		else if(t1.tm_mon=t2.tm_mon){
+			if(t1.tm_mday<t2.tm_mday) return false;
+		}
+	}
+	return true;
+}
 // int main(int argc, char const *argv[])
 // {
 // 	House house = House();
 // 	house.setAvailablePeriodStart("2022/04/27");
-// 	cout<<house.countDays("2022/04/25", "2022/04/29")<<endl;
+// 	tm start = stringToTime("2022/06/03");
+// 	tm end = stringToTime("2022/04/29");
+// 	bool res = compareTime(start, end);
+// 	cout<<res<<endl;
+	
 // 	return 0;
 // }
 

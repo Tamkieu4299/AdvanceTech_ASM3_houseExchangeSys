@@ -13,10 +13,11 @@ private:
 	string password;
 	long creditPoints;
 	double occupierRatingScore;
-	House *houseForLive;
-	House *houseForOwn;
+	House *houseForLive; 
+	House *houseForOwn; 
 	long occupyTimes;
 	bool isAdmin;
+	Member *partner;
 
 public:
 	// Constructor
@@ -88,8 +89,8 @@ public:
 		return this->houseForLive;
 	}	
 
-	void setHouseForLive(House houseForLive){
-		this->houseForLive=&houseForLive;
+	void setHouseForLive(House *houseForLive){
+		this->houseForLive=houseForLive;
 	}
 
 	House* getHouseForOwn(){
@@ -116,16 +117,24 @@ public:
 		this->isAdmin=isAdmin;
 	}
 
+	void setPartner(Member *partner){
+		this->partner=partner;
+	}
+
+	Member *getPartner(){
+		return this->partner;
+	}
+
 	// Rate the House while living
-	void ratingHouse(double rating, House house){
-		double newRating = (house.getHouseRatingScrore()+rating)/house.getUsedTimes();
-		house.setHouseRatingScore(newRating);
+	void ratingHouse(double rating, House *house){
+		double newRating = (house->getHouseRatingScrore()+rating)/house->getUsedTimes();
+		house->setHouseRatingScore(newRating);
 	}
 
 	// Rate the Occupier while renting
-	void ratingOccupier(double rating, Member member){
-		double newRating = (member.getOccupierRatingScore()+rating)/member.getOccupyTimes();
-		member.setOccupierRatingScore(newRating);
+	void ratingOccupier(double rating, Member *member){
+		double newRating = (member->getOccupierRatingScore()+rating)/member->getOccupyTimes();
+		member->setOccupierRatingScore(newRating);
 	}
 
 	// Set the period which the owner wants to rent his house
@@ -137,10 +146,20 @@ public:
 
 // int main(int argc, char const *argv[]){
 // 	Member m1 = Member("kt", "1233", "123", "123");
+// 	Member m2 = Member("bh", "123", "123", "123");
 // 	House house = House("HCM", "Hcm");
-// 	m1.setHouseForOwn(house);
+// 	m1.setHouseForOwn(&house);
+// 	m2.setHouseForLive(&house);
 // 	m1.getHouseForOwn()->setAvailablePeriodStart("2022/04/22");
-// 	cout<<m1.getHouseForOwn()->getAvailablePeriodStart()<<endl;
+	
+// 	m1.setPartner(&m2);
+// 	m2.setOccupyTimes();
+// 	m1.ratingOccupier(5.0, m1.getPartner());
+// 	cout<<m2.getOccupierRatingScore()<<endl;
+// 	house.setUsedTimes();
+// 	m2.ratingHouse(5.0, m2.getHouseForLive());
+
+// 	cout<<house.getHouseRatingScrore()<<endl;
 
 // 	return 0;
 // }
