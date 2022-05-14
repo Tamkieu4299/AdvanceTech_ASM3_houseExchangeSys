@@ -265,14 +265,14 @@ bool checkChoice(string choice, string start, string end)
 {
     if ((choice.size() > 1) | (choice.size() < 1))
     {
-        cout << "Invalid Input! Please enter your choice again" << endl;
-        cout << "\n********************************************\n";
+        cout << "Invalid Input! Please enter your choice again" << endl
+             << "\n********************************************\n";
         return true;
     }
     else if ((start > choice | choice > end) | (!isdigit(choice[0])))
     {
-        cout << "Invalid Input! Please enter your choice again" << endl;
-        cout << "\n********************************************\n";
+        cout << "Invalid Input! Please enter your choice again" << endl
+             << "\n********************************************\n";
         return true;
     }
     return false;
@@ -325,10 +325,12 @@ Member *Login(vector<Member *> users)
         cout << "\nEnter username: ";
         string username;
         cin >> username;
+        cout << endl;
 
         cout << "\nEnter password: ";
         string password;
         cin >> password;
+        cout << endl;
         for (int i = 0; i < users.size(); i++)
         {
 
@@ -440,7 +442,16 @@ void checkFunction(string role, string choice, Member *mem, System sys)
             cout << "Saturday";
             break;
         case 7:
-            cout << "Sunday";
+            cout << "Personal Info: " << endl
+                 << endl
+                 << "Fullname: " << mem->getFullname() << endl
+                 << "Phone: " << mem->getPhone() << endl
+                 << "Credit Points : " << mem->getCreditPoints() << endl
+                 << "Occupier Rating : " << mem->getOccupierRatingScore() << endl
+                 << "Occupied Times : " << mem->getOccupyTimes() << endl
+                 << "Username : " << mem->getUsername() << endl
+                 << "Present Partner : " << mem->getPartner() << endl
+                 << endl;
             break;
         case 8:
             cout << "Review: " << endl
