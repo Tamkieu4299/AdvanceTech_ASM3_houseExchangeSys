@@ -436,10 +436,23 @@ void checkFunction(string role, string choice, Member *mem, System sys)
             cout << "Thursday";
             break;
         case 5:
-            cout << "Friday";
+            cout << "Please rating your occupiers (from scale -10 to 10): " << endl;
+            double score;
+            while ((!(cin >> score)) | (-10 > score | score > 10))
+            {
+                cout << "ERROR: a number must be entered: " << endl
+                     << endl
+                     << "Please rating your occupiers (from scale -10 to 10): " << endl;
+            }
+            mem->ratingHouse(score, mem->getHouseForLive());
+            cout<<"\nThank you for rating!"<<endl;
             break;
         case 6:
-            cout << "Saturday";
+            cout << "Request: " << endl
+                 << endl;
+            for (Request *req : mem->getHouseForLive()->getRequests())
+                cout << "Requested Username: " << req->getRequestUsername() << endl
+                     << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
             break;
         case 7:
             cout << "Personal Info: " << endl
