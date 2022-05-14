@@ -316,8 +316,9 @@ bool checkChoice(string choice, string start, string end)
 //         }
 // }
 
-void Login(vector<Member *> users)
+Member *Login(vector<Member *> users)
 {
+    Member *mem = NULL;
     bool check = false;
     while (!check)
     {
@@ -333,9 +334,8 @@ void Login(vector<Member *> users)
 
             if ((users[i]->getUsername() == username) & (users[i]->getPassword() == password))
             {
-                check = true;
                 cout << endl;
-                break;
+                return mem = users[i];
             }
 
             else
@@ -346,6 +346,7 @@ void Login(vector<Member *> users)
             }
         }
     }
+    return mem;
 }
 
 void checkRole(string role)
@@ -400,6 +401,72 @@ void checkMenu(string role, string choice)
         checkChoice(choice, "0", "10");
 }
 
+void checkFunction(string role, string choice, Member *mem, System sys)
+{
+    if (role == "1")
+    {
+        if (choice == "1")
+        {
+            cout << "Houses Details: " << endl;
+            cout << endl;
+            for (House *house : sys.getAllHouses())
+            {
+                cout << "Location: " << house->getLocation() << "         | Consuming Points: " << house->getConsumingPoints() << endl;
+                cout << "Rating : " << house->getHouseRatingScrore() << " | Used Times: " << house->getUsedDays() << endl;
+            }
+        }
+    }
+    else if (role == "2")
+    {
+        int intChoice = stoi(choice);
+        switch (intChoice)
+        {
+        case 1:
+            cout << "Monday";
+            break;
+        case 2:
+            cout << "Tuesday";
+            break;
+        case 3:
+            cout << "Wednesday";
+            break;
+        case 4:
+            cout << "Thursday";
+            break;
+        case 5:
+            cout << "Friday";
+            break;
+        case 6:
+            cout << "Saturday";
+            break;
+        case 7:
+            cout << "Sunday";
+            break;
+        case 8:
+            cout << "Review: " << endl
+                 << endl;
+            for (string cmt : mem->getHouseForLive()->getComments())
+                cout << cmt << endl;
+            break;
+        case 9:
+            cout << "Houses for Live: " << endl
+                 << endl
+                 << "Location: " << mem->getHouseForLive()->getLocation() << "  Consuming Points: " << mem->getHouseForLive()->getConsumingPoints() << endl
+                 << "Rating : " << mem->getHouseForLive()->getHouseRatingScrore() << "  Used Times: " << mem->getHouseForLive()->getUsedDays() << endl
+                 << endl
+                 << "Houses for Own: " << endl
+                 << endl
+                 << "Location: " << mem->getHouseForOwn()->getLocation() << "  Consuming Points: " << mem->getHouseForOwn()->getConsumingPoints() << endl
+                 << "Rating : " << mem->getHouseForOwn()->getHouseRatingScrore() << "  Used Times: " << mem->getHouseForOwn()->getUsedDays() << endl
+                 << endl;
+            break;
+        }
+    }
+    else if (role == "3")
+    {
+    }
+}
+
 int main()
 {
     System appSys;
@@ -443,6 +510,7 @@ int main()
     // cout<<mem2->getCreditPoints()<<endl;
     bool check = false;
     string choice, role;
+    Member *mem;
 
     while (true)
     {
@@ -484,13 +552,14 @@ int main()
         }
     }
     else
-        Login(appSys.users);
+        mem = Login(appSys.users);
 
     while (choice != "0")
     {
         checkRole(role);
         cin >> choice;
         checkMenu(role, choice);
+        checkFunction(role, choice, mem, appSys);
     }
 
     cout << "\nHave A Nice Day!!!" << endl;
