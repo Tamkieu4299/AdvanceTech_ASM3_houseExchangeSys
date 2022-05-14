@@ -18,7 +18,8 @@ public:
     Member *getMemberByUsername(string username)
     {
         Member *res;
-        for (Member *member : users){
+        for (Member *member : users)
+        {
             if (member->getUsername() == username)
                 res = member;
         }
@@ -75,8 +76,9 @@ public:
         House *house = availableHouses[index];
 
         Member *member = this->getMemberByUsername(username);
-        if(member->getHouseForLive()!=NULL) {
-            cout<<"You have selected a house before !"<<endl;
+        if (member->getHouseForLive() != NULL)
+        {
+            cout << "You have selected a house before !" << endl;
             return;
         }
         Request *request = new Request();
@@ -107,24 +109,24 @@ public:
     }
 
     // Delete appropriate request
-    void delRequests(vector<Request*> &requests, string start, string end){
-		tm tmcStart = stringToTime(start);
-		tm tmcEnd = stringToTime(end);
-        
+    void delRequests(vector<Request *> &requests, string start, string end)
+    {
+        tm tmcStart = stringToTime(start);
+        tm tmcEnd = stringToTime(end);
+
         vector<int> delIndex;
-        for(int i=0; i<requests.size(); i++){
+        for (int i = 0; i < requests.size(); i++)
+        {
             Request *request = requests[i];
-            if(compareSmallerTime(stringToTime(request->getEnd()), tmcEnd) && compareBiggerTime(stringToTime(request->getStart()), tmcStart) 
-            ||  compareSmallerTime(stringToTime(request->getEnd()), tmcEnd) && compareBiggerTime(stringToTime(request->getEnd()), tmcStart)
-            || compareSmallerTime(stringToTime(request->getStart()), tmcEnd) && compareBiggerTime(stringToTime(request->getStart()), tmcStart)
-            )
+            if (compareSmallerTime(stringToTime(request->getEnd()), tmcEnd) && compareBiggerTime(stringToTime(request->getStart()), tmcStart) || compareSmallerTime(stringToTime(request->getEnd()), tmcEnd) && compareBiggerTime(stringToTime(request->getEnd()), tmcStart) || compareSmallerTime(stringToTime(request->getStart()), tmcEnd) && compareBiggerTime(stringToTime(request->getStart()), tmcStart))
                 delIndex.push_back(i);
         }
 
-        int sub=0;
-        for(int index: delIndex){
-            int actIndex = index-sub;
-            requests.erase(requests.begin()+actIndex);
+        int sub = 0;
+        for (int index : delIndex)
+        {
+            int actIndex = index - sub;
+            requests.erase(requests.begin() + actIndex);
             sub++;
         }
     }
@@ -152,7 +154,7 @@ public:
 
             // Update credits amount of renter
             this->getMemberByUsername(request->getRequestUsername())->setCreditPoints(this->getMemberByUsername(request->getRequestUsername())->getCreditPoints() - member->getHouseForOwn()->countDays(request->getStart(), request->getEnd()) * member->getHouseForOwn()->getConsumingPoints());
-            
+
             // Update house for live of renter
             this->getMemberByUsername(request->getRequestUsername())->setHouseForLive(member->getHouseForOwn());
 
@@ -161,8 +163,8 @@ public:
 
             // Update used times of house
             member->getHouseForLive()->setUsedTimes();
-            
-            // Update partner for owner 
+
+            // Update partner for owner
             member->setPartner(this->getMemberByUsername(request->getRequestUsername()));
 
             // Update credit points of the owner
@@ -173,7 +175,6 @@ public:
         else
             cout << "Your house will not be free on this period ! Please check again" << endl;
     }
-
 
     // Registration for non-member
     Member *registerAccount()
@@ -256,7 +257,7 @@ public:
 // 		else if(t1.tm_mon=t2.tm_mon){
 // 			if(t1.tm_mday>t2.tm_mday) return false;
 // 		}
-	// }
+// }
 // 	return true;
 // }
 
@@ -389,10 +390,19 @@ void checkRole(string role)
     }
 }
 
+void checkMenu(string role, string choice)
+{
+    if (role == "1")
+        checkChoice(choice, "0", "1");
+    else if (role == "2")
+        checkChoice(choice, "0", "9");
+    else
+        checkChoice(choice, "0", "10");
+}
+
 int main()
 {
     System appSys;
-
 
     Member mem2 = Member("Thanh", "123", "Thanh Nguyen", "0123456");
     Member mem3 = Member("Tam", "456", "Tam Kieu", "0123456");
@@ -405,30 +415,30 @@ int main()
 
     // Member *mem2 = appSys.registerAccount();
 
-//     // Member *mem2 = appSys.registerAccount();
+    //     // Member *mem2 = appSys.registerAccount();
 
-//     // appSys.users.push_back(mem2);
+    //     // appSys.users.push_back(mem2);
 
-//     // cout<<mem2->getUsername()<<endl;
+    //     // cout<<mem2->getUsername()<<endl;
 
-//     // mem1->setAvailablePeriod("2022/04/27", "2022/05/27");
-//     // cout<<"a"<<endl;
+    //     // mem1->setAvailablePeriod("2022/04/27", "2022/05/27");
+    //     // cout<<"a"<<endl;
 
-//     // cout<<mem1->getHouseForOwn()->getAvailablePeriodStart()<<endl;
-//     // cout<<"a"<<endl;
+    //     // cout<<mem1->getHouseForOwn()->getAvailablePeriodStart()<<endl;
+    //     // cout<<"a"<<endl;
 
-//     // mem1->getHouseForOwn()->setConsumingPoints(30);
-//     // cout<<"a"<<endl;
+    //     // mem1->getHouseForOwn()->setConsumingPoints(30);
+    //     // cout<<"a"<<endl;
 
-//     // vector<House*> availableHousesForMember = appSys.availableHousesForMember(mem2, "2022/04/27", "2022/04/29", "HCM");
-//     // for(House *house: availableHousesForMember){
-//     //     cout<<"Location: "<<house->getLocation()<< " | Description: "<<house->getDescription()<<endl;
-//     // }
+    //     // vector<House*> availableHousesForMember = appSys.availableHousesForMember(mem2, "2022/04/27", "2022/04/29", "HCM");
+    //     // for(House *house: availableHousesForMember){
+    //     //     cout<<"Location: "<<house->getLocation()<< " | Description: "<<house->getDescription()<<endl;
+    //     // }
 
-//     // appSys.sendRequest(mem2->getUsername(), availableHousesForMember, 0,"2022/04/27", "2022/04/29");
+    //     // appSys.sendRequest(mem2->getUsername(), availableHousesForMember, 0,"2022/04/27", "2022/04/29");
 
-//     // // appSys.showRequests(mem1);
-//     // appSys.acceptRequest(mem1, 0);
+    //     // // appSys.showRequests(mem1);
+    //     // appSys.acceptRequest(mem1, 0);
 
     // cout<<mem2->getCreditPoints()<<endl;
     bool check = false;
@@ -454,54 +464,6 @@ int main()
     }
 
     if (role == "1")
-//     // cout<<mem2->getCreditPoints()<<endl;
-//     bool check = false;
-//     string choice;
-
-//     while (true)
-//     {
-//         cout << "EEET2482/COSC2082 ASSIGNMENT" << endl
-//              << "VACATION HOUSE EXCHANGE APPLICATION" << endl
-//              << "\n"
-//              << "Instructor: Mr. Linh Tran" << endl
-//              << "Group: Group 11" << endl
-//              << "s3891528, Ma Phu Dien" << endl
-//              << "s3922087, Kieu Cong Tam" << endl
-//              << "s3915468, Nguyen Xuan Thanh" << endl
-//              << "s3754105, Nguyen Dang Lam Phuong" << endl
-//              << "\n"
-//              << "Use the app as 1. Guest   2. Member   3. Admin" << endl
-//              << "Enter your choice: " << endl;
-//         cin >> choice;
-//         if (!checkChoice(choice, "1", "3"))
-//             break;
-//     }
-
-
-//     if (choice == "1")
-//     {
-//         check = false;
-//         while (true)
-//         {
-//             cout << "\nRegist an account? Y/N" << endl;
-//             cin >> choice;
-//             if (choice == "Y" | choice == "y")
-//             {
-//                 Member *mem1 = appSys.registerAccount();
-//                 appSys.users.push_back(mem1);
-//                 break;
-//                 ;
-//             }
-//             else if (choice == "N" | choice == "n")
-//                 break;
-//             cout << "Invalid Input! Please enter your choice again\n";
-//         }
-//     } else if (choice=="2"){
-
-//     } else {
-        
-//     }
-    if (choice == "1")
     {
         check = false;
         while (true)
@@ -527,58 +489,32 @@ int main()
     while (choice != "0")
     {
         checkRole(role);
-
         cin >> choice;
-        checkChoice(choice, "0", "7");
-        if (choice == "1")
-        {
-        }
+        checkMenu(role, choice);
     }
-//     while (choice != "0")
-//     {
-//         cout << "\nThis is your menu:" << endl
-//              << "0. Exit" << endl
-//              << "1. List/Unlist available occupied houses" << endl
-//              << "2. Search for available suitable houses" << endl
-//              << "3. Request to occupy" << endl
-//              << "4. View requests" << endl
-//              << "5. Rate house" << endl
-//              << "6. Rate occupier" << endl
-//              << "7. View information" << endl
-//              << "8. View the reviews" << endl
-//              << "Enter your choice: " << endl;
-//         cin >> choice;
-//         checkChoice(choice, "0", "7");
-//         if (choice == "1")
-//         {
-//         }
-//     }
 
-//     cout << "\nHave A Nice Day!!!" << endl;
+    cout << "\nHave A Nice Day!!!" << endl;
 
-//     return 0;
-// }
+    // int main(){
 
-// int main(){
+    //     System app = System();
 
-//     System app = System();
+    //     Request r1 = Request();
+    //     r1.setStart("2022/04/20");
+    //     r1.setEnd("2022/04/21");
 
-//     Request r1 = Request();
-//     r1.setStart("2022/04/20");
-//     r1.setEnd("2022/04/21");
+    //     Request r2 = Request();
+    //     r2.setStart("2022/04/23");
+    //     r2.setEnd("2022/04/24");
 
-//     Request r2 = Request();
-//     r2.setStart("2022/04/23");
-//     r2.setEnd("2022/04/24");
+    //     vector<Request*> requests;
+    //     requests.push_back(&r1);
+    //     requests.push_back(&r2);
 
-//     vector<Request*> requests;
-//     requests.push_back(&r1);
-//     requests.push_back(&r2);
+    //     app.delRequests(requests, "2022/04/21", "2022/04/29" );
 
-//     app.delRequests(requests, "2022/04/21", "2022/04/29" );
-
-//     for(Request *r: requests) cout<<r->getStart()<<endl;
-//     return 0;
-// }
+    //     for(Request *r: requests) cout<<r->getStart()<<endl;
+    //     return 0;
+    // }
     return 0;
 }
