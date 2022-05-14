@@ -436,26 +436,34 @@ void checkFunction(string role, string choice, Member *mem, System sys)
             cout << "Thursday";
             break;
         case 5:
-            cout << "Please rating your occupiers (from scale -10 to 10): " << endl;
+            // if((mem->getPartner())==NULL){
+            //     cout<<"Invalid occupier"<<endl;
+            //     break;
+            // }
+            cout << "\nPlease rating your occupiers (from scale -10 to 10): " << endl;
             double score;
-            while ((!(cin >> score)) | (-10 > score | score > 10))
+            while ((!(cin >> score)) || mem->getPartner()->getOccupierRatingScore()+score>10 || (mem->getPartner()->getOccupierRatingScore()+score < -10.0))
             {
                 cout << "ERROR: a number must be entered: " << endl
-                     << endl
-                     << "Please rating your occupiers (from scale -10 to 10): " << endl;
+                     << endl;
+                cin.clear();
+                cin.ignore(123, '\n');
+                cout<< "Please rating your occupiers (from scale -10 to 10): " << endl;
+                cin >> score;
             }
+            
             mem->ratingHouse(score, mem->getHouseForLive());
-            cout<<"\nThank you for rating!"<<endl;
+            cout << "\nThank you for rating!" << endl;
             break;
         case 6:
-            cout << "Request: " << endl
+            cout << "\nRequest: " << endl
                  << endl;
             for (Request *req : mem->getHouseForLive()->getRequests())
                 cout << "Requested Username: " << req->getRequestUsername() << endl
                      << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
             break;
         case 7:
-            cout << "Personal Info: " << endl
+            cout << "\nPersonal Info: " << endl
                  << endl
                  << "Fullname: " << mem->getFullname() << endl
                  << "Phone: " << mem->getPhone() << endl
@@ -467,13 +475,13 @@ void checkFunction(string role, string choice, Member *mem, System sys)
                  << endl;
             break;
         case 8:
-            cout << "Review: " << endl
+            cout << "\nReview: " << endl
                  << endl;
             for (string cmt : mem->getHouseForLive()->getComments())
                 cout << cmt << endl;
             break;
         case 9:
-            cout << "Houses for Live: " << endl
+            cout << "\nHouses for Live: " << endl
                  << endl
                  << "Location: " << mem->getHouseForLive()->getLocation() << "  Consuming Points: " << mem->getHouseForLive()->getConsumingPoints() << endl
                  << "Rating : " << mem->getHouseForLive()->getHouseRatingScrore() << "  Used Times: " << mem->getHouseForLive()->getUsedDays() << endl

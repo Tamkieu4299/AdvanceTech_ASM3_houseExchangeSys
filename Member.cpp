@@ -24,6 +24,7 @@ public:
 	Member(){
 		this->occupyTimes=0;
 		this->occupierRatingScore=0;
+		this->partner=NULL;
 		this->creditPoints=500;
 	};
 
@@ -32,6 +33,7 @@ public:
 		this->password=password;
 		this->fullname=fullname;
 		this->phone=phone;
+		this->partner=NULL;
 		this->occupyTimes=0;
 		this->creditPoints=500;
 	}
