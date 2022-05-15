@@ -587,7 +587,7 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
                 cin >> start;
                 if (!checkDate(start))
                     cout << "Invalid Input! Renter your date by the given format!" << endl;
-                else if (!isValidDate(start.substr(0, 3), start.substr(5, 6), start.substr(8, 9)))
+                else if (!isValidDate(start.substr(0, 4), start.substr(5, 2), start.substr(8, 2)))
                     cout << "Invalid Date!" << endl;
                 else
                     break;
@@ -599,7 +599,7 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
                 cin >> end;
                 if (!checkDate(end))
                     cout << "Invalid Input! Renter your date by the given format!" << endl;
-                else if (!isValidDate(end.substr(0, 3), end.substr(5, 6), end.substr(8, 9)))
+                else if (!isValidDate(end.substr(0, 4), end.substr(5, 2), end.substr(8, 2)))
                     cout << "Invalid Date!" << endl;
                 else
                     break;
