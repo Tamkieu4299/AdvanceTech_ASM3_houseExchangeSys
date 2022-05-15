@@ -241,6 +241,30 @@ public:
     }
 };
 
+void houseAvailabilityManage(Member *&mem){
+    if(mem->getHouseForOwn()->getAvailablePeriodStart()!="" && mem->getHouseForOwn()->getAvailablePeriodEnd()!="")
+		cout<<"Your house is now available for rented from: " <<mem->getHouseForOwn()->getAvailablePeriodStart()<< " to: "<< mem->getHouseForOwn()->getAvailablePeriodEnd()<<endl;
+	else {
+        cout<<"Your house is now free on every period"<<endl;
+    }
+    string choice;
+    cout<<"Do you want to change the period of your house: Y/N"<<endl;
+    while(choice == ""){
+        cin>>choice;
+        if(choice=="Y" || choice =="y"){
+            string newStartDate;
+            cout<<"Please enter a start day: "<<endl;
+            cin>>newStartDate;
+
+            string newEndDate;
+            cout<<"Please enter an end day: "<<endl;
+            cin>>newEndDate;
+
+            mem->setAvailablePeriod(newStartDate, newEndDate);
+            cout<<"Your house is now available for rented from: " <<mem->getHouseForOwn()->getAvailablePeriodStart()<< " to: "<< mem->getHouseForOwn()->getAvailablePeriodEnd()<<endl;
+        }
+    }
+}
 // Convert string to time
 // tm stringToTime(string str){
 //     const char *cstr = str.c_str();
@@ -397,7 +421,7 @@ void checkMenu(string role, string choice)
         checkChoice(choice, "0", "10");
 }
 
-void checkFunction(string role, string choice, Member *mem, System sys)
+void checkFunction(string role, string choice, Member *&mem, System sys)
 {
     if (role == "1")
     {
@@ -418,15 +442,10 @@ void checkFunction(string role, string choice, Member *mem, System sys)
         switch (intChoice)
         {
         case 1:
-            cout << "Monday";
+            houseAvailabilityManage(mem);
             break;
-        case 2:
-            cout << "Tuesday";
-            break;
+        
         case 3:
-            cout << "Wednesday";
-            break;
-        case 4:
             if ((mem->getHouseForLive()) == NULL)
             {
                 cout << "Invalid house" << endl;
@@ -447,14 +466,14 @@ void checkFunction(string role, string choice, Member *mem, System sys)
             mem->ratingHouse(score, mem->getHouseForLive());
             cout << "\nThank you for rating!" << endl;
             break;
-        case 5:
+        case 4:
             if ((mem->getPartner()) == NULL)
             {
                 cout << "Invalid occupier" << endl;
                 break;
             }
             cout << "\nPlease rating your occupiers (from scale -10 to 10): " << endl;
-            double score;
+            // double score;
             while ((!(cin >> score)) || mem->getPartner()->getOccupierRatingScore() + score > 10 || (mem->getPartner()->getOccupierRatingScore() + score < -10.0))
             {
                 cout << "ERROR: a number must be entered: " << endl
@@ -468,14 +487,17 @@ void checkFunction(string role, string choice, Member *mem, System sys)
             mem->ratingOccupier(score, mem->getPartner());
             cout << "\nThank you for rating!" << endl;
             break;
-        case 6:
-            cout << "\nRequest: " << endl
-                 << endl;
-            for (Request *req : mem->getHouseForLive()->getRequests())
-                cout << "Requested Username: " << req->getRequestUsername() << endl
-                     << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
+        case 5:
+            if(mem->getHouseForOwn()->getRequests().size()==0) cout<<"No requests"<<endl;
+            else{
+                cout << "\nRequest: " << endl
+                    << endl;
+                for (Request *req : mem->getHouseForOwn()->getRequests())
+                    cout << "Requested Username: " << req->getRequestUsername() << endl
+                        << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
+            }   
             break;
-        case 7:
+        case 6:
             cout << "\nPersonal Info: " << endl
                  << endl
                  << "Fullname: " << mem->getFullname() << endl
@@ -487,13 +509,7 @@ void checkFunction(string role, string choice, Member *mem, System sys)
                  << "Present Partner : " << mem->getPartner() << endl
                  << endl;
             break;
-        case 8:
-            cout << "\nReview: " << endl
-                 << endl;
-            for (string cmt : mem->getHouseForLive()->getComments())
-                cout << cmt << endl;
-            break;
-        case 9:
+        case 2:
             cout << "\nHouses : " << endl
                  << endl;
             string start, end, city, review;
@@ -535,16 +551,21 @@ void checkFunction(string role, string choice, Member *mem, System sys)
     }
 }
 
-bool checkDate(string str){
-    if (!isdigit(str.substr(0, 4)))
-}
-
 int main()
 {
     System appSys;
 
     Member mem2 = Member("Thanh", "123", "Thanh Nguyen", "0123456");
     Member mem3 = Member("Tam", "456", "Tam Kieu", "0123456");
+
+    House h2 = House("Sai Gon", "hcm");
+    h2.setConsumingPoints(10);
+
+    House h3 = House("Sai Gon", "hcm");
+    h3.setConsumingPoints(20);
+
+    mem2.setHouseForOwn(&h2);
+    mem3.setHouseForOwn(&h3);
 
     mem2.setIsAdmin(false);
     mem3.setIsAdmin(true);
@@ -635,27 +656,5 @@ int main()
     }
 
     cout << "\nHave A Nice Day!!!" << endl;
-
-    // int main(){
-
-    //     System app = System();
-
-    //     Request r1 = Request();
-    //     r1.setStart("2022/04/20");
-    //     r1.setEnd("2022/04/21");
-
-    //     Request r2 = Request();
-    //     r2.setStart("2022/04/23");
-    //     r2.setEnd("2022/04/24");
-
-    //     vector<Request*> requests;
-    //     requests.push_back(&r1);
-    //     requests.push_back(&r2);
-
-    //     app.delRequests(requests, "2022/04/21", "2022/04/29" );
-
-    //     for(Request *r: requests) cout<<r->getStart()<<endl;
-    //     return 0;
-    // }
     return 0;
 }

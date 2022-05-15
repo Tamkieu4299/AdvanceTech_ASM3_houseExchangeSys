@@ -198,6 +198,8 @@ public:
 		// Find out the difference and divide it by 86400 to get the number of days
 		return abs(ttEnd - ttStart) / 86400+1;
 	}
+
+	friend class Member;
 	
 };
 tm stringToTime(string str){
@@ -225,6 +227,7 @@ bool compareBiggerTime(tm t1, tm t2){
 		}
 	}
 	return true;
+
 }
 // int main(int argc, char const *argv[])
 // {
