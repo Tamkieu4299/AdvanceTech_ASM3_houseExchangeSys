@@ -244,27 +244,31 @@ public:
     }
 };
 
-void houseAvailabilityManage(Member *&mem){
-    if(mem->getHouseForOwn()->getAvailablePeriodStart()!="" && mem->getHouseForOwn()->getAvailablePeriodEnd()!="")
-		cout<<"Your house is now available for rented from: " <<mem->getHouseForOwn()->getAvailablePeriodStart()<< " to: "<< mem->getHouseForOwn()->getAvailablePeriodEnd()<<endl;
-	else {
-        cout<<"Your house is now free on every period"<<endl;
+void houseAvailabilityManage(Member *&mem)
+{
+    if (mem->getHouseForOwn()->getAvailablePeriodStart() != "" && mem->getHouseForOwn()->getAvailablePeriodEnd() != "")
+        cout << "Your house is now available for rented from: " << mem->getHouseForOwn()->getAvailablePeriodStart() << " to: " << mem->getHouseForOwn()->getAvailablePeriodEnd() << endl;
+    else
+    {
+        cout << "Your house is now free on every period" << endl;
     }
     string choice;
-    cout<<"Do you want to change the period of your house: Y/N"<<endl;
-    while(choice == ""){
-        cin>>choice;
-        if(choice=="Y" || choice =="y"){
+    cout << "Do you want to change the period of your house: Y/N" << endl;
+    while (choice == "")
+    {
+        cin >> choice;
+        if (choice == "Y" || choice == "y")
+        {
             string newStartDate;
-            cout<<"Please enter a start day: "<<endl;
-            cin>>newStartDate;
+            cout << "Please enter a start day: " << endl;
+            cin >> newStartDate;
 
             string newEndDate;
-            cout<<"Please enter an end day: "<<endl;
-            cin>>newEndDate;
+            cout << "Please enter an end day: " << endl;
+            cin >> newEndDate;
 
             mem->setAvailablePeriod(newStartDate, newEndDate);
-            cout<<"Your house is now available for rented from: " <<mem->getHouseForOwn()->getAvailablePeriodStart()<< " to: "<< mem->getHouseForOwn()->getAvailablePeriodEnd()<<endl;
+            cout << "Your house is now available for rented from: " << mem->getHouseForOwn()->getAvailablePeriodStart() << " to: " << mem->getHouseForOwn()->getAvailablePeriodEnd() << endl;
         }
     }
 }
@@ -411,37 +415,65 @@ bool isValidDate(string d, string m, string y)
     int day = stoi(d);
     int month = stoi(m);
     int year = stoi(y);
-
-    // If year, month and day
-    // are not in given range
-    if (year > MAX_VALID_YR ||
-        year < MIN_VALID_YR)
+    // gregorian dates started in 1582
+    if (!(1582 <= year)) // comment these 2 lines out if it bothers you
         return false;
-    if (month < 1 || month > 12)
+    if (!(1 <= month && month <= 12))
         return false;
-    if (day < 1 || day > 31)
+    if (!(1 <= day && day <= 31))
         return false;
-
-    // Handle February month
-    // with leap year
-    if (month == 2)
-    {
-        if (isLeap(year))
-            return (day <= 29);
-        else
-            return (day <= 28);
-    }
-
-    // Months of April, June,
-    // Sept and Nov must have
-    // number of days less than
-    // or equal to 30.
-    if (month == 4 || month == 6 ||
-        month == 9 || month == 11)
-        return (day <= 30);
+    if ((day == 31) && (month == 2 || month == 4 || month == 6 || month == 9 || month == 11))
+        return false;
+    if ((day == 30) && (month == 2))
+        return false;
+    if ((month == 2) && (day == 29) && (year % 4 != 0))
+        return false;
+    if ((month == 2) && (day == 29) && (year % 400 == 0))
+        return true;
+    if ((month == 2) && (day == 29) && (year % 100 == 0))
+        return false;
+    if ((month == 2) && (day == 29) && (year % 4 == 0))
+        return true;
 
     return true;
 }
+
+// bool isValidDate(string d, string m, string y)
+// {
+//     int day = stoi(d);
+//     int month = stoi(m);
+//     int year = stoi(y);
+
+//     // If year, month and day
+//     // are not in given range
+//     if (year > MAX_VALID_YR ||
+//         year < MIN_VALID_YR)
+//         return false;
+//     if (month < 1 || month > 12)
+//         return false;
+//     if (day < 1 || day > 31)
+//         return false;
+
+//     // Handle February month
+//     // with leap year
+//     if (month == 2)
+//     {
+//         if (isLeap(year))
+//             return (day <= 29);
+//         else
+//             return (day <= 28);
+//     }
+
+//     // Months of April, June,
+//     // Sept and Nov must have
+//     // number of days less than
+//     // or equal to 30.
+//     if (month == 4 || month == 6 ||
+//         month == 9 || month == 11)
+//         return (day <= 30);
+
+//     return true;
+// }
 
 void checkRole(string role)
 {
@@ -512,7 +544,7 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
         case 1:
             houseAvailabilityManage(mem);
             break;
-        
+
         case 3:
             if ((mem->getHouseForLive()) == NULL)
             {
@@ -556,14 +588,16 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
             cout << "\nThank you for rating!" << endl;
             break;
         case 5:
-            if(mem->getHouseForOwn()->getRequests().size()==0) cout<<"No requests"<<endl;
-            else{
+            if (mem->getHouseForOwn()->getRequests().size() == 0)
+                cout << "No requests" << endl;
+            else
+            {
                 cout << "\nRequest: " << endl
-                    << endl;
+                     << endl;
                 for (Request *req : mem->getHouseForOwn()->getRequests())
                     cout << "Requested Username: " << req->getRequestUsername() << endl
-                        << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
-            }   
+                         << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
+            }
             break;
         case 6:
             cout << "\nPersonal Info: " << endl
@@ -617,13 +651,13 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
             {
                 cout << "Do you want to see the reviews also? (Y/N)" << endl;
                 cin >> review;
-                if ((review != "Y") | (review != "y") | (review != "N")| (review != "n"))
+                if ((review != "Y") | (review != "y") | (review != "N") | (review != "n"))
                     cout << "Invalid Input! Enter your choice again!" << endl;
                 else
                     break;
             }
 
-            if ((review == "Y")|(review=="y"))
+            if ((review == "Y") | (review == "y"))
             {
                 for (House *house : sys.availableHousesForMember(mem, start, end, city))
                 {
@@ -652,8 +686,6 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
     {
     }
 }
-
-
 
 int main()
 {
