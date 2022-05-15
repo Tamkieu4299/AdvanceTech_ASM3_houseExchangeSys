@@ -388,17 +388,19 @@ bool checkDate(string str)
     {
         for (int i = 0; i < str.size(); i++)
         {
-            if ((!isdigit(str[i])) & ((i != 4) & (i != 7))){
-                cout<<"false"<<endl;
+            if ((!isdigit(str[i])) & ((i != 4) & (i != 7)))
+            {
+                cout << "false" << endl;
                 return false;
             }
-            if ((str[7] != '/') | (str[4] != '/')){
-                cout<<"false"<<endl;
+            if ((str[7] != '/') | (str[4] != '/'))
+            {
+                cout << "false" << endl;
                 return false;
             }
         }
     }
-    cout<<"true"<<endl;
+    cout << "true" << endl;
     return true;
 }
 
@@ -420,66 +422,37 @@ bool isValidDate(string y, string m, string d)
     int day = stoi(d);
     int month = stoi(m);
     int year = stoi(y);
-    // gregorian dates started in 1582
-    if (!(1582 <= year)) // comment these 2 lines out if it bothers you
-        return false;
-    if (!(1 <= month && month <= 12))
-        return false;
-    if (!(1 <= day && day <= 31))
-        return false;
-    if ((day == 31) && (month == 2 || month == 4 || month == 6 || month == 9 || month == 11))
-        return false;
-    if ((day == 30) && (month == 2))
-        return false;
-    if ((month == 2) && (day == 29) && (year % 4 != 0))
-        return false;
-    if ((month == 2) && (day == 29) && (year % 400 == 0))
-        return true;
-    if ((month == 2) && (day == 29) && (year % 100 == 0))
-        return false;
-    if ((month == 2) && (day == 29) && (year % 4 == 0))
-        return true;
 
-    cout<<"true"<<endl;
+    // If year, month and day
+    // are not in given range
+    if (year > MAX_VALID_YR ||
+        year < MIN_VALID_YR)
+        return false;
+    if (month < 1 || month > 12)
+        return false;
+    if (day < 1 || day > 31)
+        return false;
+
+    // Handle February month
+    // with leap year
+    if (month == 2)
+    {
+        if (isLeap(year))
+            return (day <= 29);
+        else
+            return (day <= 28);
+    }
+
+    // Months of April, June,
+    // Sept and Nov must have
+    // number of days less than
+    // or equal to 30.
+    if (month == 4 || month == 6 ||
+        month == 9 || month == 11)
+        return (day <= 30);
+
     return true;
 }
-
-// bool isValidDate(string d, string m, string y)
-// {
-//     int day = stoi(d);
-//     int month = stoi(m);
-//     int year = stoi(y);
-
-//     // If year, month and day
-//     // are not in given range
-//     if (year > MAX_VALID_YR ||
-//         year < MIN_VALID_YR)
-//         return false;
-//     if (month < 1 || month > 12)
-//         return false;
-//     if (day < 1 || day > 31)
-//         return false;
-
-//     // Handle February month
-//     // with leap year
-//     if (month == 2)
-//     {
-//         if (isLeap(year))
-//             return (day <= 29);
-//         else
-//             return (day <= 28);
-//     }
-
-//     // Months of April, June,
-//     // Sept and Nov must have
-//     // number of days less than
-//     // or equal to 30.
-//     if (month == 4 || month == 6 ||
-//         month == 9 || month == 11)
-//         return (day <= 30);
-
-//     return true;
-// }
 
 void checkRole(string role)
 {
@@ -663,10 +636,13 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
                     break;
             }
 
+            int count = 0;
             if ((review == "Y") | (review == "y"))
             {
                 for (House *house : sys.availableHousesForMember(mem, start, end, city))
                 {
+                    count++;
+                    cout << count << "." << endl;
                     cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
                          << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedDays() << endl
                          << "Review : " << endl;
@@ -679,6 +655,8 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
             {
                 for (House *house : sys.availableHousesForMember(mem, start, end, city))
                 {
+                    count++;
+                    cout << count << "." << endl;
                     cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
                          << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedDays() << endl
                          << end;
