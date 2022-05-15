@@ -378,6 +378,71 @@ Member *Login(vector<Member *> users)
     return mem;
 }
 
+bool checkDate(string str)
+{
+    if (str.size() == 10)
+    {
+        for (int i = 0; i < str.size(); i++)
+        {
+            if ((!isdigit(str[i])) & ((i != 4) & (i != 7)))
+                return false;
+            if ((str[7] != '/') | (str[4] != '/'))
+                return false;
+        }
+    }
+    return true;
+}
+
+bool isLeap(int year)
+{
+    // Return true if year
+    // is a multiple of 4 and
+    // not multiple of 100.
+    // OR year is multiple of 400.
+    return (((year % 4 == 0) &&
+             (year % 100 != 0)) ||
+            (year % 400 == 0));
+}
+
+// Returns true if given
+// year is valid or not.
+bool isValidDate(string d, string m, string y)
+{
+    int day = stoi(d);
+    int month = stoi(m);
+    int year = stoi(y);
+
+    // If year, month and day
+    // are not in given range
+    if (year > MAX_VALID_YR ||
+        year < MIN_VALID_YR)
+        return false;
+    if (month < 1 || month > 12)
+        return false;
+    if (day < 1 || day > 31)
+        return false;
+
+    // Handle February month
+    // with leap year
+    if (month == 2)
+    {
+        if (isLeap(year))
+            return (day <= 29);
+        else
+            return (day <= 28);
+    }
+
+    // Months of April, June,
+    // Sept and Nov must have
+    // number of days less than
+    // or equal to 30.
+    if (month == 4 || month == 6 ||
+        month == 9 || month == 11)
+        return (day <= 30);
+
+    return true;
+}
+
 void checkRole(string role)
 {
     if (role == "1")
@@ -587,6 +652,8 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
     {
     }
 }
+
+
 
 int main()
 {
