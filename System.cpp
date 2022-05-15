@@ -662,6 +662,32 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
                          << end;
                 }
             }
+
+            while (true)
+            {
+                cout << "Do you want to make a request? (Y/N)" << endl;
+                cin >> review;
+                if ((review != "Y") | (review != "y") | (review != "N") | (review != "n"))
+                    cout << "Invalid Input! Enter your choice again!" << endl;
+                else
+                    break;
+            }
+
+            string num_house;
+            if ((review != "Y") | (review != "y"))
+            {
+                while (true)
+                {
+                    cout << "Pick a house's number which one you would like to make a request?" << endl;
+                    cin >> num_house;
+                    if ((num_house.size() > 2) | (!isdigit(num_house[0])) | (!isdigit(num_house[1])))
+                        cout << "Invalid Input! Enter your choice again!" << endl;
+                    else
+                        break;
+                }
+                int index=stoi(num_house);
+                sys.sendRequest(mem->getUsername(),sys.availableHouses(start,end),index,start,end);
+            }
             cout << endl;
             break;
         }
