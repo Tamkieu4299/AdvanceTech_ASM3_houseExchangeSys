@@ -292,7 +292,7 @@ void houseAvailabilityManage(Member *&mem)
 // 	return true;
 // }
 
-//validate user choice
+// validate user choice
 bool checkChoice(string choice, string start, string end)
 {
     if ((choice.size() > 1) | (choice.size() < 1))
@@ -345,7 +345,7 @@ Member *Login(vector<Member *> users)
     return mem;
 }
 
-//validate if user enter right date format
+// validate if user enter right date format
 bool checkDate(string str)
 {
     if (str.size() == 10)
@@ -418,10 +418,10 @@ bool isValidDate(string y, string m, string d)
     return true;
 }
 
-//validate which one is using
+// validate which one is using
 void checkRole(string role)
 {
-    //menu for guest
+    // menu for guest
     if (role == "1")
     {
         cout << "\nThis is your menu:" << endl
@@ -429,7 +429,7 @@ void checkRole(string role)
              << "1. View houses" << endl
              << "Enter your choice: " << endl;
     }
-    //menu for member
+    // menu for member
     else if (role == "2")
     {
         cout << "\nThis is your menu:" << endl
@@ -442,7 +442,7 @@ void checkRole(string role)
              << "6. View information" << endl
              << "Enter your choice: " << endl;
     }
-    //menu for admin
+    // menu for admin
     else
     {
         cout << "\nThis is your menu:" << endl
@@ -458,7 +458,7 @@ void checkRole(string role)
     }
 }
 
-//validate choice by user's menu
+// validate choice by user's menu
 void checkMenu(string role, string choice)
 {
     if (role == "1")
@@ -469,34 +469,37 @@ void checkMenu(string role, string choice)
         checkChoice(choice, "0", "10");
 }
 
-//check function base on user's choice
+// check function base on user's choice
 void checkFunction(string role, string choice, Member *&mem, System sys)
 {
-    //use menu as a guest
+    // use menu as a guest
     if (role == "1")
     {
         if (choice == "1")
         {
             cout << "Houses Details: " << endl;
             cout << endl;
+            int count = 0;
             for (House *house : sys.getAllHouses())
             {
-                cout << "Location: " << house->getLocation() << "         | Consuming Points: " << house->getConsumingPoints() << endl;
-                cout << "Rating : " << house->getHouseRatingScrore() << " | Used Times: " << house->getUsedDays() << endl;
+                count++;
+                cout << count << "." << endl
+                     << "Location: " << house->getLocation() << "         | Consuming Points: " << house->getConsumingPoints() << endl
+                     << "Rating : " << house->getHouseRatingScrore() << " | Used Times: " << house->getUsedDays() << endl;
             }
         }
     }
-    //use menu as a member
+    // use menu as a member
     else if (role == "2")
     {
         int intChoice = stoi(choice);
         switch (intChoice)
         {
-        //list/unlist house
+        // list/unlist house
         case 1:
             houseAvailabilityManage(mem);
             break;
-        //rate living house
+        // rate living house
         case 3:
             if ((mem->getHouseForLive()) == NULL)
             {
@@ -505,7 +508,7 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
             }
             cout << "\nPlease rating your living house (from scale -10 to 10): " << endl;
             float score;
-            while ((!(cin >> score)) || (!((score >= -10) && (score <= 10))))  //validate input
+            while ((!(cin >> score)) || (!((score >= -10) && (score <= 10)))) // validate input
             {
                 cout << "ERROR: a number must be entered " << endl
                      << endl;
@@ -517,7 +520,7 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
             mem->ratingHouse(score, mem->getHouseForLive());
             cout << "\nThank you for rating!" << endl;
             break;
-        //rate occupiers
+        // rate occupiers
         case 4:
             if ((mem->getPartner()) == NULL)
             {
@@ -526,7 +529,7 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
             }
             cout << "\nPlease rating your occupiers (from scale -10 to 10): " << endl;
             float score;
-            while ((!(cin >> score)) || (!((score >= -10) && (score <= 10)))) //validate input
+            while ((!(cin >> score)) || (!((score >= -10) && (score <= 10)))) // validate input
             {
                 cout << "ERROR: a number must be entered " << endl
                      << endl;
@@ -538,7 +541,7 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
             mem->ratingOccupier(score, mem->getPartner());
             cout << "\nThank you for rating!" << endl;
             break;
-        //view requests
+        // view requests
         case 5:
             if (mem->getHouseForOwn()->getRequests().size() == 0)
                 cout << "No requests" << endl;
@@ -551,7 +554,7 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
                          << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
             }
             break;
-        //view info
+        // view info
         case 6:
             cout << "\nPersonal Info: " << endl
                  << endl
@@ -564,12 +567,12 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
                  << "Present Partner : " << mem->getPartner() << endl
                  << endl;
             break;
-        //search for suitable house
+        // search for suitable house
         case 2:
             cout << "\nHouses : " << endl
                  << endl;
             string start, end, city, review;
-            while (true)  //validate input
+            while (true) // validate input
             {
                 cout << "Enter the start date (YYYY/MM/DD): " << endl;
                 cin >> start;
@@ -581,7 +584,7 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
                     break;
             }
 
-            while (true)  //validate input
+            while (true) // validate input
             {
                 cout << "Enter the end date (YYYY/MM/DD): " << endl;
                 cin >> end;
@@ -592,7 +595,7 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
                 else
                     break;
             }
-            while (true)  //validate input
+            while (true) // validate input
             {
                 cout << "Enter the city (Ha Noi/ Sai Gon/ Da Nang): " << endl;
                 cin >> city;
@@ -601,7 +604,7 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
                 else
                     break;
             }
-            while (true)  //validate input
+            while (true) // validate input
             {
                 cout << "Do you want to see the reviews also? (Y/N)" << endl;
                 cin >> review;
@@ -614,11 +617,11 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
             int count = 0;
             if ((review == "Y") | (review == "y"))
             {
-                for (House *house : sys.availableHousesForMember(mem, start, end, city))  //print houses' details with review
+                for (House *house : sys.availableHousesForMember(mem, start, end, city)) // print houses' details with review
                 {
                     count++;
-                    cout << count << "." << endl;
-                    cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
+                    cout << count << "." << endl
+                         << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
                          << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedDays() << endl
                          << "Review : " << endl;
                     for (string cmt : house->getComments())
@@ -628,17 +631,17 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
             }
             else
             {
-                for (House *house : sys.availableHousesForMember(mem, start, end, city))  //print houses' details without review
+                for (House *house : sys.availableHousesForMember(mem, start, end, city)) // print houses' details without review
                 {
                     count++;
-                    cout << count << "." << endl;
-                    cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
+                    cout << count << "." << endl
+                         << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
                          << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedDays() << endl
                          << end;
                 }
             }
 
-            while (true)  //validate input
+            while (true) // validate input
             {
                 cout << "Do you want to make a request? (Y/N)" << endl;
                 cin >> review;
@@ -649,7 +652,7 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
             }
 
             string num_house;
-            if ((review != "Y") | (review != "y"))  //make a request
+            if ((review != "Y") | (review != "y")) // make a request
             {
                 while (true)
                 {
@@ -667,9 +670,220 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
             break;
         }
     }
-    //use menu as an admin
+    // use menu as an admin
     else if (role == "3")
     {
+        int intChoice = stoi(choice);
+        switch (intChoice)
+        {
+        // list/unlist house
+        case 1:
+            houseAvailabilityManage(mem);
+            break;
+        // rate living house
+        case 3:
+            if ((mem->getHouseForLive()) == NULL)
+            {
+                cout << "Invalid house" << endl;
+                break;
+            }
+            cout << "\nPlease rating your living house (from scale -10 to 10): " << endl;
+            float score;
+            while ((!(cin >> score)) || (!((score >= -10) && (score <= 10)))) // validate input
+            {
+                cout << "ERROR: a number must be entered " << endl
+                     << endl;
+                cin.clear();
+                cin.ignore(123, '\n');
+                cout << "Please rating your living house (from scale -10 to 10): " << endl;
+            }
+
+            mem->ratingHouse(score, mem->getHouseForLive());
+            cout << "\nThank you for rating!" << endl;
+            break;
+        // rate occupiers
+        case 4:
+            if ((mem->getPartner()) == NULL)
+            {
+                cout << "Invalid occupier" << endl;
+                break;
+            }
+            cout << "\nPlease rating your occupiers (from scale -10 to 10): " << endl;
+            float score;
+            while ((!(cin >> score)) || (!((score >= -10) && (score <= 10)))) // validate input
+            {
+                cout << "ERROR: a number must be entered " << endl
+                     << endl;
+                cin.clear();
+                cin.ignore(123, '\n');
+                cout << "Please rating your occupiers (from scale -10 to 10): " << endl;
+            }
+
+            mem->ratingOccupier(score, mem->getPartner());
+            cout << "\nThank you for rating!" << endl;
+            break;
+        // view requests
+        case 5:
+            if (mem->getHouseForOwn()->getRequests().size() == 0)
+                cout << "No requests" << endl;
+            else
+            {
+                cout << "\nRequest: " << endl
+                     << endl;
+                for (Request *req : mem->getHouseForOwn()->getRequests())
+                    cout << "Requested Username: " << req->getRequestUsername() << endl
+                         << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
+            }
+            break;
+        // view info
+        case 6:
+            cout << "\nPersonal Info: " << endl
+                 << endl
+                 << "Fullname: " << mem->getFullname() << endl
+                 << "Phone: " << mem->getPhone() << endl
+                 << "Credit Points : " << mem->getCreditPoints() << endl
+                 << "Occupier Rating : " << mem->getOccupierRatingScore() << endl
+                 << "Occupied Times : " << mem->getOccupyTimes() << endl
+                 << "Username : " << mem->getUsername() << endl
+                 << "Present Partner : " << mem->getPartner() << endl
+                 << endl;
+            break;
+        // search for suitable house
+        case 2:
+        {
+            cout << "\nHouses : " << endl
+                 << endl;
+            string start, end, city, review;
+            while (true) // validate input
+            {
+                cout << "Enter the start date (YYYY/MM/DD): " << endl;
+                cin >> start;
+                if (!checkDate(start))
+                    cout << "Invalid Input! Renter your date by the given format!" << endl;
+                else if (!isValidDate(start.substr(0, 4), start.substr(5, 2), start.substr(8, 2)))
+                    cout << "Invalid Date!" << endl;
+                else
+                    break;
+            }
+
+            while (true) // validate input
+            {
+                cout << "Enter the end date (YYYY/MM/DD): " << endl;
+                cin >> end;
+                if (!checkDate(end))
+                    cout << "Invalid Input! Renter your date by the given format!" << endl;
+                else if (!isValidDate(end.substr(0, 4), end.substr(5, 2), end.substr(8, 2)))
+                    cout << "Invalid Date!" << endl;
+                else
+                    break;
+            }
+            while (true) // validate input
+            {
+                cout << "Enter the city (Ha Noi/ Sai Gon/ Da Nang): " << endl;
+                cin >> city;
+                if ((city != "Ha Noi") | (city != "Sai Gon") | (city != "Da Nang"))
+                    cout << "Invalid City! Enter the city again!" << endl;
+                else
+                    break;
+            }
+            while (true) // validate input
+            {
+                cout << "Do you want to see the reviews also? (Y/N)" << endl;
+                cin >> review;
+                if ((review != "Y") | (review != "y") | (review != "N") | (review != "n"))
+                    cout << "Invalid Input! Enter your choice again!" << endl;
+                else
+                    break;
+            }
+
+            int count = 0;
+            if ((review == "Y") | (review == "y"))
+            {
+                for (House *house : sys.availableHousesForMember(mem, start, end, city)) // print houses' details with review
+                {
+                    count++;
+                    cout << count << "." << endl;
+                    cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
+                         << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedDays() << endl
+                         << "Review : " << endl;
+                    for (string cmt : house->getComments())
+                        cout << "            " << house->getHouseRatingScrore() << endl;
+                    cout << endl;
+                }
+            }
+            else
+            {
+                for (House *house : sys.availableHousesForMember(mem, start, end, city)) // print houses' details without review
+                {
+                    count++;
+                    cout << count << "." << endl;
+                    cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
+                         << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedDays() << endl
+                         << end;
+                }
+            }
+
+            while (true) // validate input
+            {
+                cout << "Do you want to make a request? (Y/N)" << endl;
+                cin >> review;
+                if ((review != "Y") | (review != "y") | (review != "N") | (review != "n"))
+                    cout << "Invalid Input! Enter your choice again!" << endl;
+                else
+                    break;
+            }
+
+            string num_house;
+            if ((review != "Y") | (review != "y")) // make a request
+            {
+                while (true)
+                {
+                    cout << "Pick a house's number which one you would like to make a request?" << endl;
+                    cin >> num_house;
+                    if ((num_house.size() > 2) | (!isdigit(num_house[0])) | (!isdigit(num_house[1])))
+                        cout << "Invalid Input! Enter your choice again!" << endl;
+                    else
+                        break;
+                }
+                int index = stoi(num_house);
+                sys.sendRequest(mem->getUsername(), sys.availableHouses(start, end), index, start, end);
+            }
+        }
+            cout << endl;
+            break;
+        // view everyone and houses info
+        case 7:
+            int count = 0;
+            cout << "\nPeople Info: " << endl
+                 << endl;
+
+            for (Member *mem : sys.users)
+            {
+                count++;
+                cout << count << "." << endl
+                     << "Fullname: " << mem->getFullname() << endl
+                     << "Phone: " << mem->getPhone() << endl
+                     << "Credit Points : " << mem->getCreditPoints() << endl
+                     << "Occupier Rating : " << mem->getOccupierRatingScore() << endl
+                     << "Occupied Times : " << mem->getOccupyTimes() << endl
+                     << "Username : " << mem->getUsername() << endl
+                     << "Present Partner : " << mem->getPartner() << endl
+                     << endl;
+            }
+
+            cout << "Houses Details: " << endl;
+            cout << endl;
+            count = 0;
+            for (House *house : sys.getAllHouses())
+            {
+                count++;
+                cout << count << "." << endl
+                     << "Location: " << house->getLocation() << "         | Consuming Points: " << house->getConsumingPoints() << endl
+                     << "Rating : " << house->getHouseRatingScrore() << " | Used Times: " << house->getUsedDays() << endl
+                     << endl;
+            }
+            break;
+        }
     }
 }
 
@@ -742,7 +956,7 @@ int main()
              << "Use the app as 1. Guest   2. Member   3. Admin" << endl
              << "Enter your choice: " << endl;
         cin >> role;
-        if (!checkChoice(role, "1", "3")) //validate input
+        if (!checkChoice(role, "1", "3")) // validate input
             break;
     }
 
@@ -753,7 +967,7 @@ int main()
         {
             cout << "\nRegist an account? Y/N" << endl;
             cin >> choice;
-            if (choice == "Y" | choice == "y") //validate input
+            if (choice == "Y" | choice == "y") // validate input
             {
                 Member *mem1 = appSys.registerAccount();
                 appSys.users.push_back(mem1);
