@@ -7,6 +7,9 @@
 using namespace std;
 using std::string;
 
+const int MAX_VALID_YR = 9999;
+const int MIN_VALID_YR = 1800;
+
 class System
 {
 public:
@@ -513,15 +516,49 @@ void checkFunction(string role, string choice, Member *&mem, System sys)
             cout << "\nHouses : " << endl
                  << endl;
             string start, end, city, review;
-            cout << "Enter the start date (YYYY/MM/DD): " << endl;
-            cin >> start;
-            cout << "Enter the end date (YYYY/MM/DD): " << endl;
-            cin >> end;
-            cout << "Enter the city (Ha Noi/ Sai Gon/ Da Nang): " << endl;
-            cin >> city;
-            cout << "Do you want to see the reviews also? (Y/N)" << endl;
-            cin >> review;
-            if (review == "Y")
+            while (true)
+            {
+                cout << "Enter the start date (YYYY/MM/DD): " << endl;
+                cin >> start;
+                if (!checkDate(start))
+                    cout << "Invalid Input! Renter your date by the given format!" << endl;
+                else if (!isValidDate(start.substr(0, 4), start.substr(5, 2), start.substr(8, 2)))
+                    cout << "Invalid Date!" << endl;
+                else
+                    break;
+            }
+
+            while (true)
+            {
+                cout << "Enter the end date (YYYY/MM/DD): " << endl;
+                cin >> end;
+                if (!checkDate(end))
+                    cout << "Invalid Input! Renter your date by the given format!" << endl;
+                else if (!isValidDate(end.substr(0, 4), end.substr(5, 2), end.substr(8, 2)))
+                    cout << "Invalid Date!" << endl;
+                else
+                    break;
+            }
+            while (true)
+            {
+                cout << "Enter the city (Ha Noi/ Sai Gon/ Da Nang): " << endl;
+                cin >> city;
+                if ((city != "Ha Noi") | (city != "Sai Gon") | (city != "Da Nang"))
+                    cout << "Invalid City! Enter the city again!" << endl;
+                else
+                    break;
+            }
+            while (true)
+            {
+                cout << "Do you want to see the reviews also? (Y/N)" << endl;
+                cin >> review;
+                if ((review != "Y") | (review != "y") | (review != "N")| (review != "n"))
+                    cout << "Invalid Input! Enter your choice again!" << endl;
+                else
+                    break;
+            }
+
+            if ((review == "Y")|(review=="y"))
             {
                 for (House *house : sys.availableHousesForMember(mem, start, end, city))
                 {
