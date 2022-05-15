@@ -7,6 +7,9 @@
 using namespace std;
 using std::string;
 
+const int MAX_VALID_YR = 9999;
+const int MIN_VALID_YR = 1800;
+
 class System
 {
 public:
@@ -497,15 +500,49 @@ void checkFunction(string role, string choice, Member *mem, System sys)
             cout << "\nHouses : " << endl
                  << endl;
             string start, end, city, review;
-            cout << "Enter the start date (YYYY/MM/DD): " << endl;
-            cin >> start;
-            cout << "Enter the end date (YYYY/MM/DD): " << endl;
-            cin >> end;
-            cout << "Enter the city (Ha Noi/ Sai Gon/ Da Nang): " << endl;
-            cin >> city;
-            cout << "Do you want to see the reviews also? (Y/N)" << endl;
-            cin >> review;
-            if (review == "Y")
+            while (true)
+            {
+                cout << "Enter the start date (YYYY/MM/DD): " << endl;
+                cin >> start;
+                if (!checkDate(start))
+                    cout << "Invalid Input! Renter your date by the given format!" << endl;
+                else if (!isValidDate(start.substr(0, 4), start.substr(5, 2), start.substr(8, 2)))
+                    cout << "Invalid Date!" << endl;
+                else
+                    break;
+            }
+
+            while (true)
+            {
+                cout << "Enter the end date (YYYY/MM/DD): " << endl;
+                cin >> end;
+                if (!checkDate(end))
+                    cout << "Invalid Input! Renter your date by the given format!" << endl;
+                else if (!isValidDate(end.substr(0, 4), end.substr(5, 2), end.substr(8, 2)))
+                    cout << "Invalid Date!" << endl;
+                else
+                    break;
+            }
+            while (true)
+            {
+                cout << "Enter the city (Ha Noi/ Sai Gon/ Da Nang): " << endl;
+                cin >> city;
+                if ((city != "Ha Noi") | (city != "Sai Gon") | (city != "Da Nang"))
+                    cout << "Invalid City! Enter the city again!" << endl;
+                else
+                    break;
+            }
+            while (true)
+            {
+                cout << "Do you want to see the reviews also? (Y/N)" << endl;
+                cin >> review;
+                if ((review != "Y") | (review != "y") | (review != "N")| (review != "n"))
+                    cout << "Invalid Input! Enter your choice again!" << endl;
+                else
+                    break;
+            }
+
+            if ((review == "Y")|(review=="y"))
             {
                 for (House *house : sys.availableHousesForMember(mem, start, end, city))
                 {
@@ -535,8 +572,69 @@ void checkFunction(string role, string choice, Member *mem, System sys)
     }
 }
 
-bool checkDate(string str){
-    if (!isdigit(str.substr(0, 4)))
+bool checkDate(string str)
+{
+    if (str.size() == 10)
+    {
+        for (int i = 0; i < str.size(); i++)
+        {
+            if ((!isdigit(str[i])) & ((i != 4) & (i != 7)))
+                return false;
+            if ((str[7] != '/') | (str[4] != '/'))
+                return false;
+        }
+    }
+    return true;
+}
+
+bool isLeap(int year)
+{
+    // Return true if year
+    // is a multiple of 4 and
+    // not multiple of 100.
+    // OR year is multiple of 400.
+    return (((year % 4 == 0) &&
+             (year % 100 != 0)) ||
+            (year % 400 == 0));
+}
+
+// Returns true if given
+// year is valid or not.
+bool isValidDate(string d, string m, string y)
+{
+    int day = stoi(d);
+    int month = stoi(m);
+    int year = stoi(y);
+
+    // If year, month and day
+    // are not in given range
+    if (year > MAX_VALID_YR ||
+        year < MIN_VALID_YR)
+        return false;
+    if (month < 1 || month > 12)
+        return false;
+    if (day < 1 || day > 31)
+        return false;
+
+    // Handle February month
+    // with leap year
+    if (month == 2)
+    {
+        if (isLeap(year))
+            return (day <= 29);
+        else
+            return (day <= 28);
+    }
+
+    // Months of April, June,
+    // Sept and Nov must have
+    // number of days less than
+    // or equal to 30.
+    if (month == 4 || month == 6 ||
+        month == 9 || month == 11)
+        return (day <= 30);
+
+    return true;
 }
 
 int main()
