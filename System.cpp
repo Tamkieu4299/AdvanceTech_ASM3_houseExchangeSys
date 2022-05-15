@@ -388,12 +388,17 @@ bool checkDate(string str)
     {
         for (int i = 0; i < str.size(); i++)
         {
-            if ((!isdigit(str[i])) & ((i != 4) & (i != 7)))
+            if ((!isdigit(str[i])) & ((i != 4) & (i != 7))){
+                cout<<"false"<<endl;
                 return false;
-            if ((str[7] != '/') | (str[4] != '/'))
+            }
+            if ((str[7] != '/') | (str[4] != '/')){
+                cout<<"false"<<endl;
                 return false;
+            }
         }
     }
+    cout<<"true"<<endl;
     return true;
 }
 
@@ -410,7 +415,7 @@ bool isLeap(int year)
 
 // Returns true if given
 // year is valid or not.
-bool isValidDate(string d, string m, string y)
+bool isValidDate(string y, string m, string d)
 {
     int day = stoi(d);
     int month = stoi(m);
@@ -435,6 +440,7 @@ bool isValidDate(string d, string m, string y)
     if ((month == 2) && (day == 29) && (year % 4 == 0))
         return true;
 
+    cout<<"true"<<endl;
     return true;
 }
 
