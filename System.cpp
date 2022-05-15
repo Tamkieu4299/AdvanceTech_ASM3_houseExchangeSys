@@ -366,13 +366,10 @@ void checkRole(string role)
              << "0. Exit" << endl
              << "1. List/Unlist available occupied houses" << endl
              << "2. Search for available suitable houses" << endl
-             << "3. Request to occupy" << endl
-             << "4. Rate house" << endl
-             << "5. Rate occupier" << endl
-             << "6. View requests" << endl
-             << "7. View information" << endl
-             << "8. View the reviews" << endl
-             << "9. View houses" << endl
+             << "3. Rate house" << endl
+             << "4. Rate occupier" << endl
+             << "5. View requests" << endl
+             << "6. View information" << endl
              << "Enter your choice: " << endl;
     }
     else
@@ -385,9 +382,7 @@ void checkRole(string role)
              << "4. Rate occupier" << endl
              << "5. View requests" << endl
              << "6. View information" << endl
-             << "7. View the reviews" << endl
-             << "8. View houses" << endl
-             << "9. View others information" << endl
+             << "7. View others information" << endl
              << "Enter your choice: " << endl;
     }
 }
@@ -501,20 +496,35 @@ void checkFunction(string role, string choice, Member *mem, System sys)
         case 9:
             cout << "\nHouses : " << endl
                  << endl;
-            string start, end, city;
+            string start, end, city, review;
             cout << "Enter the start date (YYYY/MM/DD): " << endl;
             cin >> start;
             cout << "Enter the end date (YYYY/MM/DD): " << endl;
             cin >> end;
-            cout << "Enter the city: " << endl;
+            cout << "Enter the city (Ha Noi/ Sai Gon/ Da Nang): " << endl;
             cin >> city;
-            for (House *house : sys.availableHousesForMember(mem, start, end, city))
+            cout << "Do you want to see the reviews also? (Y/N)" << endl;
+            cin >> review;
+            if (review == "Y")
             {
-                cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
-                     << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedDays() << endl
-                     << "Review : " << endl;
-                for (string cmt : house->getComments())
-                    cout << "            " << house->getHouseRatingScrore() << endl;
+                for (House *house : sys.availableHousesForMember(mem, start, end, city))
+                {
+                    cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
+                         << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedDays() << endl
+                         << "Review : " << endl;
+                    for (string cmt : house->getComments())
+                        cout << "            " << house->getHouseRatingScrore() << endl;
+                    cout << endl;
+                }
+            }
+            else
+            {
+                for (House *house : sys.availableHousesForMember(mem, start, end, city))
+                {
+                    cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
+                         << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedDays() << endl
+                         << end;
+                }
             }
             cout << endl;
             break;
@@ -523,6 +533,10 @@ void checkFunction(string role, string choice, Member *mem, System sys)
     else if (role == "3")
     {
     }
+}
+
+bool checkDate(string str){
+    if (!isdigit(str.substr(0, 4)))
 }
 
 int main()
