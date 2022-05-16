@@ -92,7 +92,7 @@ public:
         vector<Request *> requests = house->getRequests();
         requests.push_back(request);
         house->setRequests(requests);
-        cout<<"Send request !"<<endl;
+        cout << "Send request !" << endl;
     }
 
     // Show all requests for the owner of his house
@@ -122,9 +122,7 @@ public:
         for (int i = 0; i < requests.size(); i++)
         {
             Request *request = requests[i];
-            if (compareSmallerTime(stringToTime(request->getEnd()), tmcEnd) && compareBiggerTime(stringToTime(request->getStart()), tmcStart) 
-            || compareSmallerTime(stringToTime(request->getEnd()), tmcEnd) && compareBiggerTime(stringToTime(request->getEnd()), tmcStart) 
-            || compareSmallerTime(stringToTime(request->getStart()), tmcEnd) && compareBiggerTime(stringToTime(request->getStart()), tmcStart))
+            if (compareSmallerTime(stringToTime(request->getEnd()), tmcEnd) && compareBiggerTime(stringToTime(request->getStart()), tmcStart) || compareSmallerTime(stringToTime(request->getEnd()), tmcEnd) && compareBiggerTime(stringToTime(request->getEnd()), tmcStart) || compareSmallerTime(stringToTime(request->getStart()), tmcEnd) && compareBiggerTime(stringToTime(request->getStart()), tmcStart))
                 delIndex.push_back(i);
         }
 
@@ -167,14 +165,13 @@ public:
             // Update partner for owner
             member->setPartner(this->getMemberByUsername(request->getRequestUsername()));
             // Update credit points of the owner
-            member->setCreditPoints(member->getCreditPoints()+member->getHouseForOwn()->countDays(request->getStart(), request->getEnd()) * member->getHouseForOwn()->getConsumingPoints());
+            member->setCreditPoints(member->getCreditPoints() + member->getHouseForOwn()->countDays(request->getStart(), request->getEnd()) * member->getHouseForOwn()->getConsumingPoints());
             // this->showRequests(member);
             this->delRequests(allRequests, request->getStart(), request->getEnd());
             member->getHouseForOwn()->setRequests(allRequests);
         }
         else
             cout << "Your house is not be free on this period ! Please check again" << endl;
-
     }
 
     // Registration for non-member
@@ -334,7 +331,8 @@ Member *Login(vector<Member *> users)
             }
         }
     }
-    if(!check) {
+    if (!check)
+    {
         cout << "\nWrong username or wrong password. Please enter again!" << endl;
         cout << endl;
     }
@@ -436,8 +434,8 @@ void checkRole(string role)
              << "4. Rate occupier" << endl
              << "5. View requests" << endl
              << "6. View information" << endl
-             << "7. View your house"<<endl
-             << "8. Review house"<<endl
+             << "7. View your house" << endl
+             << "8. Review house" << endl
              << "Enter your choice: " << endl;
     }
     // menu for admin
@@ -452,7 +450,7 @@ void checkRole(string role)
              << "5. View requests" << endl
              << "6. View information" << endl
              << "7. View others information" << endl
-             << "8. Review house"<<endl
+             << "8. Review house" << endl
              << "Enter your choice: " << endl;
     }
 }
@@ -482,7 +480,7 @@ void checkFunction(string role, string choice, Member *&mem, System *&sys)
             for (House *house : sys->getAllHouses())
             {
                 count++;
-            
+
                 cout << count << "." << endl
                      << "Location: " << house->getLocation() << "         | Consuming Points: " << house->getConsumingPoints() << endl
                      << "Rating : " << house->getHouseRatingScore() << " | Used Times: " << house->getUsedTimes() << endl;
@@ -493,21 +491,24 @@ void checkFunction(string role, string choice, Member *&mem, System *&sys)
     else if (role == "2")
     {
         int intChoice = stoi(choice);
-        string usname = mem->getPartner()!=NULL ? mem->getPartner()->getUsername():"None";
+        string usname = mem->getPartner() != NULL ? mem->getPartner()->getUsername() : "None";
         switch (intChoice)
         {
         // list/unlist house
-        case 1:{
+        case 1:
+        {
             cout << "\nHouse controller:" << endl
-             << "1. List/Unlist available occupied houses" << endl
-             << "2. Set consuming points for your house" << endl;
+                 << "1. List/Unlist available occupied houses" << endl
+                 << "2. Set consuming points for your house" << endl;
             string houseMana;
-            cin>>houseMana;
-            if(houseMana=="1") houseAvailabilityManage(mem);
-            else if(houseMana=="2"){
-                cout<<"Enter the consuming points"<<endl;
+            cin >> houseMana;
+            if (houseMana == "1")
+                houseAvailabilityManage(mem);
+            else if (houseMana == "2")
+            {
+                cout << "Enter the consuming points" << endl;
                 int consume;
-                cin>>consume;
+                cin >> consume;
                 mem->getHouseForOwn()->setConsumingPoints(consume);
             }
             break;
@@ -562,11 +563,12 @@ void checkFunction(string role, string choice, Member *&mem, System *&sys)
             {
                 cout << "\nRequest: " << endl
                      << endl;
-                int cnt =0;
+                int cnt = 0;
                 string start;
                 string end;
                 for (Request *req : mem->getHouseForOwn()->getRequests())
-                    cout <<cnt++<<" | "<< "Requested Username: " << req->getRequestUsername() << endl
+                    cout << cnt++ << " | "
+                         << "Requested Username: " << req->getRequestUsername() << endl
                          << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
                 int numReq;
                 cout<<"Enter the number of request: "<<endl;
@@ -584,7 +586,7 @@ void checkFunction(string role, string choice, Member *&mem, System *&sys)
                  << "Occupier Rating : " << mem->getOccupierRatingScore() << endl
                  << "Occupied Times : " << mem->getOccupyTimes() << endl
                  << "Username : " << mem->getUsername() << endl
-                 << "Present Partner : " <<usname<< endl
+                 << "Present Partner : " << usname << endl
                  << endl;
             break;
         // view House info
@@ -595,13 +597,14 @@ void checkFunction(string role, string choice, Member *&mem, System *&sys)
                  << "Consuming Points: " << mem->getHouseForOwn()->getConsumingPoints()<< endl
                  << "Rating Score: " << mem->getHouseForOwn()->getHouseRatingScore() << endl
                  << "Occupying Start Date : " << mem->getHouseForOwn()->getStartDate() << endl
-                 << "Occupying End Date : " << mem->getHouseForOwn()->getEndDate()  << endl
+                 << "Occupying End Date : " << mem->getHouseForOwn()->getEndDate() << endl
                  << "Available for renting Start : " << mem->getHouseForOwn()->getAvailablePeriodStart() << endl
                  << "Available for renting End : " << mem->getHouseForOwn()->getAvailablePeriodStart() << endl
                  << endl;
             break;
         // search for suitable house
-        case 2:{
+        case 2:
+        {
             cout << "\nHouses : " << endl
                  << endl;
             string start, end, city, review;
@@ -632,7 +635,7 @@ void checkFunction(string role, string choice, Member *&mem, System *&sys)
             {
                 cout << "Enter the city (HaNoi/ SaiGon/ DaNang): " << endl;
                 cin >> city;
-                if (city=="HaNoi" && (city != "SaiGon") && (city != "DaNang"))
+                if (city == "HaNoi" && (city != "SaiGon") && (city != "DaNang"))
                     cout << "Invalid City! Enter the city again!" << endl;
                 else
                     break;
@@ -652,7 +655,8 @@ void checkFunction(string role, string choice, Member *&mem, System *&sys)
             {
                 for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details with review
                 {
-                    if(house==mem->getHouseForOwn()) continue;
+                    if (house == mem->getHouseForOwn())
+                        continue;
                     cout << count << "." << endl
                          << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
                          << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
@@ -667,7 +671,7 @@ void checkFunction(string role, string choice, Member *&mem, System *&sys)
             {
                 for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details without review
                 {
-                    
+
                     cout << count << "." << endl
                          << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
                          << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
@@ -702,28 +706,29 @@ void checkFunction(string role, string choice, Member *&mem, System *&sys)
                 sys->sendRequest(mem->getUsername(), sys->availableHouses(start, end), index, start, end);
             }
             cout << endl;
-            break;}
+            break;
+        }
 
         case 8:
-            if(mem->getHouseForLive()!=NULL){
+            if (mem->getHouseForLive() != NULL)
+            {
                 vector<string> cmts = mem->getHouseForLive()->getComments();
-                cout<<"Enter your review: "<<endl;
+                cout << "Enter your review: " << endl;
                 string cmt;
-                cin>>cmt;
+                cin >> cmt;
                 cmts.push_back(cmt);
                 mem->getHouseForLive()->setComments(cmts);
             }
-            else cout<<"You haven't chosen any house for rent"<<endl;
+            else
+                cout << "You haven't chosen any house for rent" << endl;
             break;
         }
-        
-        
     }
     // use menu as an admin
     else if (role == "3")
     {
         int intChoice = stoi(choice);
-        string usname = mem->getPartner()!=NULL ? mem->getPartner()->getUsername():"None";
+        string usname = mem->getPartner() != NULL ? mem->getPartner()->getUsername() : "None";
         switch (intChoice)
         {
         // list/unlist house
@@ -829,9 +834,9 @@ void checkFunction(string role, string choice, Member *&mem, System *&sys)
             }
             while (true) // validate input
             {
-                cout << "Enter the city (Ha Noi/ Sai Gon/ Da Nang): " << endl;
+                cout << "Enter the city (Hanoi/ Saigon/ Danang): " << endl;
                 cin >> city;
-                if ((city != "Hanoi") && (city != "SaiGon") && (city != "DaNang"))
+                if ((city != "Hanoi") && (city != "Saigon") && (city != "Danang"))
                     cout << "Invalid City! Enter the city again!" << endl;
                 else
                     break;
@@ -898,19 +903,20 @@ void checkFunction(string role, string choice, Member *&mem, System *&sys)
                 int index = stoi(num_house);
                 sys->sendRequest(mem->getUsername(), sys->availableHouses(start, end), index, start, end);
             }
-        
+
             cout << endl;
             break;
         }
         // view everyone and houses info
-        case 7:{
+        case 7:
+        {
             int count = 0;
             cout << "\nPeople Info: " << endl
                  << endl;
 
             for (Member *mem : sys->users)
             {
-                 string usname = mem->getPartner()!=NULL ? mem->getPartner()->getUsername():"None";
+                string usname = mem->getPartner() != NULL ? mem->getPartner()->getUsername() : "None";
                 count++;
                 cout << count << "." << endl
                      << "Fullname: " << mem->getFullname() << endl
@@ -936,16 +942,18 @@ void checkFunction(string role, string choice, Member *&mem, System *&sys)
             }
             break;
         }
-         case 8: 
-            if(mem->getHouseForLive()!=NULL){
+        case 8:
+            if (mem->getHouseForLive() != NULL)
+            {
                 vector<string> cmts = mem->getHouseForLive()->getComments();
-                cout<<"Enter your review: "<<endl;
+                cout << "Enter your review: " << endl;
                 string cmt;
-                cin>>cmt;
+                cin >> cmt;
                 cmts.push_back(cmt);
                 mem->getHouseForLive()->setComments(cmts);
             }
-            else cout<<"You haven't chosen any house for rent"<<endl;
+            else
+                cout << "You haven't chosen any house for rent" << endl;
             break;
         }
     }
@@ -964,16 +972,16 @@ int main()
     Member mem3 = Member("Tamad", "456", "Tam Kieu", "0123456");
     Member mem4 = Member("Tam2", "123", "Tam Kieu", "0123456");
 
-    House h1 = House("SaiGon", "hcm");
+    House h1 = House("Saigon", "hcm");
     h1.setConsumingPoints(30);
 
-    House h2 = House("SaiGon", "hcm");
+    House h2 = House("Saigon", "hcm");
     h2.setConsumingPoints(10);
 
-    House h3 = House("SaiGon", "hcm");
+    House h3 = House("Saigon", "hcm");
     h3.setConsumingPoints(20);
 
-    House h4 = House("SaiGon", "hcm");
+    House h4 = House("Saigon", "hcm");
     h4.setConsumingPoints(50);
 
     mem1.setHouseForOwn(&h1);
@@ -1017,24 +1025,25 @@ int main()
     //     // appSys.acceptRequest(mem1, 0);
 
     // cout<<mem2->getCreditPoints()<<endl;
-    while(true){
+    while (true)
+    {
         bool check = false;
         string choice, role;
         Member *mem;
         while (true)
         {
             cout << "EEET2482/COSC2082 ASSIGNMENT" << endl
-                << "VACATION HOUSE EXCHANGE APPLICATION" << endl
-                << "\n"
-                << "Instructor: Mr. Linh Tran" << endl
-                << "Group: Group 11" << endl
-                << "s3891528, Ma Phu Dien" << endl
-                << "s3922087, Kieu Cong Tam" << endl
-                << "s3915468, Nguyen Xuan Thanh" << endl
-                << "s3754105, Nguyen Dang Lam Phuong" << endl
-                << "\n"
-                << "Use the app as 1. Guest   2. Member   3. Admin" << endl
-                << "Enter your choice: " << endl;
+                 << "VACATION HOUSE EXCHANGE APPLICATION" << endl
+                 << "\n"
+                 << "Instructor: Mr. Linh Tran" << endl
+                 << "Group: Group 11" << endl
+                 << "s3891528, Ma Phu Dien" << endl
+                 << "s3922087, Kieu Cong Tam" << endl
+                 << "s3915468, Nguyen Xuan Thanh" << endl
+                 << "s3754105, Nguyen Dang Lam Phuong" << endl
+                 << "\n"
+                 << "Use the app as 1. Guest   2. Member   3. Admin" << endl
+                 << "Enter your choice: " << endl;
             cin >> role;
             if (!checkChoice(role, "1", "3")) // validate input
                 break;
@@ -1073,5 +1082,4 @@ int main()
         cout << "\nHave A Nice Day!!!" << endl;
     }
     return 0;
-    
 }
