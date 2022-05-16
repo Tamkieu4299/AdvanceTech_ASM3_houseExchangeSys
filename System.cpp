@@ -56,10 +56,10 @@ public:
     // Show list of houses for member
     vector<House *> availableHousesForMember(Member *member, string start, string end, string city)
     {
-        vector<House *> allHouses = this->getAllHouses();
+        vector<House *> allHouses = this->availableHouses(start, end);
         vector<House *> availableRecords;
         for (House *house : allHouses)
-            if (house->isFree(start, end) && house->getLocation() == city && house->getRequiredMinOccupierRating() <= member->getOccupierRatingScore())
+            if (house->getLocation() == city && house->getRequiredMinOccupierRating() <= member->getOccupierRatingScore())
             {
                 long totalCost = house->countDays(start, end) * house->getConsumingPoints();
                 if (member->getCreditPoints() >= totalCost)
@@ -437,6 +437,7 @@ void checkRole(string role)
              << "5. View requests" << endl
              << "6. View information" << endl
              << "7. View your house"<<endl
+             << "8. Review house"<<endl
              << "Enter your choice: " << endl;
     }
     // menu for admin
@@ -451,6 +452,7 @@ void checkRole(string role)
              << "5. View requests" << endl
              << "6. View information" << endl
              << "7. View others information" << endl
+             << "8. Review house"<<endl
              << "Enter your choice: " << endl;
     }
 }
@@ -599,7 +601,7 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
                  << endl;
             break;
         // search for suitable house
-        case 2:
+        case 2:{
             cout << "\nHouses : " << endl
                  << endl;
             string start, end, city, review;
@@ -656,7 +658,7 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
                          << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedTimes() << endl
                          << "Review : " << endl;
                     for (string cmt : house->getComments())
-                        cout << "            " << house->getHouseRatingScrore() << endl;
+                        cout << " " << cmt << endl;
                     cout << endl;
                     count++;
                 }
@@ -700,8 +702,19 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
                 sys.sendRequest(mem->getUsername(), sys.availableHouses(start, end), index, start, end);
             }
             cout << endl;
+            break;}
+
+        case 8:
+            if(mem->getHouseForLive()!=NULL){
+                vector<string> cmts = mem->getHouseForLive()->getComments();
+                cout<<"Enter your review: "<<endl;
+                string cmt;
+                cin>>cmt;
+                cmts.push_back(cmt);
+                mem->getHouseForLive()->setComments(cmts);
+            }
+            else cout<<"You haven't chosen any house for rent"<<endl;
             break;
-        
         }
         
         
@@ -818,7 +831,7 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
             {
                 cout << "Enter the city (Ha Noi/ Sai Gon/ Da Nang): " << endl;
                 cin >> city;
-                if ((city != "Ha Noi") | (city != "Sai Gon") | (city != "Da Nang"))
+                if ((city != "Hanoi") && (city != "SaiGon") && (city != "DaNang"))
                     cout << "Invalid City! Enter the city again!" << endl;
                 else
                     break;
@@ -827,7 +840,7 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
             {
                 cout << "Do you want to see the reviews also? (Y/N)" << endl;
                 cin >> review;
-                if ((review != "Y") | (review != "y") | (review != "N") | (review != "n"))
+                if ((review != "Y") && (review != "y") && (review != "N") && (review != "n"))
                     cout << "Invalid Input! Enter your choice again!" << endl;
                 else
                     break;
@@ -844,7 +857,7 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
                          << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedTimes() << endl
                          << "Review : " << endl;
                     for (string cmt : house->getComments())
-                        cout << "            " << house->getHouseRatingScrore() << endl;
+                        cout << "" << cmt << endl;
                     cout << endl;
                 }
             }
@@ -885,11 +898,12 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
                 int index = stoi(num_house);
                 sys.sendRequest(mem->getUsername(), sys.availableHouses(start, end), index, start, end);
             }
-        }
+        
             cout << endl;
             break;
+        }
         // view everyone and houses info
-        case 7:
+        case 7:{
             int count = 0;
             cout << "\nPeople Info: " << endl
                  << endl;
@@ -920,6 +934,18 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
                      << "Rating : " << house->getHouseRatingScrore() << " | Used Times: " << house->getUsedTimes() << endl
                      << endl;
             }
+            break;
+        }
+         case 8: 
+            if(mem->getHouseForLive()!=NULL){
+                vector<string> cmts = mem->getHouseForLive()->getComments();
+                cout<<"Enter your review: "<<endl;
+                string cmt;
+                cin>>cmt;
+                cmts.push_back(cmt);
+                mem->getHouseForLive()->setComments(cmts);
+            }
+            else cout<<"You haven't chosen any house for rent"<<endl;
             break;
         }
     }
@@ -1027,7 +1053,6 @@ int main()
                     appSys.users.push_back(mem1);
                     Login(appSys.users);
                     break;
-                    ;
                 }
                 else if (choice == "N" | choice == "n")
                     break;
