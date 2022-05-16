@@ -138,7 +138,7 @@ public:
     }
 
     // Owner check the requests for accept
-    void acceptRequest(Member *member, int index)
+    void acceptRequest(Member *&member, int index)
     {
         vector<Request *> allRequests = member->getHouseForOwn()->getRequests();
 
@@ -469,7 +469,7 @@ void checkMenu(string role, string choice)
 }
 
 // check function base on user's choice
-void checkFunction(string role, string choice, Member *&mem, System &sys)
+void checkFunction(string role, string choice, Member *&mem, System *&sys)
 {
     // use menu as a guest
     if (role == "1")
@@ -479,13 +479,13 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
             cout << "Houses Details: " << endl;
             cout << endl;
             int count = 0;
-            for (House *house : sys.getAllHouses())
+            for (House *house : sys->getAllHouses())
             {
                 count++;
             
                 cout << count << "." << endl
                      << "Location: " << house->getLocation() << "         | Consuming Points: " << house->getConsumingPoints() << endl
-                     << "Rating : " << house->getHouseRatingScrore() << " | Used Times: " << house->getUsedTimes() << endl;
+                     << "Rating : " << house->getHouseRatingScore() << " | Used Times: " << house->getUsedTimes() << endl;
             }
         }
     }
@@ -571,7 +571,7 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
                 int numReq;
                 cout<<"Enter the number of request: "<<endl;
                 cin>>numReq;
-                sys.acceptRequest(mem, numReq);
+                sys->acceptRequest(mem, numReq);
             }
             break;
         // view info
@@ -593,7 +593,7 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
                  << endl
                  << "Location: " << mem->getHouseForOwn()->getLocation()<< endl
                  << "Consuming Points: " << mem->getHouseForOwn()->getConsumingPoints()<< endl
-                 << "Rating Score: " << mem->getHouseForOwn()->getHouseRatingScrore() << endl
+                 << "Rating Score: " << mem->getHouseForOwn()->getHouseRatingScore() << endl
                  << "Occupying Start Date : " << mem->getHouseForOwn()->getStartDate() << endl
                  << "Occupying End Date : " << mem->getHouseForOwn()->getEndDate()  << endl
                  << "Available for renting Start : " << mem->getHouseForOwn()->getAvailablePeriodStart() << endl
@@ -650,12 +650,12 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
             int count = 0;
             if ((review == "Y") || (review == "y"))
             {
-                for (House *house : sys.availableHousesForMember(mem, start, end, city)) // print houses' details with review
+                for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details with review
                 {
                     if(house==mem->getHouseForOwn()) continue;
                     cout << count << "." << endl
                          << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
-                         << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedTimes() << endl
+                         << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
                          << "Review : " << endl;
                     for (string cmt : house->getComments())
                         cout << " " << cmt << endl;
@@ -665,12 +665,12 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
             }
             else
             {
-                for (House *house : sys.availableHousesForMember(mem, start, end, city)) // print houses' details without review
+                for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details without review
                 {
                     
                     cout << count << "." << endl
                          << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
-                         << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedTimes() << endl
+                         << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
                          << end;
                     count++;
                 }
@@ -699,7 +699,7 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
                         break;
                 }
                 int index = stoi(num_house);
-                sys.sendRequest(mem->getUsername(), sys.availableHouses(start, end), index, start, end);
+                sys->sendRequest(mem->getUsername(), sys->availableHouses(start, end), index, start, end);
             }
             cout << endl;
             break;}
@@ -849,12 +849,12 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
             int count = 0;
             if ((review == "Y") | (review == "y"))
             {
-                for (House *house : sys.availableHousesForMember(mem, start, end, city)) // print houses' details with review
+                for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details with review
                 {
                     count++;
                     cout << count << "." << endl;
                     cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
-                         << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedTimes() << endl
+                         << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
                          << "Review : " << endl;
                     for (string cmt : house->getComments())
                         cout << "" << cmt << endl;
@@ -863,12 +863,12 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
             }
             else
             {
-                for (House *house : sys.availableHousesForMember(mem, start, end, city)) // print houses' details without review
+                for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details without review
                 {
                     count++;
                     cout << count << "." << endl;
                     cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
-                         << "Rating : " << house->getHouseRatingScrore() << "  Used Times: " << house->getUsedTimes() << endl
+                         << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
                          << end;
                 }
             }
@@ -896,7 +896,7 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
                         break;
                 }
                 int index = stoi(num_house);
-                sys.sendRequest(mem->getUsername(), sys.availableHouses(start, end), index, start, end);
+                sys->sendRequest(mem->getUsername(), sys->availableHouses(start, end), index, start, end);
             }
         
             cout << endl;
@@ -908,7 +908,7 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
             cout << "\nPeople Info: " << endl
                  << endl;
 
-            for (Member *mem : sys.users)
+            for (Member *mem : sys->users)
             {
                  string usname = mem->getPartner()!=NULL ? mem->getPartner()->getUsername():"None";
                 count++;
@@ -926,12 +926,12 @@ void checkFunction(string role, string choice, Member *&mem, System &sys)
             cout << "Houses Details: " << endl;
             cout << endl;
             count = 0;
-            for (House *house : sys.getAllHouses())
+            for (House *house : sys->getAllHouses())
             {
                 count++;
                 cout << count << "." << endl
                      << "Location: " << house->getLocation() << "         | Consuming Points: " << house->getConsumingPoints() << endl
-                     << "Rating : " << house->getHouseRatingScrore() << " | Used Times: " << house->getUsedTimes() << endl
+                     << "Rating : " << house->getHouseRatingScore() << " | Used Times: " << house->getUsedTimes() << endl
                      << endl;
             }
             break;
@@ -957,7 +957,7 @@ int main()
     // while(true){
 
     
-    System appSys = System();
+    System *appSys = new System();
 
     Member mem1 = Member("Tam", "123", "Tam Kieu", "0123456");
     Member mem2 = Member("Thanh", "123", "Thanh Nguyen", "0123456");
@@ -984,10 +984,10 @@ int main()
     mem2.setIsAdmin(false);
     mem3.setIsAdmin(true);
 
-    appSys.users.push_back(&mem1);
-    appSys.users.push_back(&mem2);
-    appSys.users.push_back(&mem3);
-    appSys.users.push_back(&mem4);
+    appSys->users.push_back(&mem1);
+    appSys->users.push_back(&mem2);
+    appSys->users.push_back(&mem3);
+    appSys->users.push_back(&mem4);
 
     // Member *mem2 = appSys.registerAccount();
 
@@ -1049,9 +1049,9 @@ int main()
                 cin >> choice;
                 if (choice == "Y" | choice == "y") // validate input
                 {
-                    Member *mem1 = appSys.registerAccount();
-                    appSys.users.push_back(mem1);
-                    Login(appSys.users);
+                    Member *mem1 = appSys->registerAccount();
+                    appSys->users.push_back(mem1);
+                    Login(appSys->users);
                     break;
                 }
                 else if (choice == "N" | choice == "n")
@@ -1060,7 +1060,7 @@ int main()
             }
         }
         else
-            mem = Login(appSys.users);
+            mem = Login(appSys->users);
 
         while (choice != "0")
         {

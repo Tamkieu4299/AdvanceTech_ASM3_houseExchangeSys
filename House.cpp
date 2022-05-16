@@ -77,7 +77,7 @@ public:
 		this->descripton=descripton;
 	}
 
-	double getHouseRatingScrore(){
+	double getHouseRatingScore(){
 		return this->houseRatingScrore;
 	}
 

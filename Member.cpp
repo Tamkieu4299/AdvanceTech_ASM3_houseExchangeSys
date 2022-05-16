@@ -132,7 +132,7 @@ public:
 
 	// Rate the House while living
 	void ratingHouse(double rating, House *house){
-		double newRating = (house->getHouseRatingScrore()+rating)/house->getUsedTimes();
+		double newRating = (house->getHouseRatingScore()+rating)/house->getUsedTimes();
 		house->setHouseRatingScore(newRating);
 	}
 
