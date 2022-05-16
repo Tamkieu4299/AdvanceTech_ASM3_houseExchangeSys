@@ -26,6 +26,7 @@ public:
 		this->occupierRatingScore=0;
 		this->partner=NULL;
 		this->creditPoints=500;
+		this->houseForLive==NULL;
 	};
 
 	Member(string username, string password, string fullname, string phone){
@@ -36,6 +37,8 @@ public:
 		this->partner=NULL;
 		this->occupyTimes=0;
 		this->creditPoints=500;
+		this->houseForLive==NULL;
+		this->occupierRatingScore=0;
 	}
 
 	// Getter - Setter

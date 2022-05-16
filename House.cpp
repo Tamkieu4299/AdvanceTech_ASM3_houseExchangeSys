@@ -218,8 +218,9 @@ public:
 		tm tmHouseStart = stringToTime(this->getStartDate());
 		tm tmHouseEnd = stringToTime(this->getEndDate());
 
-		if(compareSmallerTime(tmEnd, tmAvaiStart) && compareSmallerTime(tmEnd, tmHouseStart) && compareBiggerTime(tmStart, tmAvaiEnd) && compareBiggerTime(tmStart, tmHouseEnd))
-			return true;
+		if(compareSmallerTime(tmEnd, tmAvaiEnd) && compareBiggerTime(tmStart, tmAvaiStart))
+			if(compareSmallerTime(tmEnd, tmHouseStart) || compareBiggerTime(tmStart, tmHouseEnd))
+				return true;
 		return false;
 	}
 
@@ -249,11 +250,12 @@ public:
 // int main(int argc, char const *argv[])
 // {
 // 	House house = House();
-// 	house.setAvailablePeriodStart("2022/04/27");
-// 	tm start = stringToTime("2022/06/03");
-// 	tm end = stringToTime("2022/04/29");
-// 	bool res = compareTime(start, end);
-// 	cout<<res<<endl;
+// 	house.setAvailablePeriodStart("2022/05/15");
+// 	house.setAvailablePeriodEnd("2022/05/25");
+// 	house.setStartDate("2022/05/18");
+// 	house.setEndDate("2022/05/20");
+	
+// 	cout<<house.isFree("2022/05/18", "2022/05/20")<<endl;
 	
 // 	return 0;
 // }
