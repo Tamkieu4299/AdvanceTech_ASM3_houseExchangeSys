@@ -606,9 +606,9 @@ public:
                 }
                 while (true) // validate input
                 {
-                    cout << "Enter the city (HaNoi/ SaiGon/ DaNang): " << endl;
+                    cout << "Enter the city (Hanoi/ Saigon/ Danang): " << endl;
                     cin >> city;
-                    if (city == "HaNoi" && (city != "SaiGon") && (city != "DaNang"))
+                    if (city == "Hanoi" && (city != "Saigon") && (city != "Danang"))
                         cout << "Invalid City! Enter the city again!" << endl;
                     else
                         break;
@@ -664,7 +664,7 @@ public:
                 }
 
                 string num_house;
-                if ((review != "Y") || (review != "y")) // make a request
+                if ((review == "Y") || (review == "y")) // make a request
                 {
                     while (true)
                     {
@@ -678,6 +678,8 @@ public:
                     int index = stoi(num_house);
                     sys->sendRequest(mem->getUsername(), sys->availableHouses(start, end), index, start, end);
                 }
+
+                else if((review == "N") || (review == "n")) break;
                 cout << endl;
                 break;
             }
@@ -849,6 +851,7 @@ public:
                             << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
                             << end;
                     }
+                    cout << endl;
                 }
 
                 while (true) // validate input
@@ -862,7 +865,7 @@ public:
                 }
 
                 string num_house;
-                if ((review != "Y") || (review != "y")) // make a request
+                if ((review == "Y") || (review == "y")) // make a request
                 {
                     while (true)
                     {
@@ -876,6 +879,8 @@ public:
                     int index = stoi(num_house);
                     sys->sendRequest(mem->getUsername(), sys->availableHouses(start, end), index, start, end);
                 }
+
+                else if((review == "N") || (review == "n")) break;
 
                 cout << endl;
                 break;
@@ -933,8 +938,7 @@ public:
     }
 };
 
-int main()
-{
+int main() {
 
     System *appSys = new System();
 
@@ -1003,7 +1007,9 @@ int main()
                 {
                     Member *mem1 = appSys->registerAccount();
                     appSys->users.push_back(mem1);
-                    appSys->Login(appSys->users);
+                    if(mem1->getIsAdmin()==true) role="3";
+                    else role ="2";
+                    
                     break;
                 }
                 else if (choice == "N" | choice == "n")
@@ -1011,9 +1017,8 @@ int main()
                 cout << "Invalid Input! Please enter your choice again\n";
             }
         }
-        else
-            mem = appSys->Login(appSys->users);
-
+        
+        mem = appSys->Login(appSys->users);
         while (choice != "0")
         {
             appSys->checkRole(role);
