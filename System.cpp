@@ -190,11 +190,11 @@ public:
 
         if (AdminOrUser == 1){
             newMember->setIsAdmin(true);
-            data+="true";
+            data+="\ntrue";
         }
         else{
             newMember->setIsAdmin(false);
-            data+="false";
+            data+="\nfalse";
         }
 
         cout << "Enter username: ";
@@ -1013,13 +1013,24 @@ public:
     }
     
     vector<string> splitString(string s){
-        string delimiter = ",";
         vector<string> records;
-        size_t pos;
-        while ((pos = s.find(delimiter)) != string::npos) {
-            records.push_back(s.substr(0, pos));
-            s.erase(0, pos + delimiter.length());
+        string add="";
+        s+=",";
+        for(char ch: s){
+            if(ch==','){
+                records.push_back(add);
+                add="";
+                continue;
+            }
+            add+=ch;
         }
+        // string delimiter = ",";
+        // vector<string> records;
+        // size_t pos;
+        // while ((pos = s.find(delimiter)) != string::npos) {
+        //     records.push_back(s.substr(0, pos));
+        //     s.erase(0, pos + delimiter.length());
+        // }
         return records;
     }
 
