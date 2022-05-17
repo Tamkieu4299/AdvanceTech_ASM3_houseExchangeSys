@@ -8,8 +8,8 @@
 
 using namespace std;
 
-// House class
-class House {
+class House
+{
 private:
 	string location;
 	string descripton;
@@ -23,127 +23,164 @@ private:
 	long usedTimes;
 	long usedDays;
 	vector<string> comments;
-	vector<Request*> requests; 
+	vector<Request *> requests;
 
 public:
-	House(){};
+	House()
+	{
+		this->houseRatingScrore = 0;
+		this->consumingPoints = 0;
+		this->usedTimes = 0;
+		this->requiredMinOccupierRating = 0;
+	};
 
-	House(string location, string descripton){
-		this->location=location;
-		this->descripton=descripton;
-		this->usedTimes=0;
-		this->requiredMinOccupierRating=0;
-		this->houseRatingScrore=0;
+	House(string location, string descripton)
+	{
+		this->location = location;
+		this->descripton = descripton;
+		this->usedTimes = 0;
+		this->requiredMinOccupierRating = 0;
+		this->houseRatingScrore = 0;
 	}
 
-	string getLocation(){
+	string getLocation()
+	{
 		return this->location;
 	}
 
-	void setLocation(string location){
-		this->location=location;
+	void setLocation(string location)
+	{
+		this->location = location;
 	}
 
-	string getDescription(){
+	string getDescription()
+	{
 		return this->descripton;
 	}
 
-	void setDescription(string descripton){
-		this->descripton=descripton;
+	void setDescription(string descripton)
+	{
+		this->descripton = descripton;
 	}
 
-	double getHouseRatingScore(){
+	double getHouseRatingScore()
+	{
 		return this->houseRatingScrore;
 	}
 
-	void setHouseRatingScore(double houseRatingScore){
-		this->houseRatingScrore=houseRatingScore;
+	void setHouseRatingScore(double houseRatingScore)
+	{
+		this->houseRatingScrore = houseRatingScore;
 	}
 
-	string getStartDate(){
+	string getStartDate()
+	{
 		return this->startDate;
 	}
 
-	void setStartDate(string startDate){
-		this->startDate=startDate;
+	void setStartDate(string startDate)
+	{
+		this->startDate = startDate;
 	}
 
-	string getEndDate(){
+	string getEndDate()
+	{
 		return this->endDate;
 	}
 
-	void setEndDate(string endDate){
-		this->endDate=endDate;
+	void setEndDate(string endDate)
+	{
+		this->endDate = endDate;
 	}
 
-	void setAvailablePeriodStart(string availablePeriodStart){
-		this->availablePeriodStart=availablePeriodStart;
+	void setAvailablePeriodStart(string availablePeriodStart)
+	{
+		this->availablePeriodStart = availablePeriodStart;
 	}
 
-	string getAvailablePeriodEnd(){
+	string getAvailablePeriodEnd()
+	{
 		return this->availablePeriodEnd;
 	}
 
-	void setAvailablePeriodEnd(string availablePeriodEnd){
-		this->availablePeriodEnd=availablePeriodEnd;
+	void setAvailablePeriodEnd(string availablePeriodEnd)
+	{
+		this->availablePeriodEnd = availablePeriodEnd;
 	}
 
-	string getAvailablePeriodStart(){
+	string getAvailablePeriodStart()
+	{
 		return this->availablePeriodStart;
 	}
 
-	double getConsumingPoints(){
+	double getConsumingPoints()
+	{
 		return this->consumingPoints;
 	}
 
-	void setConsumingPoints(double consumingPoints){
-		this->consumingPoints=consumingPoints;
+	// void newConsumingPoints(){
+	// 	this->setConsumingPoints(this->getUsedTimes()/this->getUsedDays());
+	// }
+
+	void setConsumingPoints(double consumingPoints)
+	{
+		this->consumingPoints = consumingPoints;
 	}
 
-	long getUsedTimes(){
+	long getUsedTimes()
+	{
 		return this->usedTimes;
 	}
 
-	void setUsedTimes(){
+	void setUsedTimes()
+	{
 		this->usedTimes++;
 	}
 
-	double getRequiredMinOccupierRating(){
+	double getRequiredMinOccupierRating()
+	{
 		return this->requiredMinOccupierRating;
 	}
 
-	void setRequiredMinOccupierRating(double requiredMinOccupier){
-		this->requiredMinOccupierRating=requiredMinOccupier;
+	void setRequiredMinOccupierRating(double requiredMinOccupier)
+	{
+		this->requiredMinOccupierRating = requiredMinOccupier;
 	}
 
-	void setUsedDays(long usedDays){
-		this->usedDays=usedDays;
+	void setUsedDays(long usedDays)
+	{
+		this->usedDays = usedDays;
 	}
 
-	long getUsedDays(){
+	long getUsedDays()
+	{
 		return this->usedDays;
 	}
 
-	void setComments(vector<string> comments){
-		this->comments=comments;
+	void setComments(vector<string> comments)
+	{
+		this->comments = comments;
 	}
 
-	vector<string> getComments(){
+	vector<string> getComments()
+	{
 		return this->comments;
 	}
 
-	void setRequests(vector<Request*> requests){
-		this->requests=requests;
+	void setRequests(vector<Request *> requests)
+	{
+		this->requests = requests;
 	}
 
-	vector<Request*> getRequests(){
+	vector<Request *> getRequests()
+	{
 		return this->requests;
 	}
 
 	// Check if the house if free between start and end
 	bool isFree(string start, string end){
 		Time time = Time();
-		if(this->getAvailablePeriodStart()=="" && this->getAvailablePeriodEnd()=="" && this->getUsedTimes()==0) 
+		if (this->getAvailablePeriodStart() == "" && this->getAvailablePeriodEnd() == "" && this->getUsedTimes() == 0)
 			return true;
 
 		tm tmAvaiStart = time.stringToTime(this->getAvailablePeriodStart());
@@ -155,36 +192,32 @@ public:
 		tm tmHouseStart = time.stringToTime(this->getStartDate());
 		tm tmHouseEnd = time.stringToTime(this->getEndDate());
 
-		if(time.compareSmallerTime(tmEnd, tmAvaiEnd) && time.compareBiggerTime(tmStart, tmAvaiStart))
-			if(time.compareSmallerTime(tmEnd, tmHouseStart) || time.compareBiggerTime(tmStart, tmHouseEnd))
+		if (time.compareSmallerTime(tmEnd, tmAvaiEnd) && time.compareBiggerTime(tmStart, tmAvaiStart))
+			if (time.compareSmallerTime(tmEnd, tmHouseStart) || time.compareBiggerTime(tmStart, tmHouseEnd))
 				return true;
 		return false;
 	}
 
 	// Count the days between the period for calculating consuming points in a period
-	long countDays(string start, string end){
+	long countDays(string start, string end)
+	{
 		stringstream ss(start + "-" + end);
 		int year, month, day;
 		char hyphen;
-	
+
 		// Parse the first date into seconds
 		ss >> year >> hyphen >> month >> hyphen >> day;
-		struct tm starttm = { 0, 0, 0, day, month - 1, year - 1900 };
+		struct tm starttm = {0, 0, 0, day, month - 1, year - 1900};
 		time_t ttStart = mktime(&starttm);
-	
+
 		// Parse the second date into seconds
 		ss >> hyphen >> year >> hyphen >> month >> hyphen >> day;
-		struct tm endtm = { 0, 0, 0, day, month - 1, year - 1900 };
+		struct tm endtm = {0, 0, 0, day, month - 1, year - 1900};
 		time_t ttEnd = mktime(&endtm);
-		
+
 		// Find out the difference and divide it by 86400 to get the number of days
 		return abs(ttEnd - ttStart) / 86400;
 	}
 
 	friend class Member;
-	
 };
-
-
-
-
