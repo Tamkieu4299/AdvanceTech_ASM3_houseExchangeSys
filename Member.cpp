@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// Member class
 class Member{
 private:
 	string username;
@@ -150,26 +151,5 @@ public:
 
 	friend class System;
 };
-
-// int main(int argc, char const *argv[]){
-// 	Member m1 = Member("kt", "1233", "123", "123");
-// 	Member m2 = Member("bh", "123", "123", "123");
-// 	House house = House("HCM", "Hcm");
-// 	m1.setHouseForOwn(&house);
-// 	m2.setHouseForLive(&house);
-// 	m1.getHouseForOwn()->setAvailablePeriodStart("2022/04/22");
-	
-// 	m1.setPartner(&m2);
-// 	m2.setOccupyTimes();
-// 	m1.ratingOccupier(5.0, m1.getPartner());
-// 	cout<<m2.getOccupierRatingScore()<<endl;
-// 	house.setUsedTimes();
-// 	m2.ratingHouse(5.0, m2.getHouseForLive());
-
-// 	cout<<house.getHouseRatingScrore()<<endl;
-
-// 	return 0;
-// }
-
 
 

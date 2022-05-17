@@ -3,6 +3,7 @@
 
 using namespace std;
 
+// Request class
 class Request{
 private:
     string start;
