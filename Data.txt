@@ -1,0 +1,6 @@
+false,Tam3,123,Tam,01234,Saigon,hcm
+false,Tam,123,Tam,0123456,Saigon,hcm
+false,Tam2,123,Tam,0123456,Danang,danang
+false,Thanh,123,Thanh,0123456,Saigon,hcm
+true,Tamad,456,Kieu,0123456,Saigon,hcm
+false,Tamregis,123,123,123,Hanoi,hn

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
+#include <fstream>
 
 #include "Member.cpp"
 
@@ -182,34 +183,43 @@ public:
     {
         cout << "-----Register account--------\n";
         cout << "Register as 1->Admin  2->Member: ";
+        string data="";
         int AdminOrUser;
         cin >> AdminOrUser;
         Member *newMember = new Member();
 
-        if (AdminOrUser == 1)
+        if (AdminOrUser == 1){
             newMember->setIsAdmin(true);
-        else
+            data+="true";
+        }
+        else{
             newMember->setIsAdmin(false);
+            data+="false";
+        }
 
         cout << "Enter username: ";
         string username;
         cin >> username;
         newMember->setUsername(username);
+        data+=","+username;
 
         cout << "Enter password: ";
         string password;
         cin >> password;
         newMember->setPassword(password);
+        data+=","+password;
 
         cout << "Enter fullname: ";
         string fullname;
         cin >> fullname;
         newMember->setFullname(fullname);
+        data+=","+fullname;
 
         cout << "Enter Phone: ";
         string phone;
         cin >> phone;
         newMember->setPhone(phone);
+        data+=","+phone;
 
         cout << "Enter house ? Press 1->Yes  2->No : ";
         int enterHouse;
@@ -219,26 +229,20 @@ public:
             cout << "Enter Location: ";
             string location;
             cin >> location;
+            data+=","+location;
 
             cout << "Enter Description: ";
             string description;
             cin >> description;
-            // House house = House(location, description);
-            // House house_copy = house;
+            data+=","+description;
             House *house = new House(location, description);
             newMember->setHouseForOwn(house);
         }
-        // Member *ptMember = new Member();
-        // ptMember = &newMember;
+        ofstream myfile;
+        myfile.open ("Data.txt",fstream::app);
+        myfile << data;
 
         return newMember;
-
-        // // Store account into the system (if the registration is successful)
-        // this->users.push_back(newMember);
-        // cout << "All accounts in the system: \n";
-        // cout<<users.size()<<endl;
-        // for (Member eachUser: this->users)
-        // cout << "Name = " << eachUser.getUsername() << ", pwd = " << eachUser.getPassword()<<endl;
     }
 
     void houseAvailabilityManage(Member *&mem){
@@ -1007,41 +1011,88 @@ public:
             }
         }
     }
+    
+    vector<string> splitString(string s){
+        string delimiter = ",";
+        vector<string> records;
+        size_t pos;
+        while ((pos = s.find(delimiter)) != string::npos) {
+            records.push_back(s.substr(0, pos));
+            s.erase(0, pos + delimiter.length());
+        }
+        return records;
+    }
+
+    void readFile(){
+        string output;
+        ifstream myfile("Data.txt");
+        vector<string> datas;
+        while (getline (myfile, output)){
+            // isAdmin, username, passsword, fullname, phone, location, description
+            datas.push_back(output);
+        }
+
+        // create user and house to add to system
+        for(string data: datas){
+            vector<string> splitData = splitString(data);
+
+            Member *m = new Member();
+            bool isAdmin = splitData[0]=="true" ? true:false;
+            m->setIsAdmin(isAdmin);
+            m->setUsername(splitData[1]);
+            m->setPassword(splitData[2]);
+            m->setFullname(splitData[3]);
+            m->setPhone(splitData[4]);
+
+            House *h = new House();
+            h->setLocation(splitData[5]);
+            h->setDescription(splitData[6]);
+            
+            m->setHouseForOwn(h); 
+
+            this->users.push_back(m);  
+        }
+        myfile.close();
+    }
+
+    void writeFile(){
+
+    }
 };
 
 int main() {
-
+    
     System *appSys = new System();
+    appSys->readFile();
+    // Member mem1 = Member("Tam", "123", "Tam Kieu", "0123456");
+    // Member mem2 = Member("Thanh", "123", "Thanh Nguyen", "0123456");
+    // Member mem3 = Member("Tamad", "456", "Tam Kieu", "0123456");
+    // Member mem4 = Member("Tam2", "123", "Tam Kieu", "0123456");
 
-    Member mem1 = Member("Tam", "123", "Tam Kieu", "0123456");
-    Member mem2 = Member("Thanh", "123", "Thanh Nguyen", "0123456");
-    Member mem3 = Member("Tamad", "456", "Tam Kieu", "0123456");
-    Member mem4 = Member("Tam2", "123", "Tam Kieu", "0123456");
+    // House h1 = House("Saigon", "hcm");
+    // h1.setConsumingPoints(30);
 
-    House h1 = House("Saigon", "hcm");
-    h1.setConsumingPoints(30);
+    // House h2 = House("Saigon", "hcm");
+    // h2.setConsumingPoints(10);
 
-    House h2 = House("Saigon", "hcm");
-    h2.setConsumingPoints(10);
+    // House h3 = House("Saigon", "hcm");
+    // h3.setConsumingPoints(20);
 
-    House h3 = House("Saigon", "hcm");
-    h3.setConsumingPoints(20);
+    // House h4 = House("Saigon", "hcm");
+    // h4.setConsumingPoints(50);
 
-    House h4 = House("Saigon", "hcm");
-    h4.setConsumingPoints(50);
+    // mem1.setHouseForOwn(&h1);
+    // mem2.setHouseForOwn(&h2);
+    // mem3.setHouseForOwn(&h3);
+    // mem4.setHouseForOwn(&h4);
 
-    mem1.setHouseForOwn(&h1);
-    mem2.setHouseForOwn(&h2);
-    mem3.setHouseForOwn(&h3);
-    mem4.setHouseForOwn(&h4);
+    // mem2.setIsAdmin(false);
+    // mem3.setIsAdmin(true);
 
-    mem2.setIsAdmin(false);
-    mem3.setIsAdmin(true);
-
-    appSys->users.push_back(&mem1);
-    appSys->users.push_back(&mem2);
-    appSys->users.push_back(&mem3);
-    appSys->users.push_back(&mem4);
+    // appSys->users.push_back(&mem1);
+    // appSys->users.push_back(&mem2);
+    // appSys->users.push_back(&mem3);
+    // appSys->users.push_back(&mem4);
 
     while (true)
     {
