@@ -208,7 +208,9 @@ public:
 	// }
 
 	bool isFree(string start, string end){
-		if(this->getAvailablePeriodStart()=="" && this->getAvailablePeriodEnd()=="") return true;
+		if(this->getAvailablePeriodStart()=="" && this->getAvailablePeriodEnd()=="" && this->getUsedTimes()==0) 
+			return true;
+
 		tm tmAvaiStart = stringToTime(this->getAvailablePeriodStart());
 		tm tmAvaiEnd = stringToTime(this->getAvailablePeriodEnd());
 
