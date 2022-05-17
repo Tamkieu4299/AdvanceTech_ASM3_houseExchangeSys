@@ -80,11 +80,7 @@ public:
         House *house = availableHouses[index];
 
         Member *member = this->getMemberByUsername(username);
-        // if (member->getHouseForLive() != NULL)
-        // {
-        //     cout << "You have selected a house before !" << endl;
-        //     return;
-        // }
+
         Request *request = new Request();
         request->setRequestUsername(username);
         request->setStart(start);
@@ -1024,13 +1020,6 @@ public:
             }
             add+=ch;
         }
-        // string delimiter = ",";
-        // vector<string> records;
-        // size_t pos;
-        // while ((pos = s.find(delimiter)) != string::npos) {
-        //     records.push_back(s.substr(0, pos));
-        //     s.erase(0, pos + delimiter.length());
-        // }
         return records;
     }
 
@@ -1075,35 +1064,6 @@ int main() {
     
     System *appSys = new System();
     appSys->readFile();
-    // Member mem1 = Member("Tam", "123", "Tam Kieu", "0123456");
-    // Member mem2 = Member("Thanh", "123", "Thanh Nguyen", "0123456");
-    // Member mem3 = Member("Tamad", "456", "Tam Kieu", "0123456");
-    // Member mem4 = Member("Tam2", "123", "Tam Kieu", "0123456");
-
-    // House h1 = House("Saigon", "hcm");
-    // h1.setConsumingPoints(30);
-
-    // House h2 = House("Saigon", "hcm");
-    // h2.setConsumingPoints(10);
-
-    // House h3 = House("Saigon", "hcm");
-    // h3.setConsumingPoints(20);
-
-    // House h4 = House("Saigon", "hcm");
-    // h4.setConsumingPoints(50);
-
-    // mem1.setHouseForOwn(&h1);
-    // mem2.setHouseForOwn(&h2);
-    // mem3.setHouseForOwn(&h3);
-    // mem4.setHouseForOwn(&h4);
-
-    // mem2.setIsAdmin(false);
-    // mem3.setIsAdmin(true);
-
-    // appSys->users.push_back(&mem1);
-    // appSys->users.push_back(&mem2);
-    // appSys->users.push_back(&mem3);
-    // appSys->users.push_back(&mem4);
 
     while (true)
     {
