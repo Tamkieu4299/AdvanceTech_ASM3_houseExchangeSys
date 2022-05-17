@@ -1054,10 +1054,6 @@ public:
         }
         myfile.close();
     }
-
-    void writeFile(){
-
-    }
 };
 
 int main() {
