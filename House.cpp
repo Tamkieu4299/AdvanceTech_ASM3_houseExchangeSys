@@ -32,7 +32,6 @@ bool compareBiggerTime(tm t1, tm t2){
 		}
 	}
 	return true;
-
 }
 class House {
 private:
@@ -153,11 +152,6 @@ public:
 		return this->usedDays;
 	}
 
-	// void newUsedDays(string start, string end){
-	// 	long curUsedDays = this->getUsedDays();
-	// 	this->setUsedDays(curUsedDays+countDays(start,end));
-	// }
-
 	void setComments(vector<string> comments){
 		this->comments=comments;
 	}
@@ -173,39 +167,6 @@ public:
 	vector<Request*> getRequests(){
 		return this->requests;
 	}
-
-	// Check if the house is free in the period
-	// bool isFree(string start, string end){
-	// 	if(this->startDate == "" && this->endDate == "") return true;
-	// 	const char *availbleStart = this->getAvailablePeriodStart().c_str();
-	// 	const char *availbleEnd = this->getAvailablePeriodEnd().c_str();
-	// 	tm tmAvailableStart;
-	// 	tm tmAvailableEnd;
-	// 	sscanf(availbleStart,"%4d/%2d/%2d",&tmAvailableStart.tm_year,&tmAvailableStart.tm_mon,&tmAvailableStart.tm_mday);
-	// 	sscanf(availbleEnd,"%4d/%2d/%2d",&tmAvailableEnd.tm_year,&tmAvailableEnd.tm_mon,&tmAvailableEnd.tm_mday);
-
-	// 	const char *startDate = start.c_str();
-	// 	const char *endDate = end.c_str();
-	// 	tm tmStart;
-	// 	tm tmEnd;
-	// 	sscanf(startDate,"%4d/%2d/%2d",&tmStart.tm_year,&tmStart.tm_mon,&tmStart.tm_mday);
-	// 	sscanf(endDate,"%4d/%2d/%2d",&tmEnd.tm_year,&tmEnd.tm_mon,&tmEnd.tm_mday);
-
-	// 	const char *houseStart = this->startDate.c_str();
-	// 	const char *houseEnd = this->endDate.c_str();
-	// 	tm tmHouseStart;
-	// 	tm tmHouseEnd;
-	// 	sscanf(houseStart,"%4d/%2d/%2d",&tmHouseStart.tm_year,&tmHouseStart.tm_mon,&tmHouseStart.tm_mday);
-	// 	sscanf(houseEnd,"%4d/%2d/%2d",&tmHouseEnd.tm_year,&tmHouseEnd.tm_mon,&tmHouseEnd.tm_mday);
-
-	// 	//End to HouseStart
-	// 	if(tmEnd.tm_year<=tmAvailableStart.tm_year && tmEnd.tm_mon<=tmAvailableStart.tm_mon && tmEnd.tm_mday<=tmAvailableStart.tm_mday 
-	// 		|| tmAvailableEnd.tm_year<=tmStart.tm_year && tmAvailableEnd.tm_mon<=tmStart.tm_mon && tmAvailableEnd.tm_mday<=tmStart.tm_mday)
-	// 			if(tmEnd.tm_year<=tmHouseStart.tm_year && tmEnd.tm_mon<=tmHouseStart.tm_mon && tmEnd.tm_mday<=tmHouseStart.tm_mday 
-	// 				|| tmHouseEnd.tm_year<=tmStart.tm_year && tmHouseEnd.tm_mon<=tmStart.tm_mon && tmHouseEnd.tm_mday<=tmStart.tm_mday)
-	// 					return true;	
-	// 	return false;
-	// }
 
 	bool isFree(string start, string end){
 		if(this->getAvailablePeriodStart()=="" && this->getAvailablePeriodEnd()=="" && this->getUsedTimes()==0) 
@@ -243,7 +204,7 @@ public:
 		time_t ttEnd = mktime(&endtm);
 		
 		// Find out the difference and divide it by 86400 to get the number of days
-		return abs(ttEnd - ttStart) / 86400+1;
+		return abs(ttEnd - ttStart) / 86400;
 	}
 
 	friend class Member;
@@ -252,12 +213,9 @@ public:
 // int main(int argc, char const *argv[])
 // {
 // 	House house = House();
-// 	house.setAvailablePeriodStart("2022/05/15");
-// 	house.setAvailablePeriodEnd("2022/05/25");
-// 	house.setStartDate("2022/05/18");
-// 	house.setEndDate("2022/05/20");
 	
-// 	cout<<house.isFree("2022/05/18", "2022/05/20")<<endl;
+	
+// 	cout<<house.countDays("2022/05/18", "2022/05/19")<<endl;
 	
 // 	return 0;
 // }

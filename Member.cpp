@@ -18,7 +18,7 @@ private:
 	long occupyTimes;
 	bool isAdmin;
 	Member *partner;
-
+	
 public:
 	// Constructor
 	Member(){
@@ -27,7 +27,7 @@ public:
 		this->partner=NULL;
 		this->creditPoints=500;
 		this->houseForLive==NULL;
-	};
+	}
 
 	Member(string username, string password, string fullname, string phone){
 		this->username=username;
@@ -147,6 +147,8 @@ public:
 		this->getHouseForOwn()->setAvailablePeriodStart(start);
 		this->getHouseForOwn()->setAvailablePeriodEnd(end);
 	}
+
+	friend class System;
 };
 
 // int main(int argc, char const *argv[]){

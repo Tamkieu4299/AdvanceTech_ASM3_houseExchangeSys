@@ -168,6 +168,8 @@ public:
             member->setCreditPoints(member->getCreditPoints() + member->getHouseForOwn()->countDays(request->getStart(), request->getEnd()) * member->getHouseForOwn()->getConsumingPoints());
             // this->showRequests(member);
             this->delRequests(allRequests, request->getStart(), request->getEnd());
+            // Change status of request
+            request->setStatus("Accepted");
             member->getHouseForOwn()->setRequests(allRequests);
         }
         else
@@ -264,6 +266,19 @@ public:
                 cout << "Your house is now available for rented from: " << mem->getHouseForOwn()->getAvailablePeriodStart() << " to: " << mem->getHouseForOwn()->getAvailablePeriodEnd() << endl;
             }
         }
+    }
+
+    // vector of requests for requester to view the status
+    vector<Request *> requestsOfOccupier(Member *mem){
+        vector<Request*> records;
+        vector<House *> allHouses = this->getAllHouses();
+
+        for(House *house: allHouses){
+            for(Request *req: house->getRequests()){
+                if(req->getRequestUsername()==mem->getUsername()) records.push_back(req);
+            }
+        }
+        return records;
     }
 
     // validate user choice
@@ -529,26 +544,49 @@ public:
                 cout << "\nThank you for rating!" << endl;
                 break;
             // view requests
-            case 5:
-                if (mem->getHouseForOwn()->getRequests().size() == 0)
+            case 5:{
+                int reqChoice;
+                cout << "\nRequests Management:" << endl
+                << "0. Exit" << endl
+                << "1. Received requests " << endl
+                << "2. Send requests" << endl;
+                cin>>reqChoice;
+                if(reqChoice==1){
+                    if (mem->getHouseForOwn()->getRequests().size() == 0)
                     cout << "No requests" << endl;
-                else
-                {
-                    cout << "\nRequest: " << endl
-                        << endl;
-                    int cnt = 0;
-                    string start;
-                    string end;
-                    for (Request *req : mem->getHouseForOwn()->getRequests())
-                        cout << cnt++ << " | "
-                            << "Requested Username: " << req->getRequestUsername() << endl
-                            << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
-                    int numReq;
-                    cout<<"Enter the number of request: "<<endl;
-                    cin>>numReq;
-                    sys->acceptRequest(mem, numReq);
+                    else
+                    {
+                        cout << "\nRequest: " << endl
+                            << endl;
+                        int cnt = 0;
+                        string start;
+                        string end;
+                        for (Request *req : mem->getHouseForOwn()->getRequests())
+                            cout << cnt++ << " | "
+                                << "Requested Username: " << req->getRequestUsername() << endl
+                                << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
+                        int numReq;
+                        cout<<"Enter the number of request: "<<endl;
+                        cin>>numReq;
+                        sys->acceptRequest(mem, numReq);
+                    }
+                }
+                else if(reqChoice==2){
+                    vector<Request*> allReqs = this->requestsOfOccupier(mem);
+                    if(allReqs.size()==0){
+                        cout<<"Currently no requests"<<endl;
+                    }
+                    else {
+                        int cnt=0;
+                        for(Request *req: allReqs){
+                            cout << cnt++ << " | "
+                                << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl
+                                << "Status: " << req->getStatus() << endl;
+                        }
+                    }
                 }
                 break;
+            }
             // view info
             case 6:
                 cout << "\nPersonal Info: " << endl
@@ -754,17 +792,49 @@ public:
                 break;
             // view requests
             case 5:
-                if (mem->getHouseForOwn()->getRequests().size() == 0)
-                    cout << "No requests" << endl;
-                else
                 {
-                    cout << "\nRequest: " << endl
-                        << endl;
-                    for (Request *req : mem->getHouseForOwn()->getRequests())
-                        cout << "Requested Username: " << req->getRequestUsername() << endl
-                            << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
+                int reqChoice;
+                cout << "\nRequests Management:" << endl
+                << "0. Exit" << endl
+                << "1. Received requests " << endl
+                << "2. Send requests" << endl;
+                cin>>reqChoice;
+                if(reqChoice==1){
+                    if (mem->getHouseForOwn()->getRequests().size() == 0)
+                    cout << "No requests" << endl;
+                    else
+                    {
+                        cout << "\nRequest: " << endl
+                            << endl;
+                        int cnt = 0;
+                        string start;
+                        string end;
+                        for (Request *req : mem->getHouseForOwn()->getRequests())
+                            cout << cnt++ << " | "
+                                << "Requested Username: " << req->getRequestUsername() << endl
+                                << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl;
+                        int numReq;
+                        cout<<"Enter the number of request: "<<endl;
+                        cin>>numReq;
+                        sys->acceptRequest(mem, numReq);
+                    }
+                }
+                else if(reqChoice==2){
+                    vector<Request*> allReqs = this->requestsOfOccupier(mem);
+                    if(allReqs.size()==0){
+                        cout<<"Currently no requests"<<endl;
+                    }
+                    else {
+                        int cnt=0;
+                        for(Request *req: allReqs){
+                            cout << cnt++ << " | "
+                                << "Start Date - End Date: " << req->getStart() << "-" << req->getEnd() << endl
+                                << "Status: " << req->getStatus() << endl;
+                        }
+                    }
                 }
                 break;
+            }
             // view info
             case 6:
                 cout << "\nPersonal Info: " << endl
@@ -1017,7 +1087,7 @@ int main() {
                 cout << "Invalid Input! Please enter your choice again\n";
             }
         }
-        
+
         mem = appSys->Login(appSys->users);
         while (choice != "0")
         {

@@ -8,9 +8,12 @@ private:
     string start;
     string end;
     string requestUsername;
+    string status;
 
 public:
-    Request(){}
+    Request(){
+        this->status="pending";
+    }
 
     string getRequestUsername(){
         return this->requestUsername;
@@ -34,6 +37,15 @@ public:
 
     void setEnd(string end){
         this->end=end;
+    }
+
+
+    string getStatus(){
+        return this->status;
+    }
+
+    void setStatus(string status){
+        this->status=status;
     }
 
 };
