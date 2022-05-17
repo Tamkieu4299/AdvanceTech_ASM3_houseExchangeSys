@@ -4,35 +4,36 @@
 #include <sstream>
 #include <time.h>
 #include "Request.cpp"
+#include "Time.cpp"
 
 using namespace std;
 
-tm stringToTime(string str){
-    const char *cstr = str.c_str();
-    tm tmStr;
-    sscanf(cstr,"%4d/%2d/%2d",&tmStr.tm_year,&tmStr.tm_mon,&tmStr.tm_mday);
-    return tmStr;
-}
-bool compareSmallerTime(tm t1, tm t2){
-    if(t1.tm_year>t2.tm_year) return false;
-	else if(t1.tm_year=t2.tm_year){
-		if(t1.tm_mon>t2.tm_mon) return false;
-		else if(t1.tm_mon=t2.tm_mon){
-			if(t1.tm_mday>t2.tm_mday) return false;
-		}
-	}
-	return true;
-}
-bool compareBiggerTime(tm t1, tm t2){
-    if(t1.tm_year<t2.tm_year) return false;
-	else if(t1.tm_year=t2.tm_year){
-		if(t1.tm_mon<t2.tm_mon) return false;
-		else if(t1.tm_mon=t2.tm_mon){
-			if(t1.tm_mday<t2.tm_mday) return false;
-		}
-	}
-	return true;
-}
+// tm stringToTime(string str){
+//     const char *cstr = str.c_str();
+//     tm tmStr;
+//     sscanf(cstr,"%4d/%2d/%2d",&tmStr.tm_year,&tmStr.tm_mon,&tmStr.tm_mday);
+//     return tmStr;
+// }
+// bool compareSmallerTime(tm t1, tm t2){
+//     if(t1.tm_year>t2.tm_year) return false;
+// 	else if(t1.tm_year=t2.tm_year){
+// 		if(t1.tm_mon>t2.tm_mon) return false;
+// 		else if(t1.tm_mon=t2.tm_mon){
+// 			if(t1.tm_mday>t2.tm_mday) return false;
+// 		}
+// 	}
+// 	return true;
+// }
+// bool compareBiggerTime(tm t1, tm t2){
+//     if(t1.tm_year<t2.tm_year) return false;
+// 	else if(t1.tm_year=t2.tm_year){
+// 		if(t1.tm_mon<t2.tm_mon) return false;
+// 		else if(t1.tm_mon=t2.tm_mon){
+// 			if(t1.tm_mday<t2.tm_mday) return false;
+// 		}
+// 	}
+// 	return true;
+// }
 class House {
 private:
 	string location;
@@ -169,20 +170,21 @@ public:
 	}
 
 	bool isFree(string start, string end){
+		Time time = Time();
 		if(this->getAvailablePeriodStart()=="" && this->getAvailablePeriodEnd()=="" && this->getUsedTimes()==0) 
 			return true;
 
-		tm tmAvaiStart = stringToTime(this->getAvailablePeriodStart());
-		tm tmAvaiEnd = stringToTime(this->getAvailablePeriodEnd());
+		tm tmAvaiStart = time.stringToTime(this->getAvailablePeriodStart());
+		tm tmAvaiEnd = time.stringToTime(this->getAvailablePeriodEnd());
 
-		tm tmStart = stringToTime(start);
-		tm tmEnd = stringToTime(end);
+		tm tmStart = time.stringToTime(start);
+		tm tmEnd = time.stringToTime(end);
 
-		tm tmHouseStart = stringToTime(this->getStartDate());
-		tm tmHouseEnd = stringToTime(this->getEndDate());
+		tm tmHouseStart = time.stringToTime(this->getStartDate());
+		tm tmHouseEnd = time.stringToTime(this->getEndDate());
 
-		if(compareSmallerTime(tmEnd, tmAvaiEnd) && compareBiggerTime(tmStart, tmAvaiStart))
-			if(compareSmallerTime(tmEnd, tmHouseStart) || compareBiggerTime(tmStart, tmHouseEnd))
+		if(time.compareSmallerTime(tmEnd, tmAvaiEnd) && time.compareBiggerTime(tmStart, tmAvaiStart))
+			if(time.compareSmallerTime(tmEnd, tmHouseStart) || time.compareBiggerTime(tmStart, tmHouseEnd))
 				return true;
 		return false;
 	}
@@ -213,9 +215,9 @@ public:
 // int main(int argc, char const *argv[])
 // {
 // 	House house = House();
-	
-	
-// 	cout<<house.countDays("2022/05/18", "2022/05/19")<<endl;
+// 	house.setAvailablePeriodStart("2022/05/15");
+// 	house.setAvailablePeriodEnd("2022/05/20");
+// 	cout<<house.isFree("2022/05/13", "2022/05/14")<<endl;
 	
 // 	return 0;
 // }

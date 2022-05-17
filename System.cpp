@@ -115,14 +115,15 @@ public:
     // Delete appropriate request
     void delRequests(vector<Request *> &requests, string start, string end)
     {
-        tm tmcStart = stringToTime(start);
-        tm tmcEnd = stringToTime(end);
+        Time time = Time();
+        tm tmcStart = time.stringToTime(start);
+        tm tmcEnd = time.stringToTime(end);
 
         vector<int> delIndex;
         for (int i = 0; i < requests.size(); i++)
         {
             Request *request = requests[i];
-            if (compareSmallerTime(stringToTime(request->getEnd()), tmcEnd) && compareBiggerTime(stringToTime(request->getStart()), tmcStart) || compareSmallerTime(stringToTime(request->getEnd()), tmcEnd) && compareBiggerTime(stringToTime(request->getEnd()), tmcStart) || compareSmallerTime(stringToTime(request->getStart()), tmcEnd) && compareBiggerTime(stringToTime(request->getStart()), tmcStart))
+            if (time.compareSmallerTime(time.stringToTime(request->getEnd()), tmcEnd) && time.compareBiggerTime(time.stringToTime(request->getStart()), tmcStart) || time.compareSmallerTime(time.stringToTime(request->getEnd()), tmcEnd) && time.compareBiggerTime(time.stringToTime(request->getEnd()), tmcStart) || time.compareSmallerTime(time.stringToTime(request->getStart()), tmcEnd) && time.compareBiggerTime(time.stringToTime(request->getStart()), tmcStart))
                 delIndex.push_back(i);
         }
 
@@ -1079,7 +1080,7 @@ int main() {
                     appSys->users.push_back(mem1);
                     if(mem1->getIsAdmin()==true) role="3";
                     else role ="2";
-                    
+                    mem = appSys->Login(appSys->users);
                     break;
                 }
                 else if (choice == "N" | choice == "n")
@@ -1088,7 +1089,7 @@ int main() {
             }
         }
 
-        mem = appSys->Login(appSys->users);
+        else if(role=="2" || role=="3") mem = appSys->Login(appSys->users);
         while (choice != "0")
         {
             appSys->checkRole(role);
