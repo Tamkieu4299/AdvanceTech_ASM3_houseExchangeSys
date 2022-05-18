@@ -430,7 +430,7 @@ public:
         else if (role == "2")
         {
             cout << "\nThis is your menu:" << endl
-                 << "0. Exit" << endl
+                 << "0. Log out" << endl
                  << "1. Manage your house" << endl
                  << "2. Search for available suitable houses" << endl
                  << "3. Rate house" << endl
@@ -445,7 +445,7 @@ public:
         else
         {
             cout << "\nThis is your menu:" << endl
-                 << "0. Exit" << endl
+                 << "0. Log out" << endl
                  << "1. Manage your house " << endl
                  << "2. Search for available suitable houses" << endl
                  << "3. Rate house" << endl
