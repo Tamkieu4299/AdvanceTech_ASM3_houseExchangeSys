@@ -479,7 +479,6 @@ public:
                 for (House *house : sys->getAllHouses())
                 {
                     count++;
-
                     cout << count << "." << endl
                          << "Location: " << house->getLocation() << "         | Consuming Points: " << house->getConsumingPoints() << endl
                          << "Rating : " << house->getHouseRatingScore() << " | Used Times: " << house->getUsedTimes() << endl;
@@ -699,11 +698,12 @@ public:
                 {
                     for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details without review
                     {
-
+                        if (house == mem->getHouseForOwn())
+                            continue;
                         cout << count << "." << endl
                              << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
                              << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
-                             << end;
+                             << endl;
                         count++;
                     }
                 }
