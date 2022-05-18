@@ -45,8 +45,10 @@ public:
     // Show list of houses to be used in a the period
     vector<House *> availableHouses(string start, string end)
     {
+
         vector<House *> allHouses = this->getAllHouses();
         vector<House *> availableRecords;
+        
         for (House *house : allHouses)
             if (house->isFree(start, end))
             {
@@ -268,8 +270,9 @@ public:
                 cout << "Please enter an end day: " << endl;
                 cin >> newEndDate;
 
-                mem->setAvailablePeriod(newStartDate, newEndDate);
-                cout << "Your house is now available for rented from: " << mem->getHouseForOwn()->getAvailablePeriodStart() << " to: " << mem->getHouseForOwn()->getAvailablePeriodEnd() << endl;
+                bool checkSuccess = mem->setAvailablePeriod(newStartDate, newEndDate);
+                if(checkSuccess) cout << "Your house is now available for rented from: " << mem->getHouseForOwn()->getAvailablePeriodStart() << " to: " << mem->getHouseForOwn()->getAvailablePeriodEnd() << endl;
+                else cout<<"START DATE cannot be BIGGER than END DATE"<<endl;
             }
         }
     }
