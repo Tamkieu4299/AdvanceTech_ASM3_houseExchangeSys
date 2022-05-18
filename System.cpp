@@ -501,7 +501,8 @@ public:
             {
                 cout << "\nHouse controller:" << endl
                      << "1. List/Unlist available occupied houses" << endl
-                     << "2. Set consuming points for your house" << endl;
+                     << "2. Set consuming points for your house" << endl
+                     << "3. Set minimum required rating score for your house" << endl;
                 string houseMana;
                 cin >> houseMana;
                 if (houseMana == "1")
@@ -509,9 +510,16 @@ public:
                 else if (houseMana == "2")
                 {
                     cout << "Enter the consuming points" << endl;
-                    int consume;
+                    double consume;
                     cin >> consume;
                     mem->getHouseForOwn()->setConsumingPoints(consume);
+                }
+                else if (houseMana == "3")
+                {
+                    cout << "Enter the minimum required rating score" << endl;
+                    double minScore;
+                    cin >> minScore;
+                    mem->getHouseForOwn()->setRequiredMinOccupierRating(minScore);
                 }
                 break;
             }
