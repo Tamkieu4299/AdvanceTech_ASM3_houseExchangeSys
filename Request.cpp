@@ -4,7 +4,8 @@
 using namespace std;
 
 // Request class
-class Request{
+class Request
+{
 private:
     string start;
     string end;
@@ -12,41 +13,48 @@ private:
     string status;
 
 public:
-    Request(){
-        this->status="pending";
+    Request()
+    {
+        this->status = "pending";
     }
 
-    string getRequestUsername(){
+    string getRequestUsername()
+    {
         return this->requestUsername;
     }
 
-    void setRequestUsername(string requestUsername){
-        this->requestUsername=requestUsername;
+    void setRequestUsername(string requestUsername)
+    {
+        this->requestUsername = requestUsername;
     }
 
-    string getStart(){
+    string getStart()
+    {
         return this->start;
     }
 
-    void setStart(string start){
-        this->start=start;
+    void setStart(string start)
+    {
+        this->start = start;
     }
 
-    string getEnd(){
+    string getEnd()
+    {
         return this->end;
     }
 
-    void setEnd(string end){
-        this->end=end;
+    void setEnd(string end)
+    {
+        this->end = end;
     }
 
-
-    string getStatus(){
+    string getStatus()
+    {
         return this->status;
     }
 
-    void setStatus(string status){
-        this->status=status;
+    void setStatus(string status)
+    {
+        this->status = status;
     }
-
 };

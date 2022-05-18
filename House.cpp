@@ -178,20 +178,21 @@ public:
 	}
 
 	// Check if the house if free between start and end
-	bool isFree(string start, string end){
+	bool isFree(string start, string end)
+	{
 		Time time = Time();
 		tm tmStart = time.stringToTime(start);
 		tm tmEnd = time.stringToTime(end);
 
-		if(time.compareBiggerTime(tmStart, tmEnd)) return false;
-
+		if (time.compareBiggerTime(tmStart, tmEnd))
+			return false;
 
 		if (this->getAvailablePeriodStart() == "" && this->getAvailablePeriodEnd() == "" && this->getUsedTimes() == 0)
 			return true;
 
 		tm tmAvaiStart = time.stringToTime(this->getAvailablePeriodStart());
 		tm tmAvaiEnd = time.stringToTime(this->getAvailablePeriodEnd());
-		
+
 		// tm tmStart = time.stringToTime(start);
 		// tm tmEnd = time.stringToTime(end);
 
