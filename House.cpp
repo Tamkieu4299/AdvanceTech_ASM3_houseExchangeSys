@@ -198,7 +198,7 @@ public:
 		tm tmHouseStart = time.stringToTime(this->getStartDate());
 		tm tmHouseEnd = time.stringToTime(this->getEndDate());
 
-		if (time.compareSmallerTime(tmEnd, tmAvaiEnd) && time.compareBiggerTime(tmStart, tmAvaiStart))
+		if (time.compareSmallerTime(tmEnd, tmAvaiEnd) && time.compareBiggerTime(tmStart, tmAvaiStart) || this->getAvailablePeriodStart() == "" && this->getAvailablePeriodEnd() == "")
 			if (time.compareSmallerTime(tmEnd, tmHouseStart) || time.compareBiggerTime(tmStart, tmHouseEnd))
 				return true;
 		return false;

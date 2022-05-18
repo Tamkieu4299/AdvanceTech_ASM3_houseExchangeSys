@@ -148,8 +148,7 @@ public:
         }
 
         Request *request = allRequests[index];
-        if (member->getHouseForOwn()->isFree(request->getStart(), request->getEnd()))
-        {
+        if (member->getHouseForOwn()->isFree(request->getStart(), request->getEnd())){
             cout << "Successfully accept request from user: " << this->getMemberByUsername(request->getRequestUsername())->getUsername() << " | From: " << request->getStart() << " | To: " << request->getEnd() << endl;
             allRequests.erase(allRequests.begin() + index);
             member->getHouseForOwn()->setStartDate(request->getStart());
