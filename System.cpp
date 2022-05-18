@@ -48,7 +48,7 @@ public:
 
         vector<House *> allHouses = this->getAllHouses();
         vector<House *> availableRecords;
-        
+
         for (House *house : allHouses)
             if (house->isFree(start, end))
             {
@@ -270,8 +270,10 @@ public:
                 cin >> newEndDate;
 
                 bool checkSuccess = mem->setAvailablePeriod(newStartDate, newEndDate);
-                if(checkSuccess) cout << "Your house is now available for rented from: " << mem->getHouseForOwn()->getAvailablePeriodStart() << " to: " << mem->getHouseForOwn()->getAvailablePeriodEnd() << endl;
-                else cout<<"START DATE cannot be BIGGER than END DATE"<<endl;
+                if (checkSuccess)
+                    cout << "Your house is now available for rented from: " << mem->getHouseForOwn()->getAvailablePeriodStart() << " to: " << mem->getHouseForOwn()->getAvailablePeriodEnd() << endl;
+                else
+                    cout << "START DATE cannot be BIGGER than END DATE" << endl;
             }
         }
     }
@@ -481,7 +483,6 @@ public:
                 for (House *house : sys->getAllHouses())
                 {
                     count++;
-
                     cout << count << "." << endl
                          << "Location: " << house->getLocation() << "         | Consuming Points: " << house->getConsumingPoints() << endl
                          << "Rating : " << house->getHouseRatingScore() << " | Used Times: " << house->getUsedTimes() << endl;
@@ -701,11 +702,12 @@ public:
                 {
                     for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details without review
                     {
-
+                        if (house == mem->getHouseForOwn())
+                            continue;
                         cout << count << "." << endl
                              << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
                              << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
-                             << end;
+                             << endl;
                         count++;
                     }
                 }
