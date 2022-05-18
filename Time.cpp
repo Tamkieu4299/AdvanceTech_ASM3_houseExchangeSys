@@ -39,6 +39,7 @@ class Time{
         return true;
     }
 
+    friend class Member;
     friend class House;
     friend class System;
 };

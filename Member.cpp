@@ -144,9 +144,16 @@ public:
 	}
 
 	// Set the period which the owner wants to rent his house
-	void setAvailablePeriod(string start, string end){
+	bool setAvailablePeriod(string start, string end){
+		Time time = Time();
+		tm tmStart = time.stringToTime(start);
+		tm tmEnd = time.stringToTime(end);
+		if(time.compareBiggerTime(tmStart, tmEnd)) {
+			return false;
+		}
 		this->getHouseForOwn()->setAvailablePeriodStart(start);
 		this->getHouseForOwn()->setAvailablePeriodEnd(end);
+		return true;
 	}
 
 	friend class System;
