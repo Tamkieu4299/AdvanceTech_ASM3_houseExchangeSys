@@ -177,6 +177,18 @@ public:
             cout << "Your house is not be free on this period ! Please check again" << endl;
     }
 
+    bool checkDupUsername(string username){
+        bool isValid = false;
+        for(Member *member: this->users){
+            if(member->getUsername()==username) {
+                isValid = true;
+                cout<<"This username has been created before !"<<endl;
+                break;
+            }
+        }
+        return isValid;
+    }
+
     // Registration for non-member
     Member *registerAccount()
     {
@@ -198,9 +210,12 @@ public:
             data += "\nfalse";
         }
 
-        cout << "Enter username: ";
+        
         string username;
-        cin >> username;
+        while(username=="" ||checkDupUsername(username)) {
+            cout << "Enter username: ";
+            cin >> username;
+        }
         newMember->setUsername(username);
         data += "," + username;
 
@@ -517,7 +532,7 @@ public:
                         cout<<"Successfully registered a house !"<<endl;
                     }
                 }
-                else {
+                else { 
                     cout << "\nHouse controller:" << endl
                      << "1. List/Unlist available occupied houses" << endl
                      << "2. Set consuming points for your house" << endl
