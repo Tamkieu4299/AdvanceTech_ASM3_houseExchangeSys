@@ -500,27 +500,46 @@ public:
             // list/unlist house
             case 1:
             {
-                cout << "\nHouse controller:" << endl
+                if(mem->getHouseForOwn()==NULL){
+                    cout<<"Currently you register no house ! Register a house (Y/N)"<<endl;
+                    string response;
+                    cin>>response;
+                    if(response=="Y" || response=="y"){
+                        cout << "Enter Location: ";
+                        string location;
+                        cin >> location;
+
+                        cout << "Enter Description: ";
+                        string description;
+                        cin >> description;
+                        House *house = new House(location, description);
+                        mem->setHouseForOwn(house);
+                        cout<<"Successfully registered a house !"<<endl;
+                    }
+                }
+                else {
+                    cout << "\nHouse controller:" << endl
                      << "1. List/Unlist available occupied houses" << endl
                      << "2. Set consuming points for your house" << endl
                      << "3. Set minimum required rating score for your house" << endl;
-                string houseMana;
-                cin >> houseMana;
-                if (houseMana == "1")
-                    houseAvailabilityManage(mem);
-                else if (houseMana == "2")
-                {
-                    cout << "Enter the consuming points" << endl;
-                    double consume;
-                    cin >> consume;
-                    mem->getHouseForOwn()->setConsumingPoints(consume);
-                }
-                else if (houseMana == "3")
-                {
-                    cout << "Enter the minimum required rating score" << endl;
-                    double minScore;
-                    cin >> minScore;
-                    mem->getHouseForOwn()->setRequiredMinOccupierRating(minScore);
+                    string houseMana;
+                    cin >> houseMana;
+                    if (houseMana == "1")
+                        houseAvailabilityManage(mem);
+                    else if (houseMana == "2")
+                    {
+                        cout << "Enter the consuming points" << endl;
+                        double consume;
+                        cin >> consume;
+                        mem->getHouseForOwn()->setConsumingPoints(consume);
+                    }
+                    else if (houseMana == "3")
+                    {
+                        cout << "Enter the minimum required rating score" << endl;
+                        double minScore;
+                        cin >> minScore;
+                        mem->getHouseForOwn()->setRequiredMinOccupierRating(minScore);
+                    }
                 }
                 break;
             }
@@ -631,7 +650,8 @@ public:
                 break;
             // view House info
             case 7:
-                cout << "\nHouse Info: " << endl
+                if(mem->getHouseForOwn()!=NULL){
+                    cout << "\nHouse Info: " << endl
                      << endl
                      << "Location: " << mem->getHouseForOwn()->getLocation() << endl
                      << "Consuming Points: " << mem->getHouseForOwn()->getConsumingPoints() << endl
@@ -641,6 +661,8 @@ public:
                      << "Available for renting Start : " << mem->getHouseForOwn()->getAvailablePeriodStart() << endl
                      << "Available for renting End : " << mem->getHouseForOwn()->getAvailablePeriodStart() << endl
                      << endl;
+                }
+                else cout<<"Currently you register no house !"<<endl;
                 break;
             // search for suitable house
             case 2:
@@ -787,9 +809,50 @@ public:
             string usname = mem->getPartner() != NULL ? mem->getPartner()->getUsername() : "None";
             switch (intChoice)
             {
-            // list/unlist house
+            // House management
             case 1:
-                houseAvailabilityManage(mem);
+                if(mem->getHouseForOwn()==NULL){
+                    cout<<"Currently you register no house ! Register a house (Y/N)"<<endl;
+                    string response;
+                    cin>>response;
+                    if(response=="Y" || response=="y"){
+
+                        cout << "Enter Location: ";
+                        string location;
+                        cin >> location;
+
+                        cout << "Enter Description: ";
+                        string description;
+                        cin >> description;
+                        House *house = new House(location, description);
+                        mem->setHouseForOwn(house);
+                        cout<<"Successfully registered a house !"<<endl;
+                    }
+                }
+                else {
+                    cout << "\nHouse controller:" << endl
+                     << "1. List/Unlist available occupied houses" << endl
+                     << "2. Set consuming points for your house" << endl
+                     << "3. Set minimum required rating score for your house" << endl;
+                    string houseMana;
+                    cin >> houseMana;
+                    if (houseMana == "1")
+                        houseAvailabilityManage(mem);
+                    else if (houseMana == "2")
+                    {
+                        cout << "Enter the consuming points" << endl;
+                        double consume;
+                        cin >> consume;
+                        mem->getHouseForOwn()->setConsumingPoints(consume);
+                    }
+                    else if (houseMana == "3")
+                    {
+                        cout << "Enter the minimum required rating score" << endl;
+                        double minScore;
+                        cin >> minScore;
+                        mem->getHouseForOwn()->setRequiredMinOccupierRating(minScore);
+                    }
+                }
                 break;
             // rate living house
             case 3:
@@ -895,6 +958,20 @@ public:
                      << "Username : " << mem->getUsername() << endl
                      << "Present Partner : " << usname << endl
                      << endl;
+
+                if(mem->getHouseForOwn()!=NULL){
+                    cout << "\nHouse Info: " << endl
+                     << endl
+                     << "Location: " << mem->getHouseForOwn()->getLocation() << endl
+                     << "Consuming Points: " << mem->getHouseForOwn()->getConsumingPoints() << endl
+                     << "Rating Score: " << mem->getHouseForOwn()->getHouseRatingScore() << endl
+                     << "Occupying Start Date : " << mem->getHouseForOwn()->getStartDate() << endl
+                     << "Occupying End Date : " << mem->getHouseForOwn()->getEndDate() << endl
+                     << "Available for renting Start : " << mem->getHouseForOwn()->getAvailablePeriodStart() << endl
+                     << "Available for renting End : " << mem->getHouseForOwn()->getAvailablePeriodStart() << endl
+                     << endl;
+                }
+                else cout<<"Currently you register no house !"<<endl;
                 break;
             // search for suitable house
             case 2:
