@@ -193,13 +193,15 @@ public:
     Member *registerAccount()
     {
         cout << "-----Register account--------\n";
-        cout << "Register as 1->Admin  2->Member: ";
         string data = "";
-        int AdminOrUser;
-        cin >> AdminOrUser;
+        string AdminOrUser;
+        while(AdminOrUser=="" || !isdigit(AdminOrUser[0]) || AdminOrUser.size()>1){
+            cout << "Register as 1->Admin  2->Member: ";
+            cin >> AdminOrUser;
+        }
         Member *newMember = new Member();
 
-        if (AdminOrUser == 1)
+        if (AdminOrUser == "1")
         {
             newMember->setIsAdmin(true);
             data += "\ntrue";
