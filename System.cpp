@@ -514,12 +514,12 @@ public:
         // use menu as a member
         else if (role == "2")
         {
-            int intChoice = stoi(choice);
+            // int intChoice = stoi(choice);
             string usname = mem->getPartner() != NULL ? mem->getPartner()->getUsername() : "None";
-            switch (intChoice)
+            switch (choice[0])
             {
             // list/unlist house
-            case 1:
+            case '1':
             {
                 if(mem->getHouseForOwn()==NULL){
                     cout<<"Currently you register no house ! Register a house (Y/N)"<<endl;
@@ -565,7 +565,7 @@ public:
                 break;
             }
             // rate living house
-            case 3:
+            case '3':
                 if ((mem->getHouseForLive()) == NULL)
                 {
                     cout << "Invalid house" << endl;
@@ -586,7 +586,7 @@ public:
                 cout << "\nThank you for rating!" << endl;
                 break;
             // rate occupiers
-            case 4:
+            case '4':
                 if ((mem->getPartner()) == NULL)
                 {
                     cout << "Invalid occupier" << endl;
@@ -607,7 +607,7 @@ public:
                 cout << "\nThank you for rating!" << endl;
                 break;
             // view requests
-            case 5:
+            case '5':
             {
                 int reqChoice;
                 cout << "\nRequests Management:" << endl
@@ -657,7 +657,7 @@ public:
                 break;
             }
             // view info
-            case 6:
+            case '6':
                 cout << "\nPersonal Info: " << endl
                      << endl
                      << "Fullname: " << mem->getFullname() << endl
@@ -670,7 +670,7 @@ public:
                      << endl;
                 break;
             // view House info
-            case 7:
+            case '7':
                 if(mem->getHouseForOwn()!=NULL){
                     cout << "\nHouse Info: " << endl
                      << endl
@@ -686,7 +686,7 @@ public:
                 else cout<<"Currently you register no house !"<<endl;
                 break;
             // search for suitable house
-            case 2:
+            case '2':
             {
                 cout << "\nHouses : " << endl
                      << endl;
@@ -808,7 +808,7 @@ public:
                 break;
             }
 
-            case 8:
+            case '8':
                 if (mem->getHouseForLive() != NULL)
                 {
                     vector<string> cmts = mem->getHouseForLive()->getComments();
@@ -826,12 +826,12 @@ public:
         // use menu as an admin
         else if (role == "3")
         {
-            int intChoice = stoi(choice);
+            // int intChoice = stoi(choice);
             string usname = mem->getPartner() != NULL ? mem->getPartner()->getUsername() : "None";
-            switch (intChoice)
+            switch (choice[0])
             {
             // House management
-            case 1:
+            case '1':
                 if(mem->getHouseForOwn()==NULL){
                     cout<<"Currently you register no house ! Register a house (Y/N)"<<endl;
                     string response;
@@ -876,7 +876,7 @@ public:
                 }
                 break;
             // rate living house
-            case 3:
+            case '3':
                 if ((mem->getHouseForLive()) == NULL)
                 {
                     cout << "Invalid house" << endl;
@@ -897,7 +897,7 @@ public:
                 cout << "\nThank you for rating!" << endl;
                 break;
             // rate occupiers
-            case 4:
+            case '4':
                 if ((mem->getPartner()) == NULL)
                 {
                     cout << "Invalid occupier" << endl;
@@ -918,7 +918,7 @@ public:
                 cout << "\nThank you for rating!" << endl;
                 break;
             // view requests
-            case 5:
+            case '5':
             {
                 int reqChoice;
                 cout << "\nRequests Management:" << endl
@@ -968,7 +968,7 @@ public:
                 break;
             }
             // view info
-            case 6:
+            case '6':
                 cout << "\nPersonal Info: " << endl
                      << endl
                      << "Fullname: " << mem->getFullname() << endl
@@ -995,7 +995,7 @@ public:
                 else cout<<"Currently you register no house !"<<endl;
                 break;
             // search for suitable house
-            case 2:
+            case '2':
             {
                 cout << "\nHouses : " << endl
                      << endl;
@@ -1115,7 +1115,7 @@ public:
                 break;
             }
             // view everyone and houses info
-            case 7:
+            case '7':
             {
                 int count = 0;
                 cout << "\nPeople Info: " << endl
@@ -1149,7 +1149,7 @@ public:
                 }
                 break;
             }
-            case 8:
+            case '8':
                 if (mem->getHouseForLive() != NULL)
                 {
                     vector<string> cmts = mem->getHouseForLive()->getComments();
