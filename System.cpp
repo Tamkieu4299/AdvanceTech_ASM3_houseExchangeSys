@@ -176,7 +176,8 @@ public:
         else
             cout << "Your house is not be free on this period ! Please check again" << endl;
     }
-
+    
+    //check if username is used already
     bool checkDupUsername(string username){
         bool isValid = false;
         for(Member *member: this->users){
