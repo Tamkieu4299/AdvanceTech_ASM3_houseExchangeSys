@@ -690,37 +690,47 @@ public:
                 }
 
                 int count = 0;
+                vector<House*> avaiHouses = sys->availableHousesForMember(mem, start, end, city);
                 if ((review == "Y") || (review == "y"))
-                {
-                    for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details with review
-                    {
-                        if (house == mem->getHouseForOwn())
-                            continue;
-                        cout << count << "." << endl
-                             << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
-                             << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
-                             << "Review : " << endl;
-                        for (string cmt : house->getComments())
-                            cout << " " << cmt << endl;
-                        cout << endl;
-                        count++;
+                {   
+                    if(avaiHouses.size()==0)
+                        cout<<"Currently no houses for you !"<<endl;
+                    else {
+                        for (House *house : avaiHouses) // print houses' details with review
+                        {
+                            if (house == mem->getHouseForOwn())
+                                continue;
+                            cout << count << "." << endl
+                                << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
+                                << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
+                                << "Review : " << endl;
+                            for (string cmt : house->getComments())
+                                cout << " " << cmt << endl;
+                            cout << endl;
+                            count++;
+                        }
                     }
                 }
                 else
                 {
-                    for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details without review
-                    {
-                        if (house == mem->getHouseForOwn())
-                            continue;
-                        cout << count << "." << endl
-                             << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
-                             << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
-                             << endl;
-                        count++;
+                    if(avaiHouses.size()==0)
+                        cout<<"Currently no houses for you !"<<endl;
+                    else {
+                        for (House *house : avaiHouses) // print houses' details without review
+                        {
+                            if (house == mem->getHouseForOwn())
+                                continue;
+                            cout << count << "." << endl
+                                << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
+                                << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
+                                << endl;
+                            count++;
+                        }
                     }
                 }
 
-                while (true) // validate input
+                if(avaiHouses.size()!=0){
+                    while (true) // validate input
                 {
                     cout << "Do you want to make a request? (Y/N)" << endl;
                     cin >> review;
@@ -748,6 +758,8 @@ public:
 
                 else if ((review == "N") || (review == "n"))
                     break;
+                }
+                
                 cout << endl;
                 break;
             }
@@ -931,35 +943,46 @@ public:
                         break;
                 }
 
+                vector<House*> avaiHouses = sys->availableHousesForMember(mem, start, end, city);
                 int count = 0;
                 if ((review == "Y") | (review == "y"))
-                {
-                    for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details with review
-                    {
-                        count++;
-                        cout << count << "." << endl;
-                        cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
-                             << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
-                             << "Review : " << endl;
-                        for (string cmt : house->getComments())
-                            cout << "" << cmt << endl;
-                        cout << endl;
+                {   
+
+                    if(avaiHouses.size()==0)
+                        cout<<"Currently no houses for you !"<<endl;
+                    else{
+                        for (House *house : avaiHouses) // print houses' details with review
+                        {
+                            count++;
+                            cout << count << "." << endl;
+                            cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
+                                << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
+                                << "Review : " << endl;
+                            for (string cmt : house->getComments())
+                                cout << "" << cmt << endl;
+                            cout << endl;
+                        }
                     }
                 }
                 else
-                {
-                    for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details without review
-                    {
-                        count++;
-                        cout << count << "." << endl;
-                        cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
-                             << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
-                             << end;
+                {   
+                    if(avaiHouses.size()==0)
+                        cout<<"Currently no houses for you !"<<endl;
+                    else {
+                        for (House *house : sys->availableHousesForMember(mem, start, end, city)) // print houses' details without review
+                        {
+                            count++;
+                            cout << count << "." << endl;
+                            cout << "Location: " << house->getLocation() << "  Consuming Points: " << house->getConsumingPoints() << endl
+                                << "Rating : " << house->getHouseRatingScore() << "  Used Times: " << house->getUsedTimes() << endl
+                                << end;
+                        }
+                        cout << endl;
                     }
-                    cout << endl;
-                }
+                }   
 
-                while (true) // validate input
+                if(avaiHouses.size()!=0){
+                     while (true) // validate input
                 {
                     cout << "Do you want to make a request? (Y/N)" << endl;
                     cin >> review;
@@ -988,6 +1011,7 @@ public:
                 else if ((review == "N") || (review == "n"))
                     break;
 
+                }
                 cout << endl;
                 break;
             }
