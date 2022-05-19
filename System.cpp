@@ -239,10 +239,13 @@ public:
         newMember->setPhone(phone);
         data += "," + phone;
 
-        cout << "Enter house ? Press 1->Yes  2->No : ";
-        int enterHouse;
-        cin >> enterHouse;
-        if (enterHouse == 1)
+       
+        string enterHouse;
+        while(enterHouse=="" || !isdigit(enterHouse[0]) || enterHouse.size()>1 || enterHouse != "1" && enterHouse!="2"){
+             cout << "Enter house ? Press 1->Yes  2->No : ";
+             cin >> enterHouse;
+        }
+        if (enterHouse == "1")
         {
             cout << "Enter Location: ";
             string location;
@@ -256,6 +259,7 @@ public:
             House *house = new House(location, description);
             newMember->setHouseForOwn(house);
         }
+        
         ofstream myfile;
         myfile.open("Data.txt", fstream::app);
         myfile << data;
