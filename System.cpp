@@ -148,7 +148,8 @@ public:
         }
 
         Request *request = allRequests[index];
-        if (member->getHouseForOwn()->isFree(request->getStart(), request->getEnd())){
+        if (member->getHouseForOwn()->isFree(request->getStart(), request->getEnd()))
+        {
             cout << "Successfully accept request from user: " << this->getMemberByUsername(request->getRequestUsername())->getUsername() << " | From: " << request->getStart() << " | To: " << request->getEnd() << endl;
             allRequests.erase(allRequests.begin() + index);
             member->getHouseForOwn()->setStartDate(request->getStart());
@@ -430,7 +431,7 @@ public:
         else if (role == "2")
         {
             cout << "\nThis is your menu:" << endl
-                 << "0. Exit" << endl
+                 << "0. Log out" << endl
                  << "1. Manage your house" << endl
                  << "2. Search for available suitable houses" << endl
                  << "3. Rate house" << endl
@@ -445,7 +446,7 @@ public:
         else
         {
             cout << "\nThis is your menu:" << endl
-                 << "0. Exit" << endl
+                 << "0. Log out" << endl
                  << "1. Manage your house " << endl
                  << "2. Search for available suitable houses" << endl
                  << "3. Rate house" << endl
@@ -1194,7 +1195,8 @@ int main()
             appSys->checkFunction(role, choice, mem, appSys);
         }
 
-        cout << "\nHave A Nice Day!!!" << endl;
+        cout << "\nHave A Nice Day!!!" << endl
+             << endl;
     }
     return 0;
 }
